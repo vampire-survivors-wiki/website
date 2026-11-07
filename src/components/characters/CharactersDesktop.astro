@@ -1,0 +1,166 @@
+---
+import type { CharacterItem } from '../../data/characters';
+
+interface Props {
+  characters: CharacterItem[];
+}
+
+const { characters } = Astro.props;
+const standardCount = characters.filter(c => c.category === 'standard').length;
+const unlockableCount = characters.filter(c => c.category === 'unlockable').length;
+const dlcCount = characters.filter(c => c.category === 'dlc').length;
+---
+
+<div class="w-full">
+  <!-- ホームと共通化されたヒーローエリア (フロストガラス帯) -->
+  <section class="w-full hero-glass-band pt-12 pb-8 mb-10">
+    <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="text-xs font-mono font-medium tracking-widest text-slate-500 uppercase block mb-2">
+        SURVIVORS COMPENDIUM & DATABASE
+      </span>
+      <h1 class="text-4xl lg:text-5xl font-extrabold tracking-tight text-slate-950 mb-3">
+        キャラクター一覧
+      </h1>
+      <p class="text-sm text-slate-600 max-w-2xl leading-relaxed">
+        Vampire Survivorsに登場する全生存者の網羅的データベース。基本ステータス、初期装備、固有パッシブ、およびアンロック要件の体系的アーカイブ。
+      </p>
+    </div>
+  </section>
+
+  <!-- メインコンテンツ -->
+  <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+    <!-- Category Filter Tabs -->
+    <div class="flex items-center justify-between mb-8 pb-4 border-b border-slate-200/50">
+      <div class="flex items-center gap-2">
+        <button class="px-4 py-1.5 rounded-lg text-xs font-semibold bg-slate-950 text-white shadow-xs">
+          全キャラクター ({characters.length})
+        </button>
+        <button class="px-4 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-950 hover:bg-white/60 transition-colors">
+          通常キャラクター ({standardCount})
+        </button>
+        <button class="px-4 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-950 hover:bg-white/60 transition-colors">
+          隠し・アンロック ({unlockableCount})
+        </button>
+        <button class="px-4 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-950 hover:bg-white/60 transition-colors">
+          DLC生存者 ({dlcCount})
+        </button>
+      </div>
+      <div class="text-xs font-mono text-slate-500 flex items-center gap-1.5">
+        <span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
+        <span>ARCHIVE FILTER ACTIVE</span>
+      </div>
+    </div>
+
+    <!-- Section 01: Standard Survivors -->
+    <div class="mb-14">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-baseline gap-2">
+          <span class="text-xs font-mono text-red-600 font-bold">SECTION 01</span>
+          <span class="text-slate-300 font-light">/</span>
+          <h2 class="text-base font-bold text-slate-950">初期・通常キャラクター</h2>
+          <span class="text-xs font-mono text-slate-500 uppercase">STANDARD SURVIVORS</span>
+        </div>
+        <span class="text-xs font-mono text-slate-500">CAT-COUNT: {standardCount} REG</span>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+        {characters.filter(c => c.category === 'standard').map((char) => (
+          <div class="glass-panel rounded-xl p-3 flex flex-col justify-between group hover:shadow-md transition-all">
+            <div class="flex items-center justify-between text-[10px] font-mono text-slate-400 mb-2">
+              <span>#{char.id}</span>
+              <span class="uppercase">ST</span>
+            </div>
+            <!-- Image Frame -->
+            <div class="w-full aspect-square rounded-lg bg-white/70 border border-slate-200/50 flex items-center justify-center mb-3 group-hover:scale-102 transition-transform">
+              <svg class="w-8 h-8 text-slate-600" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                <path d={char.icon}></path>
+              </svg>
+            </div>
+            <div>
+              <h3 class="text-xs font-bold text-slate-950 truncate mb-0.5">{char.name}</h3>
+              <p class="text-[10px] text-slate-400 truncate font-mono mb-2">{char.nameEn}</p>
+              <div class="pt-2 border-t border-slate-100 flex items-center justify-between text-[10px]">
+                <span class="text-slate-400">初期武器</span>
+                <span class="font-bold text-blue-700">{char.initialWeapon}</span>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Section 02: Unlockable Survivors -->
+    <div class="mb-14">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-baseline gap-2">
+          <span class="text-xs font-mono text-red-600 font-bold">SECTION 02</span>
+          <span class="text-slate-300 font-light">/</span>
+          <h2 class="text-base font-bold text-slate-950">解放・アンロック生存者</h2>
+          <span class="text-xs font-mono text-slate-500 uppercase">UNLOCKABLE & SECRET</span>
+        </div>
+        <span class="text-xs font-mono text-slate-500">CAT-COUNT: {unlockableCount} REG</span>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+        {characters.filter(c => c.category === 'unlockable').map((char) => (
+          <div class="glass-panel rounded-xl p-3 flex flex-col justify-between group hover:shadow-md transition-all">
+            <div class="flex items-center justify-between text-[10px] font-mono text-slate-400 mb-2">
+              <span>#{char.id}</span>
+              <span class="uppercase">SECRE</span>
+            </div>
+            <div class="w-full aspect-square rounded-lg bg-white/70 border border-slate-200/50 flex items-center justify-center mb-3 group-hover:scale-102 transition-transform">
+              <svg class="w-8 h-8 text-slate-600" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                <path d={char.icon}></path>
+              </svg>
+            </div>
+            <div>
+              <h3 class="text-xs font-bold text-slate-950 truncate mb-0.5">{char.name}</h3>
+              <p class="text-[10px] text-slate-400 truncate font-mono mb-2">{char.nameEn}</p>
+              <div class="pt-2 border-t border-slate-100 flex items-center justify-between text-[10px]">
+                <span class="text-slate-400">初期武器</span>
+                <span class="font-bold text-blue-700">{char.initialWeapon}</span>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Section 03: DLC Survivors -->
+    <div class="mb-14">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-baseline gap-2">
+          <span class="text-xs font-mono text-red-600 font-bold">SECTION 03</span>
+          <span class="text-slate-300 font-light">/</span>
+          <h2 class="text-base font-bold text-slate-950">DLC生存者アーカイブ</h2>
+          <span class="text-xs font-mono text-slate-500 uppercase">EXPANSION REGISTRY</span>
+        </div>
+        <span class="text-xs font-mono text-slate-500">CAT-COUNT: {dlcCount} REG</span>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+        {characters.filter(c => c.category === 'dlc').map((char) => (
+          <div class="glass-panel rounded-xl p-3 flex flex-col justify-between group hover:shadow-md transition-all">
+            <div class="flex items-center justify-between text-[10px] font-mono text-slate-400 mb-2">
+              <span>#{char.id}</span>
+              <span class="uppercase">DLC</span>
+            </div>
+            <div class="w-full aspect-square rounded-lg bg-white/70 border border-slate-200/50 flex items-center justify-center mb-3 group-hover:scale-102 transition-transform">
+              <svg class="w-8 h-8 text-slate-600" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                <path d={char.icon}></path>
+              </svg>
+            </div>
+            <div>
+              <h3 class="text-xs font-bold text-slate-950 truncate mb-0.5">{char.name}</h3>
+              <p class="text-[10px] text-slate-400 truncate font-mono mb-2">{char.nameEn}</p>
+              <div class="pt-2 border-t border-slate-100 flex items-center justify-between text-[10px]">
+                <span class="text-slate-400">初期武器</span>
+                <span class="font-bold text-blue-700">{char.initialWeapon}</span>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</div>
