@@ -1,0 +1,78 @@
+---
+interface Props {
+  currentPath: '/' | '/characters/';
+}
+
+const { currentPath } = Astro.props;
+
+const navItems = [
+  { label: 'ホーム', href: '/', id: 'home' },
+  { label: '攻略', href: '#strategy', id: 'strategy' },
+  { label: 'キャラクター', href: '/characters/', id: 'characters' },
+  { label: '金策', href: '#gold', id: 'gold' },
+  { label: 'アップデート', href: '#updates', id: 'updates' },
+  { label: 'note', href: 'https://note.com/neo_magical', target: '_blank', id: 'note' },
+  { label: 'YouTube', href: 'https://www.youtube.com/@hirakouki_vs', target: '_blank', id: 'youtube' },
+];
+---
+
+<header class="sticky top-0 z-40 w-full glass-header">
+  <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+    <!-- Brand / Breadcrumbs -->
+    <div class="flex items-center gap-3">
+      <a href="/" class="flex items-center gap-2 text-sm font-bold tracking-tight text-slate-900 hover:opacity-80 transition-opacity">
+        <span class="tracking-widest font-mono text-xs text-slate-500">VS. ARCH</span>
+        <span class="text-slate-300 font-light">/</span>
+        <span class="font-extrabold">VS GUIDE</span>
+        <span class="text-slate-300 font-light">/</span>
+        <span class="font-mono text-xs text-slate-500 font-normal">COMPENDIUM</span>
+      </a>
+    </div>
+
+    <!-- Center Navigation (PC: md以上で表示) -->
+    <nav class="hidden md:flex items-center gap-8 text-sm font-medium">
+      {navItems.map((item) => {
+        const isActive = (item.href === '/' && currentPath === '/') || (item.href === '/characters/' && currentPath === '/characters/');
+        return (
+          <a
+            href={item.href}
+            target={item.target}
+            class:list={[
+              'relative py-5 transition-colors hover:text-slate-950',
+              isActive ? 'text-slate-950 font-semibold' : 'text-slate-600'
+            ]}
+          >
+            {item.label}
+            {isActive && (
+              <span class="absolute bottom-0 left-0 w-full h-[2px] bg-slate-950 rounded-full" />
+            )}
+          </a>
+        );
+      })}
+    </nav>
+
+    <!-- Right Side Meta & Profile (PC) / ハンバーガーボタン (Mobile) -->
+    <div class="flex items-center gap-3">
+      <!-- PC版メタ表示 -->
+      <div class="hidden lg:flex items-center gap-2 text-xs font-mono text-slate-500 bg-white/60 px-2.5 py-1 rounded-full border border-white/80 shadow-xs">
+        <span>v1.12.0</span>
+      </div>
+      <div class="hidden md:flex w-8 h-8 rounded-full bg-slate-900 text-white items-center justify-center text-xs shadow-xs">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+        </svg>
+      </div>
+
+      <!-- スマホ版ハンバーガーメニュー開閉ボタン (md未満で表示) -->
+      <button
+        id="hamburger-btn"
+        aria-label="メニューを開く"
+        class="flex md:hidden w-9 h-9 rounded-xl bg-white/80 border border-slate-200/80 items-center justify-center text-slate-900 shadow-xs active:scale-95 transition-transform"
+      >
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
