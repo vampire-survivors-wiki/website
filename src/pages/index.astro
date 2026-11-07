@@ -1,0 +1,17 @@
+---
+import Layout from '../layouts/Layout.astro';
+import HomeDesktop from '../components/home/HomeDesktop.astro';
+import HomeMobile from '../components/home/HomeMobile.astro';
+---
+
+<Layout title="Vampire Survivors 攻略 | VS GUIDE" currentPath="/">
+  <!-- PC画面 (md以上で自動表示) -->
+  <div class="hidden md:block">
+    <HomeDesktop />
+  </div>
+
+  <!-- スマホ画面 (md未満で自動表示) -->
+  <div class="block md:hidden">
+    <HomeMobile />
+  </div>
+</Layout>
