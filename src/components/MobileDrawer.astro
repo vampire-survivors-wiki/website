@@ -1,0 +1,136 @@
+---
+interface Props {
+  currentPath: '/' | '/characters/';
+}
+
+const { currentPath } = Astro.props;
+---
+
+<!-- ドロワーオーバーレイ背景 -->
+<div
+  id="drawer-overlay"
+  class="fixed inset-0 bg-slate-950/40 backdrop-blur-xs z-50 opacity-0 pointer-events-none transition-opacity duration-300 md:hidden"
+></div>
+
+<!-- スライドインドロワー本体 -->
+<aside
+  id="drawer-panel"
+  class="fixed top-0 right-0 bottom-0 w-[82vw] max-w-[340px] drawer-glass z-50 transform translate-x-full transition-transform duration-300 ease-out flex flex-col justify-between p-6 md:hidden"
+>
+  <div>
+    <!-- ドロワーヘッダー -->
+    <div class="flex items-center justify-between pb-5 border-b border-slate-200/60 mb-6">
+      <div class="flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-slate-950"></span>
+        <span class="text-xs font-mono font-bold tracking-widest text-slate-800 uppercase">ARCHIVE MENU</span>
+      </div>
+      <button
+        id="drawer-close-btn"
+        aria-label="メニューを閉じる"
+        class="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center text-slate-500 hover:text-slate-950 transition-colors"
+      >
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- ナビゲーションリスト -->
+    <nav class="space-y-2">
+      <!-- ホーム -->
+      <a
+        href="/"
+        class:list={[
+          'flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-colors',
+          currentPath === '/'
+            ? 'bg-slate-950 text-white shadow-xs'
+            : 'text-slate-700 hover:bg-slate-100'
+        ]}
+      >
+        <span>ホーム</span>
+        <span class="font-mono text-[10px] opacity-70">INDEX</span>
+      </a>
+
+      <!-- キャラクター一覧 -->
+      <a
+        href="/characters/"
+        class:list={[
+          'flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-colors',
+          currentPath === '/characters/'
+            ? 'bg-slate-950 text-white shadow-xs'
+            : 'text-slate-700 hover:bg-slate-100'
+        ]}
+      >
+        <span>キャラクター一覧</span>
+        <span class="text-[9px] font-mono px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 font-normal">84 CHS</span>
+      </a>
+
+      <!-- 未実装セクション群（ステータスバッジ明記） -->
+      <div class="pt-3 pb-1">
+        <span class="text-[10px] font-mono text-slate-400 tracking-wider block px-3 mb-1">PREPARING SECTIONS</span>
+      </div>
+
+      <a href="#strategy" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-medium text-slate-500 hover:bg-slate-100/70">
+        <span>ステージ・ボス攻略</span>
+        <span class="text-[9px] font-mono px-2 py-0.5 rounded-sm bg-slate-100 text-slate-400">PREPARING</span>
+      </a>
+
+      <a href="#gold" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-medium text-slate-500 hover:bg-slate-100/70">
+        <span>金策アーカイブ</span>
+        <span class="text-[9px] font-mono px-2 py-0.5 rounded-sm bg-slate-100 text-slate-400">PREPARING</span>
+      </a>
+
+      <a href="#updates" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-medium text-slate-500 hover:bg-slate-100/70">
+        <span>アップデートログ</span>
+        <span class="text-[9px] font-mono px-2 py-0.5 rounded-sm bg-slate-100 text-slate-400">PREPARING</span>
+      </a>
+
+      <!-- 外部連携 -->
+      <div class="pt-3 pb-1">
+        <span class="text-[10px] font-mono text-slate-400 tracking-wider block px-3 mb-1">EXTERNAL LINKS</span>
+      </div>
+
+      <a href="https://note.com/neo_magical" target="_blank" class="flex items-center justify-between px-3.5 py-2 rounded-xl text-xs font-medium text-slate-600 hover:bg-slate-100">
+        <span>note 連載コラム</span>
+        <span class="text-xs text-slate-400">↗</span>
+      </a>
+
+      <a href="https://www.youtube.com/@hirakouki_vs" target="_blank" class="flex items-center justify-between px-3.5 py-2 rounded-xl text-xs font-medium text-slate-600 hover:bg-slate-100">
+        <span>YouTube 実証アーカイブ</span>
+        <span class="text-xs text-slate-400">↗</span>
+      </a>
+    </nav>
+  </div>
+
+  <!-- ドロワーフッター -->
+  <div class="pt-6 border-t border-slate-200/60 text-center">
+    <div class="text-[10px] font-mono text-slate-400">
+      VS COMPENDIUM · v1.12.0
+    </div>
+  </div>
+</aside>
+
+<script>
+  const btn = document.getElementById('hamburger-btn');
+  const closeBtn = document.getElementById('drawer-close-btn');
+  const overlay = document.getElementById('drawer-overlay');
+  const panel = document.getElementById('drawer-panel');
+
+  function openDrawer() {
+    overlay?.classList.remove('opacity-0', 'pointer-events-none');
+    overlay?.classList.add('opacity-100');
+    panel?.classList.remove('translate-x-full');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeDrawer() {
+    overlay?.classList.add('opacity-0', 'pointer-events-none');
+    overlay?.classList.remove('opacity-100');
+    panel?.classList.add('translate-x-full');
+    document.body.style.overflow = '';
+  }
+
+  btn?.addEventListener('click', openDrawer);
+  closeBtn?.addEventListener('click', closeDrawer);
+  overlay?.addEventListener('click', closeDrawer);
+</script>
