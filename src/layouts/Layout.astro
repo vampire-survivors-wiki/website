@@ -1,0 +1,33 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import MobileDrawer from '../components/MobileDrawer.astro';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  currentPath: '/' | '/characters/';
+}
+
+const { title, currentPath } = Astro.props;
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+  </head>
+  <body class="bg-responsive-portal text-slate-900 min-h-screen flex flex-col relative overflow-x-hidden">
+    <Header currentPath={currentPath} />
+    <main class="flex-1 w-full">
+      <slot />
+    </main>
+    <Footer />
+    
+    <!-- スマホ版ハンバーガードロワーメニュー -->
+    <MobileDrawer currentPath={currentPath} />
+  </body>
+</html>
