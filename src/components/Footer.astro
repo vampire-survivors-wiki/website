@@ -3,7 +3,10 @@
 
 <!-- PC Footer (md以上) -->
 <footer
-  class="hidden md:block w-full border-t border-slate-200/60 bg-white/40 backdrop-blur-md py-12 mt-20"
+  class:list={[
+    'hidden md:block w-full border-t border-slate-200/60 bg-white/40',
+    'backdrop-blur-md py-12 mt-20',
+  ]}
 >
   <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
     <div class="grid grid-cols-1 md:grid-cols-[1.5fr_1fr_1fr] gap-10 mb-10">
@@ -104,11 +107,15 @@
     </div>
 
     <div
-      class="flex flex-col md:flex-row items-start md:items-center justify-between gap-2 pt-6 border-t border-slate-200/40 text-[11px] text-slate-500"
+      class:list={[
+        'flex flex-col md:flex-row items-start md:items-center justify-between gap-2',
+        'pt-6 border-t border-slate-200/40 text-[11px] text-slate-500',
+      ]}
     >
       <p>© 2026 VS GUIDE.</p>
       <p>
-        Vampire Survivors is a trademark of poncle limited. This site is an unofficial fan-made guide and is not affiliated with or endorsed by poncle.
+        Vampire Survivors is a trademark of poncle limited. This site is an unofficial fan-made guide
+        and is not affiliated with or endorsed by poncle.
       </p>
     </div>
   </div>
@@ -116,7 +123,10 @@
 
 <!-- Mobile Footer (md未満) -->
 <footer
-  class="block md:hidden w-full border-t border-slate-200/50 bg-white/30 backdrop-blur-md py-8 px-5 mt-12"
+  class:list={[
+    'block md:hidden w-full border-t border-slate-200/50 bg-white/30',
+    'backdrop-blur-md py-8 px-5 mt-12',
+  ]}
 >
   <div class="mb-6">
     <h3 class="text-base font-extrabold tracking-tight text-slate-950 mb-1">VS GUIDE</h3>
