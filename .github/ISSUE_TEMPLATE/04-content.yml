@@ -3,6 +3,10 @@ description: 攻略情報、ゲーム仕様、キャラクター情報などの�
 title: '[CONTENT] '
 type: Task
 body:
+  - type: markdown
+    attributes:
+      value: >-
+        コンテンツの追加・修正も、利用者に届ける体験に対応するPBIがある場合は、そのPBIの子Issueとして管理します。起票後に親PBIを開き、「Sub-issues」欄の「Add existing issue」からこのIssueを追加してください。本文に番号を書くことだけでは親子関係になりません。
   - type: input
     id: target
     attributes:
