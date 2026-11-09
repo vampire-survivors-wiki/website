@@ -1,0 +1,64 @@
+name: PBI（ユーザー価値・体験）
+description: 利用者に届けたい価値と、実現したい体験を管理する
+title: '[PBI] '
+type: PBI
+body:
+  - type: markdown
+    attributes:
+      value: 'PBIは「何を実装するか」ではなく「誰のどんな困りごとを、どのような体験に変えるか」を管理します。実装方法や細かな作業は、必要に応じて子Taskへ分けてください。'
+  - type: textarea
+    id: story
+    attributes:
+      label: ユーザーストーリー
+      description: 誰が・どんな場面で・何をしたいか・なぜ必要かを、利用者の立場で短く書いてください。
+      placeholder: '攻略情報を探している利用者として、...を確認したい。なぜなら、...だからだ。'
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: 背景・Why
+      description: 現状の何が問題なのか、誰がどの場面で困るのか、改善が必要な理由を事実に基づいて補足してください。ユーザーストーリーの言い換えだけにしないでください。
+      placeholder: '現在は...のため、利用者が...しにくい。'
+    validations:
+      required: true
+  - type: textarea
+    id: experience
+    attributes:
+      label: ユーザーに提供する体験
+      description: PBIが完了したとき、利用者が何を見つける・理解する・判断する・操作できるようになるかを書いてください。実装手段ではなく、利用者から見た変化を記載してください。
+      placeholder: '- 利用者が...できる。'
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: 受け入れ条件・確認したいこと
+      description: 完了を判断するための重要な観点を、確認可能な形で少数記載してください。細かなテストケースは実装時に整理できます。
+      placeholder: "- ...の情報が確認できる。\n- PC・スマートフォンの両方で...できる。"
+    validations:
+      required: false
+  - type: textarea
+    id: scope
+    attributes:
+      label: 対象範囲・対象外
+      description: 対象ページや機能、今回扱わないこと、制約などが決まっていれば記載してください。
+      placeholder: "対象: ...\n対象外: ..."
+    validations:
+      required: false
+  - type: textarea
+    id: references
+    attributes:
+      label: 参考資料・関連Issue
+      description: 参考サイト、デザイン、画像、関連するPBI・Task・調査Issueなどがあれば記載してください。
+      placeholder: '- URL: ...'
+    validations:
+      required: false
+  - type: textarea
+    id: notes
+    attributes:
+      label: 補足・未確認事項
+      description: 仮説、未確定の判断、検証が必要な点があれば、確認済みの事実と分けて記載してください。
+      placeholder: '未確認: ...'
+    validations:
+      required: false
