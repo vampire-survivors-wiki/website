@@ -128,6 +128,17 @@ test.describe('スマートフォン操作', () => {
     await page.goto('/');
   });
 
+  test('キャラクター一覧ではPC用フィルターを表示せず、分類別の一覧を維持する', async ({
+    page,
+  }) => {
+    await page.goto('/characters/');
+
+    await expect(page.locator('[data-character-filter]:visible')).toHaveCount(0);
+    await expect(page.getByRole('heading', { name: '初期・通常キャラクター' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: '隠しキャラクター' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Foscariの潮流' })).toBeVisible();
+  });
+
   test('モバイルドロワーを開閉できる', async ({ page }) => {
     const panel = page.locator('#drawer-panel');
 
