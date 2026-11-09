@@ -40,7 +40,7 @@ jobs:
         run: npm ci
 
       - name: Check formatting
-        run: npx prettier --write src/components/Footer.astro && git diff -- src/components/Footer.astro
+        run: npm run format:check
 
   lint:
     name: Lint
