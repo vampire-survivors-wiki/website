@@ -31,29 +31,50 @@ const dlcCount = characters.filter((c) => c.category === 'dlc').length;
   <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 pb-16">
     <!-- Category Filter Tabs -->
     <div class="flex items-center justify-between mb-8 pb-4 border-b border-slate-200/50">
-      <div class="flex items-center gap-2">
-        <button class="px-4 py-1.5 rounded-lg text-xs font-semibold bg-slate-950 text-white shadow-xs">
+      <div class="flex items-center gap-2" role="group" aria-label="キャラクターの表示分類">
+        <button
+          type="button"
+          data-character-filter="all"
+          aria-pressed="true"
+          class="px-4 py-1.5 rounded-lg text-xs font-semibold bg-slate-950 text-white shadow-xs transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-950"
+        >
           全キャラクター ({characters.length})
         </button>
-        <button class="px-4 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-950 hover:bg-white/60 transition-colors">
+        <button
+          type="button"
+          data-character-filter="standard"
+          aria-pressed="false"
+          class="px-4 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-950 hover:bg-white/60 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-950"
+        >
           通常キャラクター ({standardCount})
         </button>
-        <button class="px-4 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-950 hover:bg-white/60 transition-colors">
+        <button
+          type="button"
+          data-character-filter="unlockable"
+          aria-pressed="false"
+          class="px-4 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-950 hover:bg-white/60 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-950"
+        >
           隠しキャラクター ({unlockableCount})
         </button>
-        <button class="px-4 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-950 hover:bg-white/60 transition-colors">
+        <button
+          type="button"
+          data-character-filter="dlc"
+          aria-pressed="false"
+          class="px-4 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-950 hover:bg-white/60 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-950"
+        >
           Foscariの潮流 ({dlcCount})
         </button>
       </div>
       <div class="text-xs font-mono text-slate-500 flex items-center gap-1.5">
         <span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
-        <span>ARCHIVE FILTER ACTIVE</span>
+        <span id="character-filter-status" aria-live="polite" aria-atomic="true">
+          全キャラクターを表示中
+        </span>
       </div>
     </div>
 
     <!-- Section 01: Standard Survivors -->
-    <div class="mb-14">
-      <div class="flex items-center justify-between mb-4">
+    <div class="mb-14" data-character-section="standard">\n      <div class="flex items-center justify-between mb-4">
         <div class="flex items-baseline gap-2">
           <span class="text-xs font-mono text-red-600 font-bold">SECTION 01</span>
           <span class="text-slate-300 font-light">/</span>
@@ -98,8 +119,7 @@ const dlcCount = characters.filter((c) => c.category === 'dlc').length;
     </div>
 
     <!-- Section 02: Unlockable Survivors -->
-    <div class="mb-14">
-      <div class="flex items-center justify-between mb-4">
+    <div class="mb-14" data-character-section="unlockable">\n      <div class="flex items-center justify-between mb-4">
         <div class="flex items-baseline gap-2">
           <span class="text-xs font-mono text-red-600 font-bold">SECTION 02</span>
           <span class="text-slate-300 font-light">/</span>
@@ -143,8 +163,7 @@ const dlcCount = characters.filter((c) => c.category === 'dlc').length;
     </div>
 
     <!-- Section 03: DLC Survivors -->
-    <div class="mb-14">
-      <div class="flex items-center justify-between mb-4">
+    <div class="mb-14" data-character-section="dlc">\n      <div class="flex items-center justify-between mb-4">
         <div class="flex items-baseline gap-2">
           <span class="text-xs font-mono text-red-600 font-bold">SECTION 03</span>
           <span class="text-slate-300 font-light">/</span>
@@ -188,3 +207,40 @@ const dlcCount = characters.filter((c) => c.category === 'dlc').length;
     </div>
   </div>
 </div>
+
+<script>
+  const filterButtons = document.querySelectorAll<HTMLButtonElement>('[data-character-filter]');
+  const characterSections = document.querySelectorAll<HTMLElement>('[data-character-section]');
+  const filterStatus = document.getElementById('character-filter-status');
+
+  filterButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const selectedFilter = button.dataset.characterFilter;
+      if (!selectedFilter) return;
+
+      filterButtons.forEach((filterButton) => {
+        const isActive = filterButton === button;
+        filterButton.setAttribute('aria-pressed', String(isActive));
+        filterButton.classList.toggle('font-semibold', isActive);
+        filterButton.classList.toggle('bg-slate-950', isActive);
+        filterButton.classList.toggle('text-white', isActive);
+        filterButton.classList.toggle('shadow-xs', isActive);
+        filterButton.classList.toggle('font-medium', !isActive);
+        filterButton.classList.toggle('text-slate-600', !isActive);
+      });
+
+      characterSections.forEach((section) => {
+        const isVisible =
+          selectedFilter === 'all' || section.dataset.characterSection === selectedFilter;
+        section.hidden = !isVisible;
+      });
+
+      if (filterStatus) {
+        filterStatus.textContent =
+          selectedFilter === 'all'
+            ? '全キャラクターを表示中'
+            : `${button.textContent?.trim().replace(/\\s*\\(\\d+\\)\\s*$/, '') ?? ''}を表示中`;
+      }
+    });
+  });
+</script>
