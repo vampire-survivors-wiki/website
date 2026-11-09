@@ -1,0 +1,62 @@
+name: 不具合報告
+description: 表示崩れ、動作不良、リンク切れなどの不具合を報告する
+title: "[BUG] "
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: 不具合の概要
+      description: 何が起きているのかを簡潔に記載してください。原因は推測で断定しないでください。
+      placeholder: "..."
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: 期待する動作
+      description: 本来どのように表示・動作するべきかを書いてください。
+      placeholder: "..."
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: 再現手順
+      description: 不具合が再現する操作を順番に記載してください。再現できない場合はその旨を書いてください。
+      placeholder: "1. ...\n2. ...\n3. ..."
+    validations:
+      required: false
+  - type: dropdown
+    id: device
+    attributes:
+      label: 発生環境
+      description: 発生した環境を選択してください。
+      options:
+        - PC
+        - スマートフォン
+        - PC・スマートフォン両方
+        - その他・不明
+    validations:
+      required: true
+  - type: input
+    id: browser
+    attributes:
+      label: OS・ブラウザ
+      description: 分かる範囲でOS、ブラウザ、バージョンを記載してください。
+      placeholder: "例: NixOS / Firefox、Android / Chrome"
+    validations:
+      required: false
+  - type: textarea
+    id: evidence
+    attributes:
+      label: スクリーンショット・ログ
+      description: 表示崩れの画像、エラーメッセージ、コンソールログなどがあれば添付してください。
+    validations:
+      required: false
+  - type: textarea
+    id: notes
+    attributes:
+      label: 補足
+      description: 発生頻度、特定ページだけで起きるかなど、補足情報があれば記載してください。
+    validations:
+      required: false
