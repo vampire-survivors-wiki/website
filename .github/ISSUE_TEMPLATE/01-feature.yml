@@ -1,6 +1,7 @@
 name: 機能提案・改善（PBI候補）
 description: 利用者に届けたい体験がまだ整理できていない機能提案や改善案を相談する
 title: '[FEATURE] '
+type: Feature
 body:
   - type: markdown
     attributes:
