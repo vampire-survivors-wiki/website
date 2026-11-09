@@ -1,0 +1,43 @@
+name: 技術調査・検証
+description: 原因、実現可能性、ゲーム仕様などを調査して判断材料を残す
+title: "[RESEARCH] "
+body:
+  - type: textarea
+    id: question
+    attributes:
+      label: 調査したい問い
+      description: 調査によって何を明らかにしたいのかを書いてください。
+      placeholder: "..."
+    validations:
+      required: true
+  - type: textarea
+    id: facts
+    attributes:
+      label: 確認済みの事実・仮説
+      description: 確認できている事実と、まだ検証していない仮説を分けてください。
+      placeholder: "確認済み: ...\n仮説: ..."
+    validations:
+      required: true
+  - type: textarea
+    id: plan
+    attributes:
+      label: 調査・検証方法
+      description: 比較条件、再現手順、参照資料などを記載してください。
+      placeholder: "- ..."
+    validations:
+      required: false
+  - type: textarea
+    id: outcome
+    attributes:
+      label: 調査完了条件・成果物
+      description: どのような根拠や結論を残せば調査完了かを書いてください。
+      placeholder: "- 結果と確認条件が記録されている。\n- 次の対応方針が判断できる。"
+    validations:
+      required: false
+  - type: textarea
+    id: references
+    attributes:
+      label: 参考資料・関連Issue
+      description: 関連するURL、記事、Issueなどがあれば記載してください。
+    validations:
+      required: false
