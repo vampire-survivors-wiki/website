@@ -1,12 +1,15 @@
 name: 作業・タスク
-description: 設計、実装、保守などの具体的な作業を管理する
+description: PBIなどで決めた体験を実現するための具体的な作業を管理する
 title: '[TASK] '
 body:
+  - type: markdown
+    attributes:
+      value: '利用者に届ける価値や体験そのものはPBIで管理し、Taskでは担当する具体的な作業を管理します。関連するPBIがある場合は親子関係で紐づけ、下の欄にも番号を記載してください。'
   - type: textarea
     id: purpose
     attributes:
-      label: 作業の目的
-      description: なぜこの作業が必要なのか、どの課題や機能に関係するのかを書いてください。
+      label: 作業の目的・Why
+      description: なぜこの作業が必要なのか、どの課題やPBIに関係するのかを書いてください。
       placeholder: '...'
     validations:
       required: true
@@ -21,7 +24,7 @@ body:
   - type: textarea
     id: done
     attributes:
-      label: 完了条件
+      label: 作業完了条件
       description: 作業が完了したと判断できる条件を書いてください。
       placeholder: "- ...が実装されている。\n- ...で確認できる。"
     validations:
@@ -37,7 +40,8 @@ body:
   - type: textarea
     id: related
     attributes:
-      label: 関連Issue・参考資料
-      description: 関連する機能提案、バグ、設計資料などがあれば記載してください。
+      label: 親PBI・関連Issue・参考資料
+      description: 親PBIの番号、関連するバグ・調査Issue、参考資料などを記載してください。可能ならIssueの親子関係も設定してください。
+      placeholder: "親PBI: #...\n関連Issue: #..."
     validations:
       required: false
