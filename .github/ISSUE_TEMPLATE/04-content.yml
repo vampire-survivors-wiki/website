@@ -1,13 +1,13 @@
 name: 攻略・記事コンテンツの修正
 description: 攻略情報、ゲーム仕様、キャラクター情報などの追加・修正を提案する
-title: "[CONTENT] "
+title: '[CONTENT] '
 body:
   - type: input
     id: target
     attributes:
       label: 対象ページ・記事
       description: 対象ページのURL、ページ名、または追加予定のカテゴリを記載してください。
-      placeholder: "例: キャラクター一覧 / ボス攻略 / URL"
+      placeholder: '例: キャラクター一覧 / ボス攻略 / URL'
     validations:
       required: true
   - type: textarea
@@ -31,7 +31,7 @@ body:
     attributes:
       label: ゲームバージョン・DLC
       description: 確認したバージョンやDLC、プラットフォームを分かる範囲で記載してください。
-      placeholder: "例: v1.xx / DLC名 / Steam版"
+      placeholder: '例: v1.xx / DLC名 / Steam版'
     validations:
       required: false
   - type: textarea

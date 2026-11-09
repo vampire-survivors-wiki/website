@@ -6,9 +6,9 @@ interface Props {
 }
 
 const { characters } = Astro.props;
-const standardCount = characters.filter(c => c.category === 'standard').length;
-const unlockableCount = characters.filter(c => c.category === 'unlockable').length;
-const dlcCount = characters.filter(c => c.category === 'dlc').length;
+const standardCount = characters.filter((c) => c.category === 'standard').length;
+const unlockableCount = characters.filter((c) => c.category === 'unlockable').length;
+const dlcCount = characters.filter((c) => c.category === 'dlc').length;
 ---
 
 <div class="w-full">
@@ -22,7 +22,8 @@ const dlcCount = characters.filter(c => c.category === 'dlc').length;
         キャラクター一覧
       </h1>
       <p class="text-sm text-slate-600 max-w-2xl leading-relaxed">
-        Vampire Survivorsに登場する全生存者の網羅的データベース。基本ステータス、初期装備、固有パッシブ、およびアンロック要件の体系的アーカイブ。
+        Vampire
+        Survivorsに登場する全生存者の網羅的データベース。基本ステータス、初期装備、固有パッシブ、およびアンロック要件の体系的アーカイブ。
       </p>
     </div>
   </section>
@@ -64,28 +65,36 @@ const dlcCount = characters.filter(c => c.category === 'dlc').length;
       </div>
 
       <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-        {characters.filter(c => c.category === 'standard').map((char) => (
-          <div class="glass-panel rounded-xl p-3 flex flex-col justify-between group hover:shadow-md transition-all">
-            <div class="flex items-center justify-between text-[10px] font-mono text-slate-400 mb-2">
-              <span>#{char.id}</span>
-              <span class="uppercase">ST</span>
-            </div>
-            <!-- Image Frame -->
-            <div class="w-full aspect-square rounded-lg bg-white/70 border border-slate-200/50 flex items-center justify-center mb-3 group-hover:scale-102 transition-transform">
-              <svg class="w-8 h-8 text-slate-600" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-                <path d={char.icon}></path>
-              </svg>
-            </div>
-            <div>
-              <h3 class="text-xs font-bold text-slate-950 truncate mb-0.5">{char.name}</h3>
-              <p class="text-[10px] text-slate-400 truncate font-mono mb-2">{char.nameEn}</p>
-              <div class="pt-2 border-t border-slate-100 flex items-center justify-between text-[10px]">
-                <span class="text-slate-400">初期武器</span>
-                <span class="font-bold text-blue-700">{char.initialWeapon}</span>
+        {characters
+          .filter((c) => c.category === 'standard')
+          .map((char) => (
+            <div class="glass-panel rounded-xl p-3 flex flex-col justify-between group hover:shadow-md transition-all">
+              <div class="flex items-center justify-between text-[10px] font-mono text-slate-400 mb-2">
+                <span>#{char.id}</span>
+                <span class="uppercase">ST</span>
+              </div>
+              <!-- Image Frame -->
+              <div class="w-full aspect-square rounded-lg bg-white/70 border border-slate-200/50 flex items-center justify-center mb-3 group-hover:scale-102 transition-transform">
+                <svg
+                  class="w-8 h-8 text-slate-600"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  viewBox="0 0 24 24"
+                >
+                  <path d={char.icon}></path>
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-xs font-bold text-slate-950 truncate mb-0.5">{char.name}</h3>
+                <p class="text-[10px] text-slate-400 truncate font-mono mb-2">{char.nameEn}</p>
+                <div class="pt-2 border-t border-slate-100 flex items-center justify-between text-[10px]">
+                  <span class="text-slate-400">初期武器</span>
+                  <span class="font-bold text-blue-700">{char.initialWeapon}</span>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
       </div>
     </div>
 
@@ -102,27 +111,35 @@ const dlcCount = characters.filter(c => c.category === 'dlc').length;
       </div>
 
       <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-        {characters.filter(c => c.category === 'unlockable').map((char) => (
-          <div class="glass-panel rounded-xl p-3 flex flex-col justify-between group hover:shadow-md transition-all">
-            <div class="flex items-center justify-between text-[10px] font-mono text-slate-400 mb-2">
-              <span>#{char.id}</span>
-              <span class="uppercase">SECRE</span>
-            </div>
-            <div class="w-full aspect-square rounded-lg bg-white/70 border border-slate-200/50 flex items-center justify-center mb-3 group-hover:scale-102 transition-transform">
-              <svg class="w-8 h-8 text-slate-600" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-                <path d={char.icon}></path>
-              </svg>
-            </div>
-            <div>
-              <h3 class="text-xs font-bold text-slate-950 truncate mb-0.5">{char.name}</h3>
-              <p class="text-[10px] text-slate-400 truncate font-mono mb-2">{char.nameEn}</p>
-              <div class="pt-2 border-t border-slate-100 flex items-center justify-between text-[10px]">
-                <span class="text-slate-400">初期武器</span>
-                <span class="font-bold text-blue-700">{char.initialWeapon}</span>
+        {characters
+          .filter((c) => c.category === 'unlockable')
+          .map((char) => (
+            <div class="glass-panel rounded-xl p-3 flex flex-col justify-between group hover:shadow-md transition-all">
+              <div class="flex items-center justify-between text-[10px] font-mono text-slate-400 mb-2">
+                <span>#{char.id}</span>
+                <span class="uppercase">SECRE</span>
+              </div>
+              <div class="w-full aspect-square rounded-lg bg-white/70 border border-slate-200/50 flex items-center justify-center mb-3 group-hover:scale-102 transition-transform">
+                <svg
+                  class="w-8 h-8 text-slate-600"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  viewBox="0 0 24 24"
+                >
+                  <path d={char.icon}></path>
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-xs font-bold text-slate-950 truncate mb-0.5">{char.name}</h3>
+                <p class="text-[10px] text-slate-400 truncate font-mono mb-2">{char.nameEn}</p>
+                <div class="pt-2 border-t border-slate-100 flex items-center justify-between text-[10px]">
+                  <span class="text-slate-400">初期武器</span>
+                  <span class="font-bold text-blue-700">{char.initialWeapon}</span>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
       </div>
     </div>
 
@@ -139,27 +156,35 @@ const dlcCount = characters.filter(c => c.category === 'dlc').length;
       </div>
 
       <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-        {characters.filter(c => c.category === 'dlc').map((char) => (
-          <div class="glass-panel rounded-xl p-3 flex flex-col justify-between group hover:shadow-md transition-all">
-            <div class="flex items-center justify-between text-[10px] font-mono text-slate-400 mb-2">
-              <span>#{char.id}</span>
-              <span class="uppercase">DLC</span>
-            </div>
-            <div class="w-full aspect-square rounded-lg bg-white/70 border border-slate-200/50 flex items-center justify-center mb-3 group-hover:scale-102 transition-transform">
-              <svg class="w-8 h-8 text-slate-600" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-                <path d={char.icon}></path>
-              </svg>
-            </div>
-            <div>
-              <h3 class="text-xs font-bold text-slate-950 truncate mb-0.5">{char.name}</h3>
-              <p class="text-[10px] text-slate-400 truncate font-mono mb-2">{char.nameEn}</p>
-              <div class="pt-2 border-t border-slate-100 flex items-center justify-between text-[10px]">
-                <span class="text-slate-400">初期武器</span>
-                <span class="font-bold text-blue-700">{char.initialWeapon}</span>
+        {characters
+          .filter((c) => c.category === 'dlc')
+          .map((char) => (
+            <div class="glass-panel rounded-xl p-3 flex flex-col justify-between group hover:shadow-md transition-all">
+              <div class="flex items-center justify-between text-[10px] font-mono text-slate-400 mb-2">
+                <span>#{char.id}</span>
+                <span class="uppercase">DLC</span>
+              </div>
+              <div class="w-full aspect-square rounded-lg bg-white/70 border border-slate-200/50 flex items-center justify-center mb-3 group-hover:scale-102 transition-transform">
+                <svg
+                  class="w-8 h-8 text-slate-600"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  viewBox="0 0 24 24"
+                >
+                  <path d={char.icon}></path>
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-xs font-bold text-slate-950 truncate mb-0.5">{char.name}</h3>
+                <p class="text-[10px] text-slate-400 truncate font-mono mb-2">{char.nameEn}</p>
+                <div class="pt-2 border-t border-slate-100 flex items-center justify-between text-[10px]">
+                  <span class="text-slate-400">初期武器</span>
+                  <span class="font-bold text-blue-700">{char.initialWeapon}</span>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
       </div>
     </div>
   </div>

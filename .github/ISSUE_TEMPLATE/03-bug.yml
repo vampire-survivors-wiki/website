@@ -1,13 +1,13 @@
 name: 不具合報告
 description: 表示崩れ、動作不良、リンク切れなどの不具合を報告する
-title: "[BUG] "
+title: '[BUG] '
 body:
   - type: textarea
     id: summary
     attributes:
       label: 不具合の概要
       description: 何が起きているのかを簡潔に記載してください。原因は推測で断定しないでください。
-      placeholder: "..."
+      placeholder: '...'
     validations:
       required: true
   - type: textarea
@@ -15,7 +15,7 @@ body:
     attributes:
       label: 期待する動作
       description: 本来どのように表示・動作するべきかを書いてください。
-      placeholder: "..."
+      placeholder: '...'
     validations:
       required: true
   - type: textarea
@@ -43,7 +43,7 @@ body:
     attributes:
       label: OS・ブラウザ
       description: 分かる範囲でOS、ブラウザ、バージョンを記載してください。
-      placeholder: "例: NixOS / Firefox、Android / Chrome"
+      placeholder: '例: NixOS / Firefox、Android / Chrome'
     validations:
       required: false
   - type: textarea

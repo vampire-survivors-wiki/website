@@ -1,13 +1,13 @@
 name: 技術調査・検証
 description: 原因、実現可能性、ゲーム仕様などを調査して判断材料を残す
-title: "[RESEARCH] "
+title: '[RESEARCH] '
 body:
   - type: textarea
     id: question
     attributes:
       label: 調査したい問い
       description: 調査によって何を明らかにしたいのかを書いてください。
-      placeholder: "..."
+      placeholder: '...'
     validations:
       required: true
   - type: textarea
@@ -23,7 +23,7 @@ body:
     attributes:
       label: 調査・検証方法
       description: 比較条件、再現手順、参照資料などを記載してください。
-      placeholder: "- ..."
+      placeholder: '- ...'
     validations:
       required: false
   - type: textarea

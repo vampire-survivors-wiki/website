@@ -22,7 +22,9 @@ const { currentPath } = Astro.props;
     <div class="flex items-center justify-between pb-5 border-b border-slate-200/60 mb-6">
       <div class="flex items-center gap-2">
         <span class="w-2 h-2 rounded-full bg-slate-950"></span>
-        <span class="text-xs font-mono font-bold tracking-widest text-slate-800 uppercase">ARCHIVE MENU</span>
+        <span class="text-xs font-mono font-bold tracking-widest text-slate-800 uppercase">
+          ARCHIVE MENU
+        </span>
       </div>
       <button
         id="drawer-close-btn"
@@ -44,7 +46,7 @@ const { currentPath } = Astro.props;
           'flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-colors',
           currentPath === '/'
             ? 'bg-slate-950 text-white shadow-xs'
-            : 'text-slate-700 hover:bg-slate-100'
+            : 'text-slate-700 hover:bg-slate-100',
         ]}
       >
         <span>ホーム</span>
@@ -58,44 +60,73 @@ const { currentPath } = Astro.props;
           'flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-colors',
           currentPath === '/characters/'
             ? 'bg-slate-950 text-white shadow-xs'
-            : 'text-slate-700 hover:bg-slate-100'
+            : 'text-slate-700 hover:bg-slate-100',
         ]}
       >
         <span>キャラクター一覧</span>
-        <span class="text-[9px] font-mono px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 font-normal">84 CHS</span>
+        <span class="text-[9px] font-mono px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 font-normal">
+          84 CHS
+        </span>
       </a>
 
       <!-- 未実装セクション群（ステータスバッジ明記） -->
       <div class="pt-3 pb-1">
-        <span class="text-[10px] font-mono text-slate-400 tracking-wider block px-3 mb-1">PREPARING SECTIONS</span>
+        <span class="text-[10px] font-mono text-slate-400 tracking-wider block px-3 mb-1">
+          PREPARING SECTIONS
+        </span>
       </div>
 
-      <a href="#strategy" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-medium text-slate-500 hover:bg-slate-100/70">
+      <a
+        href="#strategy"
+        class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-medium text-slate-500 hover:bg-slate-100/70"
+      >
         <span>ステージ・ボス攻略</span>
-        <span class="text-[9px] font-mono px-2 py-0.5 rounded-sm bg-slate-100 text-slate-400">PREPARING</span>
+        <span class="text-[9px] font-mono px-2 py-0.5 rounded-sm bg-slate-100 text-slate-400">
+          PREPARING
+        </span>
       </a>
 
-      <a href="#gold" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-medium text-slate-500 hover:bg-slate-100/70">
+      <a
+        href="#gold"
+        class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-medium text-slate-500 hover:bg-slate-100/70"
+      >
         <span>金策アーカイブ</span>
-        <span class="text-[9px] font-mono px-2 py-0.5 rounded-sm bg-slate-100 text-slate-400">PREPARING</span>
+        <span class="text-[9px] font-mono px-2 py-0.5 rounded-sm bg-slate-100 text-slate-400">
+          PREPARING
+        </span>
       </a>
 
-      <a href="#updates" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-medium text-slate-500 hover:bg-slate-100/70">
+      <a
+        href="#updates"
+        class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-medium text-slate-500 hover:bg-slate-100/70"
+      >
         <span>アップデートログ</span>
-        <span class="text-[9px] font-mono px-2 py-0.5 rounded-sm bg-slate-100 text-slate-400">PREPARING</span>
+        <span class="text-[9px] font-mono px-2 py-0.5 rounded-sm bg-slate-100 text-slate-400">
+          PREPARING
+        </span>
       </a>
 
       <!-- 外部連携 -->
       <div class="pt-3 pb-1">
-        <span class="text-[10px] font-mono text-slate-400 tracking-wider block px-3 mb-1">EXTERNAL LINKS</span>
+        <span class="text-[10px] font-mono text-slate-400 tracking-wider block px-3 mb-1">
+          EXTERNAL LINKS
+        </span>
       </div>
 
-      <a href="https://note.com/neo_magical" target="_blank" class="flex items-center justify-between px-3.5 py-2 rounded-xl text-xs font-medium text-slate-600 hover:bg-slate-100">
+      <a
+        href="https://note.com/neo_magical"
+        target="_blank"
+        class="flex items-center justify-between px-3.5 py-2 rounded-xl text-xs font-medium text-slate-600 hover:bg-slate-100"
+      >
         <span>note 連載コラム</span>
         <span class="text-xs text-slate-400">↗</span>
       </a>
 
-      <a href="https://www.youtube.com/@hirakouki_vs" target="_blank" class="flex items-center justify-between px-3.5 py-2 rounded-xl text-xs font-medium text-slate-600 hover:bg-slate-100">
+      <a
+        href="https://www.youtube.com/@hirakouki_vs"
+        target="_blank"
+        class="flex items-center justify-between px-3.5 py-2 rounded-xl text-xs font-medium text-slate-600 hover:bg-slate-100"
+      >
         <span>YouTube 実証アーカイブ</span>
         <span class="text-xs text-slate-400">↗</span>
       </a>
@@ -104,9 +135,7 @@ const { currentPath } = Astro.props;
 
   <!-- ドロワーフッター -->
   <div class="pt-6 border-t border-slate-200/60 text-center">
-    <div class="text-[10px] font-mono text-slate-400">
-      VS COMPENDIUM · v1.12.0
-    </div>
+    <div class="text-[10px] font-mono text-slate-400">VS COMPENDIUM · v1.12.0</div>
   </div>
 </aside>
 

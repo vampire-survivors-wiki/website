@@ -1,13 +1,13 @@
 name: 作業・タスク
 description: 設計、実装、保守などの具体的な作業を管理する
-title: "[TASK] "
+title: '[TASK] '
 body:
   - type: textarea
     id: purpose
     attributes:
       label: 作業の目的
       description: なぜこの作業が必要なのか、どの課題や機能に関係するのかを書いてください。
-      placeholder: "..."
+      placeholder: '...'
     validations:
       required: true
   - type: textarea
@@ -15,7 +15,7 @@ body:
     attributes:
       label: 作業内容・対象範囲
       description: 対象ファイル、ページ、機能、実施する作業を分かる範囲で記載してください。
-      placeholder: "- ..."
+      placeholder: '- ...'
     validations:
       required: true
   - type: textarea

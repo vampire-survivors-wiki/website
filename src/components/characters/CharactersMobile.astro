@@ -6,9 +6,9 @@ interface Props {
 }
 
 const { characters } = Astro.props;
-const standardCount = characters.filter(c => c.category === 'standard').length;
-const unlockableCount = characters.filter(c => c.category === 'unlockable').length;
-const dlcCount = characters.filter(c => c.category === 'dlc').length;
+const standardCount = characters.filter((c) => c.category === 'standard').length;
+const unlockableCount = characters.filter((c) => c.category === 'unlockable').length;
+const dlcCount = characters.filter((c) => c.category === 'dlc').length;
 ---
 
 <div class="px-4 py-6 space-y-6">
@@ -17,9 +17,13 @@ const dlcCount = characters.filter(c => c.category === 'dlc').length;
     <div class="flex items-center justify-between">
       <div class="flex items-center gap-1.5">
         <span class="w-1.5 h-1.5 rounded-full bg-slate-900"></span>
-        <span class="text-[10px] font-mono tracking-widest text-slate-500 uppercase">SURVIVOR ARCHIVE</span>
+        <span class="text-[10px] font-mono tracking-widest text-slate-500 uppercase">
+          SURVIVOR ARCHIVE
+        </span>
       </div>
-      <span class="text-[10px] font-mono bg-slate-200/60 px-2 py-0.5 rounded-sm text-slate-600">{characters.length} SURVIVORS</span>
+      <span class="text-[10px] font-mono bg-slate-200/60 px-2 py-0.5 rounded-sm text-slate-600">
+        {characters.length} SURVIVORS
+      </span>
     </div>
     <h1 class="text-2xl font-extrabold tracking-tight text-slate-950">キャラクター一覧</h1>
     <p class="text-xs text-slate-600 leading-relaxed">
@@ -38,18 +42,28 @@ const dlcCount = characters.filter(c => c.category === 'dlc').length;
     </div>
 
     <div class="grid grid-cols-2 gap-3">
-      {characters.filter(c => c.category === 'standard').map((char) => (
-        <div class="glass-panel rounded-xl p-2.5 flex flex-col items-center text-center">
-          <!-- 正方形画像枠 -->
-          <div class="w-full aspect-square rounded-lg bg-white/70 border border-slate-200/60 flex items-center justify-center mb-1.5">
-            <svg class="w-8 h-8 text-slate-600" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-              <path d={char.icon}></path>
-            </svg>
+      {characters
+        .filter((c) => c.category === 'standard')
+        .map((char) => (
+          <div class="glass-panel rounded-xl p-2.5 flex flex-col items-center text-center">
+            <!-- 正方形画像枠 -->
+            <div class="w-full aspect-square rounded-lg bg-white/70 border border-slate-200/60 flex items-center justify-center mb-1.5">
+              <svg
+                class="w-8 h-8 text-slate-600"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                viewBox="0 0 24 24"
+              >
+                <path d={char.icon}></path>
+              </svg>
+            </div>
+            <!-- タイトなキャラクター名のみ -->
+            <span class="text-[11px] font-bold text-slate-900 leading-tight truncate w-full">
+              {char.name}
+            </span>
           </div>
-          <!-- タイトなキャラクター名のみ -->
-          <span class="text-[11px] font-bold text-slate-900 leading-tight truncate w-full">{char.name}</span>
-        </div>
-      ))}
+        ))}
     </div>
   </div>
 
@@ -64,16 +78,26 @@ const dlcCount = characters.filter(c => c.category === 'dlc').length;
     </div>
 
     <div class="grid grid-cols-2 gap-3">
-      {characters.filter(c => c.category === 'unlockable').map((char) => (
-        <div class="glass-panel rounded-xl p-2.5 flex flex-col items-center text-center">
-          <div class="w-full aspect-square rounded-lg bg-white/70 border border-slate-200/60 flex items-center justify-center mb-1.5">
-            <svg class="w-8 h-8 text-slate-600" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-              <path d={char.icon}></path>
-            </svg>
+      {characters
+        .filter((c) => c.category === 'unlockable')
+        .map((char) => (
+          <div class="glass-panel rounded-xl p-2.5 flex flex-col items-center text-center">
+            <div class="w-full aspect-square rounded-lg bg-white/70 border border-slate-200/60 flex items-center justify-center mb-1.5">
+              <svg
+                class="w-8 h-8 text-slate-600"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                viewBox="0 0 24 24"
+              >
+                <path d={char.icon}></path>
+              </svg>
+            </div>
+            <span class="text-[11px] font-bold text-slate-900 leading-tight truncate w-full">
+              {char.name}
+            </span>
           </div>
-          <span class="text-[11px] font-bold text-slate-900 leading-tight truncate w-full">{char.name}</span>
-        </div>
-      ))}
+        ))}
     </div>
   </div>
 
@@ -88,16 +112,26 @@ const dlcCount = characters.filter(c => c.category === 'dlc').length;
     </div>
 
     <div class="grid grid-cols-2 gap-3">
-      {characters.filter(c => c.category === 'dlc').map((char) => (
-        <div class="glass-panel rounded-xl p-2.5 flex flex-col items-center text-center">
-          <div class="w-full aspect-square rounded-lg bg-white/70 border border-slate-200/60 flex items-center justify-center mb-1.5">
-            <svg class="w-8 h-8 text-slate-600" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-              <path d={char.icon}></path>
-            </svg>
+      {characters
+        .filter((c) => c.category === 'dlc')
+        .map((char) => (
+          <div class="glass-panel rounded-xl p-2.5 flex flex-col items-center text-center">
+            <div class="w-full aspect-square rounded-lg bg-white/70 border border-slate-200/60 flex items-center justify-center mb-1.5">
+              <svg
+                class="w-8 h-8 text-slate-600"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                viewBox="0 0 24 24"
+              >
+                <path d={char.icon}></path>
+              </svg>
+            </div>
+            <span class="text-[11px] font-bold text-slate-900 leading-tight truncate w-full">
+              {char.name}
+            </span>
           </div>
-          <span class="text-[11px] font-bold text-slate-900 leading-tight truncate w-full">{char.name}</span>
-        </div>
-      ))}
+        ))}
     </div>
   </div>
 </div>

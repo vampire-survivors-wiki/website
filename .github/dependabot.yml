@@ -2,12 +2,12 @@ version: 2
 
 updates:
   - package-ecosystem: npm
-    directory: "/"
+    directory: '/'
     schedule:
       interval: weekly
       day: monday
-      time: "09:00"
-      timezone: "Asia/Tokyo"
+      time: '09:00'
+      timezone: 'Asia/Tokyo'
     open-pull-requests-limit: 5
     groups:
       non-major:
@@ -16,12 +16,12 @@ updates:
           - patch
 
   - package-ecosystem: github-actions
-    directory: "/"
+    directory: '/'
     schedule:
       interval: weekly
       day: monday
-      time: "09:00"
-      timezone: "Asia/Tokyo"
+      time: '09:00'
+      timezone: 'Asia/Tokyo'
     open-pull-requests-limit: 3
     groups:
       non-major:
