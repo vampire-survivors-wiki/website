@@ -78,7 +78,8 @@ const dlcCount = characters.filter((c) => c.category === 'dlc').length;
     </div>
 
     <!-- Section 01: Standard Survivors -->
-    <div class="mb-14" data-character-section="standard">\n      <div class="flex items-center justify-between mb-4">
+    <div class="mb-14" data-character-section="standard">
+      <div class="flex items-center justify-between mb-4">
         <div class="flex items-baseline gap-2">
           <span class="text-xs font-mono text-red-600 font-bold">SECTION 01</span>
           <span class="text-slate-300 font-light">/</span>
@@ -123,7 +124,8 @@ const dlcCount = characters.filter((c) => c.category === 'dlc').length;
     </div>
 
     <!-- Section 02: Unlockable Survivors -->
-    <div class="mb-14" data-character-section="unlockable">\n      <div class="flex items-center justify-between mb-4">
+    <div class="mb-14" data-character-section="unlockable">
+      <div class="flex items-center justify-between mb-4">
         <div class="flex items-baseline gap-2">
           <span class="text-xs font-mono text-red-600 font-bold">SECTION 02</span>
           <span class="text-slate-300 font-light">/</span>
@@ -167,7 +169,8 @@ const dlcCount = characters.filter((c) => c.category === 'dlc').length;
     </div>
 
     <!-- Section 03: DLC Survivors -->
-    <div class="mb-14" data-character-section="dlc">\n      <div class="flex items-center justify-between mb-4">
+    <div class="mb-14" data-character-section="dlc">
+      <div class="flex items-center justify-between mb-4">
         <div class="flex items-baseline gap-2">
           <span class="text-xs font-mono text-red-600 font-bold">SECTION 03</span>
           <span class="text-slate-300 font-light">/</span>
@@ -231,6 +234,8 @@ const dlcCount = characters.filter((c) => c.category === 'dlc').length;
         filterButton.classList.toggle('shadow-xs', isActive);
         filterButton.classList.toggle('font-medium', !isActive);
         filterButton.classList.toggle('text-slate-600', !isActive);
+        filterButton.classList.toggle('hover:text-slate-950', !isActive);
+        filterButton.classList.toggle('hover:bg-white/60', !isActive);
       });
 
       characterSections.forEach((section) => {
