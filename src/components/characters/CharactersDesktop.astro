@@ -87,10 +87,6 @@ const dlcCount = characters.filter((c) => c.category === 'dlc').length;
           .filter((c) => c.category === 'standard')
           .map((char) => (
             <div class="glass-panel rounded-xl p-3 flex flex-col justify-between group hover:shadow-md transition-all">
-              <div class="flex items-center justify-between text-[10px] font-mono text-slate-400 mb-2">
-                <span>#{char.id}</span>
-                <span class="uppercase">ST</span>
-              </div>
               <!-- Image Frame -->
               <div class="w-full aspect-square rounded-lg bg-white/70 border border-slate-200/50 flex items-center justify-center mb-3 group-hover:scale-102 transition-transform">
                 <svg
@@ -132,10 +128,6 @@ const dlcCount = characters.filter((c) => c.category === 'dlc').length;
           .filter((c) => c.category === 'unlockable')
           .map((char) => (
             <div class="glass-panel rounded-xl p-3 flex flex-col justify-between group hover:shadow-md transition-all">
-              <div class="flex items-center justify-between text-[10px] font-mono text-slate-400 mb-2">
-                <span>#{char.id}</span>
-                <span class="uppercase">SECRE</span>
-              </div>
               <div class="w-full aspect-square rounded-lg bg-white/70 border border-slate-200/50 flex items-center justify-center mb-3 group-hover:scale-102 transition-transform">
                 <svg
                   class="w-8 h-8 text-slate-600"
@@ -176,10 +168,6 @@ const dlcCount = characters.filter((c) => c.category === 'dlc').length;
           .filter((c) => c.category === 'dlc')
           .map((char) => (
             <div class="glass-panel rounded-xl p-3 flex flex-col justify-between group hover:shadow-md transition-all">
-              <div class="flex items-center justify-between text-[10px] font-mono text-slate-400 mb-2">
-                <span>#{char.id}</span>
-                <span class="uppercase">DLC</span>
-              </div>
               <div class="w-full aspect-square rounded-lg bg-white/70 border border-slate-200/50 flex items-center justify-center mb-3 group-hover:scale-102 transition-transform">
                 <svg
                   class="w-8 h-8 text-slate-600"
