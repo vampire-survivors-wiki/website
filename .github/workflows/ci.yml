@@ -39,6 +39,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Show formatted browser test
+        run: npx prettier e2e/site.spec.mjs
+
       - name: Check formatting
         run: npm run format:check
 
