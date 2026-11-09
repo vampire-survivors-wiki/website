@@ -7,7 +7,7 @@ interface Props {
 
 const { characters } = Astro.props;
 const standardCharacters = characters.filter((c) => c.category === 'standard').slice(0, 1);
-const unlockableCharacters = characters.filter((c) => c.category === 'unlockable').slice(0, 1);
+const unlockableCharacters = characters.filter((c) => c.id === '19');
 const dlcCharacters = characters.filter((c) => c.category === 'dlc').slice(0, 1);
 const visibleCharacters = [...standardCharacters, ...unlockableCharacters, ...dlcCharacters];
 const standardCount = standardCharacters.length;
