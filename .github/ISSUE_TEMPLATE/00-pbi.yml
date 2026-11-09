@@ -5,6 +5,10 @@ type: PBI
 body:
   - type: markdown
     attributes:
+      value: >-
+        このIssueは利用者に届ける価値をまとめる**親PBI**として扱います。実装・調査・コンテンツ修正などの具体的なIssueは、作成後にこのPBIの「Sub-issues」欄から子Issueとして追加してください。子Issueの番号を本文に書くだけでは、親子関係は作成されません。
+  - type: markdown
+    attributes:
       value: 'PBIは「何を実装するか」ではなく「誰のどんな困りごとを、どのような体験に変えるか」を管理します。実装方法や細かな作業は、必要に応じて子Taskへ分けてください。'
   - type: textarea
     id: story
