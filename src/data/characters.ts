@@ -5,6 +5,7 @@ export interface CharacterItem {
   initialWeapon: string;
   category: 'standard' | 'unlockable' | 'dlc';
   icon: string; // SVG path
+  image?: string;
 }
 
 export const characters: CharacterItem[] = [
@@ -15,6 +16,7 @@ export const characters: CharacterItem[] = [
     initialWeapon: '鞭',
     category: 'standard',
     icon: 'M13 10V3L4 14h7v7l9-11h-7z',
+    image: '/images/characters/antonio-belpaese-portrait.webp',
   },
   {
     id: '02',
@@ -159,6 +161,7 @@ export const characters: CharacterItem[] = [
     initialWeapon: 'キャンディーボックス',
     category: 'unlockable',
     icon: 'M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6',
+    image: '/images/characters/big-trouser-portrait.webp',
   },
   {
     id: '20',
@@ -191,6 +194,7 @@ export const characters: CharacterItem[] = [
     initialWeapon: '悪食の瞳',
     category: 'dlc',
     icon: 'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z',
+    image: '/images/characters/sammy-portrait.webp',
   },
   {
     id: '24',

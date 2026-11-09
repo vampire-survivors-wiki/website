@@ -24,6 +24,37 @@ test.describe('サイトのルーティングと共通コンポーネント', ()
     await expect(page.locator('main svg path[d]')).not.toHaveCount(0);
   });
 
+  test('用意した3キャラクターの画像がPC・スマートフォン用カードに表示される', async ({ page }) => {
+    const response = await page.goto('/characters/');
+
+    expect(response?.status()).toBe(200);
+
+    const imageAssets = [
+      {
+        src: '/images/characters/antonio-belpaese-portrait.webp',
+        alt: 'アントニオのキャラクター画像',
+      },
+      {
+        src: '/images/characters/big-trouser-portrait.webp',
+        alt: 'トラウザーのキャラクター画像',
+      },
+      {
+        src: '/images/characters/sammy-portrait.webp',
+        alt: 'サミーのキャラクター画像',
+      },
+    ];
+
+    for (const asset of imageAssets) {
+      const images = page.locator(`img[src="${asset.src}"]`);
+      await expect(images).toHaveCount(2);
+      await expect(images.first()).toHaveAttribute('alt', asset.alt);
+
+      const imageResponse = await page.request.get(asset.src);
+      expect(imageResponse.status()).toBe(200);
+      expect(imageResponse.headers()['content-type']).toContain('image/webp');
+    }
+  });
+
   test('PC版のキャラクターフィルターで表示カテゴリーを切り替えられる', async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 900 });
     await page.goto('/characters/');

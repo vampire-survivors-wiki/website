@@ -90,15 +90,25 @@ const dlcCount = dlcCharacters.length;
             <div class="glass-panel rounded-xl p-3 flex flex-col justify-between group hover:shadow-md transition-all">
               <!-- Image Frame -->
               <div class="w-full aspect-square rounded-lg bg-white/70 border border-slate-200/50 flex items-center justify-center mb-3 group-hover:scale-102 transition-transform">
-                <svg
-                  class="w-8 h-8 text-slate-600"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.5"
-                  viewBox="0 0 24 24"
-                >
-                  <path d={char.icon}></path>
-                </svg>
+                {char.image ? (
+                  <img
+                    src={char.image}
+                    alt={`${char.name}のキャラクター画像`}
+                    class="w-full h-full object-contain"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                ) : (
+                  <svg
+                    class="w-8 h-8 text-slate-600"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d={char.icon}></path>
+                  </svg>
+                )}
               </div>
               <div>
                 <h3 class="text-xs font-bold text-slate-950 truncate mb-0.5">{char.name}</h3>
@@ -127,15 +137,25 @@ const dlcCount = dlcCharacters.length;
         {unlockableCharacters.map((char) => (
             <div class="glass-panel rounded-xl p-3 flex flex-col justify-between group hover:shadow-md transition-all">
               <div class="w-full aspect-square rounded-lg bg-white/70 border border-slate-200/50 flex items-center justify-center mb-3 group-hover:scale-102 transition-transform">
-                <svg
-                  class="w-8 h-8 text-slate-600"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.5"
-                  viewBox="0 0 24 24"
-                >
-                  <path d={char.icon}></path>
-                </svg>
+                {char.image ? (
+                  <img
+                    src={char.image}
+                    alt={`${char.name}のキャラクター画像`}
+                    class="w-full h-full object-contain"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                ) : (
+                  <svg
+                    class="w-8 h-8 text-slate-600"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d={char.icon}></path>
+                  </svg>
+                )}
               </div>
               <div>
                 <h3 class="text-xs font-bold text-slate-950 truncate mb-0.5">{char.name}</h3>
@@ -164,15 +184,25 @@ const dlcCount = dlcCharacters.length;
         {dlcCharacters.map((char) => (
             <div class="glass-panel rounded-xl p-3 flex flex-col justify-between group hover:shadow-md transition-all">
               <div class="w-full aspect-square rounded-lg bg-white/70 border border-slate-200/50 flex items-center justify-center mb-3 group-hover:scale-102 transition-transform">
-                <svg
-                  class="w-8 h-8 text-slate-600"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.5"
-                  viewBox="0 0 24 24"
-                >
-                  <path d={char.icon}></path>
-                </svg>
+                {char.image ? (
+                  <img
+                    src={char.image}
+                    alt={`${char.name}のキャラクター画像`}
+                    class="w-full h-full object-contain"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                ) : (
+                  <svg
+                    class="w-8 h-8 text-slate-600"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d={char.icon}></path>
+                  </svg>
+                )}
               </div>
               <div>
                 <h3 class="text-xs font-bold text-slate-950 truncate mb-0.5">{char.name}</h3>
