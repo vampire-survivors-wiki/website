@@ -3,6 +3,10 @@ description: 表示崩れ、動作不良、リンク切れなどの不具合を�
 title: '[BUG] '
 type: Bug
 body:
+  - type: markdown
+    attributes:
+      value: >-
+        関連するPBIがある不具合は、そのPBIの子Issueとして管理してください。起票後に親PBIを開き、「Sub-issues」欄の「Add existing issue」からこのIssueを追加します。親子関係は本文への番号記載ではなく、GitHubのSub-issues機能で設定してください。関連するPBIがまだない場合は、無理に親を指定する必要はありません。
   - type: textarea
     id: summary
     attributes:
