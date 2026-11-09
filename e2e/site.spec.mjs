@@ -20,8 +20,46 @@ test.describe('サイトのルーティングと共通コンポーネント', ()
     await expect(page).toHaveTitle(/キャラクター一覧/);
     await expect(page.locator('main')).toContainText('アントニオ');
     await expect(page.locator('main')).toContainText('初期・通常キャラクター');
-    await expect(page.locator('main')).toContainText('DLC生存者');
+    await expect(page.locator('main')).toContainText('Foscariの潮流');
     await expect(page.locator('main svg path[d]')).not.toHaveCount(0);
+  });
+
+  test('PC版のキャラクターフィルターで表示カテゴリーを切り替えられる', async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await page.goto('/characters/');
+
+    const standardSection = page.locator('[data-character-section="standard"]');
+    const hiddenSection = page.locator('[data-character-section="unlockable"]');
+    const dlcSection = page.locator('[data-character-section="dlc"]');
+    const status = page.locator('#character-filter-status');
+
+    await expect(standardSection).toBeVisible();
+    await expect(hiddenSection).toBeVisible();
+    await expect(dlcSection).toBeVisible();
+
+    await page.getByRole('button', { name: /通常キャラクター/ }).click();
+    await expect(standardSection).toBeVisible();
+    await expect(hiddenSection).toBeHidden();
+    await expect(dlcSection).toBeHidden();
+    await expect(status).toHaveText('通常キャラクターを表示中');
+
+    await page.getByRole('button', { name: /隠しキャラクター/ }).click();
+    await expect(standardSection).toBeHidden();
+    await expect(hiddenSection).toBeVisible();
+    await expect(dlcSection).toBeHidden();
+    await expect(status).toHaveText('隠しキャラクターを表示中');
+
+    await page.getByRole('button', { name: /Foscariの潮流/ }).click();
+    await expect(standardSection).toBeHidden();
+    await expect(hiddenSection).toBeHidden();
+    await expect(dlcSection).toBeVisible();
+    await expect(status).toHaveText('Foscariの潮流を表示中');
+
+    await page.getByRole('button', { name: /全キャラクター/ }).click();
+    await expect(standardSection).toBeVisible();
+    await expect(hiddenSection).toBeVisible();
+    await expect(dlcSection).toBeVisible();
+    await expect(status).toHaveText('全キャラクターを表示中');
   });
 
   test('ヘッダーがPCとスマートフォンで適切に切り替わる', async ({ page }) => {
