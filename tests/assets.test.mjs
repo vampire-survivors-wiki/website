@@ -90,6 +90,6 @@ test('Astroソース内のローカル参照先がページまたはpublicアセ
   assert.deepEqual(
     unresolvedReferences,
     [],
-    `参照先が存在しないローカルリンクがあります:\\n${unresolvedReferences.join('\\n')}`,
+    `参照先が存在しないローカルリンクがあります:\n${unresolvedReferences.join('\n')}`,
   );
 });
