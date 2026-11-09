@@ -11,19 +11,18 @@ test.describe('サイトのルーティングと共通コンポーネント', ()
     await expect(page.locator('footer')).toHaveCount(2);
   });
 
-  test(
-    'キャラクター一覧ページとPC・スマートフォン用コンポーネントが描画される',
-    async ({ page }) => {
-      const response = await page.goto('/characters/');
+  test('キャラクター一覧ページとPC・スマートフォン用コンポーネントが描画される', async ({
+    page,
+  }) => {
+    const response = await page.goto('/characters/');
 
-      expect(response?.status()).toBe(200);
-      await expect(page).toHaveTitle(/キャラクター一覧/);
-      await expect(page.locator('main')).toContainText('アントニオ');
-      await expect(page.locator('main')).toContainText('初期・通常キャラクター');
-      await expect(page.locator('main')).toContainText('DLC生存者');
-      await expect(page.locator('main svg path[d]')).not.toHaveCount(0);
-    },
-  );
+    expect(response?.status()).toBe(200);
+    await expect(page).toHaveTitle(/キャラクター一覧/);
+    await expect(page.locator('main')).toContainText('アントニオ');
+    await expect(page.locator('main')).toContainText('初期・通常キャラクター');
+    await expect(page.locator('main')).toContainText('DLC生存者');
+    await expect(page.locator('main svg path[d]')).not.toHaveCount(0);
+  });
 
   test('ヘッダーがPCとスマートフォンで適切に切り替わる', async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 900 });
@@ -41,9 +40,9 @@ test.describe('サイトのルーティングと共通コンポーネント', ()
   test('キャラクターアイコンのSVGパスがブラウザで解析できる', async ({ page }) => {
     await page.goto('/characters/');
 
-    const pathLengths = await page.locator('main svg path[d]').evaluateAll((paths) =>
-      paths.map((path) => path.getTotalLength()),
-    );
+    const pathLengths = await page
+      .locator('main svg path[d]')
+      .evaluateAll((paths) => paths.map((path) => path.getTotalLength()));
 
     expect(pathLengths.length).toBeGreaterThan(0);
     expect(pathLengths.every((length) => Number.isFinite(length) && length > 0)).toBe(true);
@@ -109,7 +108,7 @@ test.describe('スマートフォン操作', () => {
       .getByRole('link', { name: /キャラクター一覧/ })
       .click();
 
-    await expect(page).toHaveURL(/\/characters\/$/);
+    await expect(page).toHaveURL(/\\/characters\\/$/);
     await expect(page).toHaveTitle(/キャラクター一覧/);
   });
 });
