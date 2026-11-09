@@ -31,35 +31,48 @@ test.describe('サイトのルーティングと共通コンポーネント', ()
     const standardSection = page.locator('[data-character-section="standard"]');
     const hiddenSection = page.locator('[data-character-section="unlockable"]');
     const dlcSection = page.locator('[data-character-section="dlc"]');
-    const status = page.locator('#character-filter-status');
 
     await expect(standardSection).toBeVisible();
     await expect(hiddenSection).toBeVisible();
     await expect(dlcSection).toBeVisible();
+    await expect(page.locator('#character-filter-status')).toHaveCount(0);
+
+    const standardCount = await standardSection.locator('.glass-panel').count();
+    const hiddenCount = await hiddenSection.locator('.glass-panel').count();
+    const dlcCount = await dlcSection.locator('.glass-panel').count();
+    const getButtonCount = async (name) => {
+      const text = await page.getByRole('button', { name }).textContent();
+      const match = text?.match(/\\((\\d+)\\)/);
+      expect(match).not.toBeNull();
+      return Number(match?.[1]);
+    };
+
+    expect(await getButtonCount(/通常キャラクター/)).toBe(standardCount);
+    expect(await getButtonCount(/隠しキャラクター/)).toBe(hiddenCount);
+    expect(await getButtonCount(/Foscariの潮流/)).toBe(dlcCount);
+    expect(await getButtonCount(/全キャラクター/)).toBe(
+      standardCount + hiddenCount + dlcCount,
+    );
 
     await page.getByRole('button', { name: /通常キャラクター/ }).click();
     await expect(standardSection).toBeVisible();
     await expect(hiddenSection).toBeHidden();
     await expect(dlcSection).toBeHidden();
-    await expect(status).toHaveText('通常キャラクターを表示中');
 
     await page.getByRole('button', { name: /隠しキャラクター/ }).click();
     await expect(standardSection).toBeHidden();
     await expect(hiddenSection).toBeVisible();
     await expect(dlcSection).toBeHidden();
-    await expect(status).toHaveText('隠しキャラクターを表示中');
 
     await page.getByRole('button', { name: /Foscariの潮流/ }).click();
     await expect(standardSection).toBeHidden();
     await expect(hiddenSection).toBeHidden();
     await expect(dlcSection).toBeVisible();
-    await expect(status).toHaveText('Foscariの潮流を表示中');
 
     await page.getByRole('button', { name: /全キャラクター/ }).click();
     await expect(standardSection).toBeVisible();
     await expect(hiddenSection).toBeVisible();
     await expect(dlcSection).toBeVisible();
-    await expect(status).toHaveText('全キャラクターを表示中');
   });
 
   test('ヘッダーがPCとスマートフォンで適切に切り替わる', async ({ page }) => {
