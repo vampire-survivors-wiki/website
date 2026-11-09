@@ -10,7 +10,7 @@ function assertUnique(values, label) {
   assert.equal(new Set(values).size, values.length, `キャラクターの${label}に重複があります。`);
 }
 
-test('キャラクターデータが配列として1件以上登録されている', () => {
+test('キャラクターデータが空ではない', () => {
   assert.ok(Array.isArray(characters));
   assert.ok(characters.length > 0);
 });
@@ -22,7 +22,7 @@ test('キャラクターIDが重複していない', () => {
   );
 });
 
-test('キャラクターの日本語名と英語名が重複していない', () => {
+test('キャラクター名が重複していない', () => {
   assertUnique(
     characters.map((character) => character.name),
     '日本語名',
@@ -38,20 +38,9 @@ test('各キャラクターに必須項目が設定されている', () => {
     for (const field of requiredFields) {
       const value = character[field];
 
-      assert.equal(
-        typeof value,
-        'string',
-        `${character.name || character.id}: ${field} は文字列である必要があります。`,
-      );
-      assert.ok(
-        value.trim().length > 0,
-        `${character.name || character.id}: ${field} が空です。`,
-      );
-      assert.equal(
-        value,
-        value.trim(),
-        `${character.name || character.id}: ${field} の前後に不要な空白があります。`,
-      );
+      assert.equal(typeof value, 'string', `${character.id}: ${field} must be a string`);
+      assert.ok(value.trim().length > 0, `${character.id}: ${field} must not be empty`);
+      assert.equal(value, value.trim(), `${character.id}: ${field} has surrounding whitespace`);
     }
   }
 });
@@ -65,12 +54,8 @@ test('キャラクターカテゴリが定義済みの値になっている', ()
   }
 });
 
-test('キャラクターアイコンがSVGパスデータとして定義されている', () => {
+test('キャラクターアイコンがSVGパスデータになっている', () => {
   for (const character of characters) {
-    assert.match(
-      character.icon,
-      /^M/i,
-      `${character.name}: アイコンはSVGパスの開始コマンド M で始まる必要があります。`,
-    );
+    assert.match(character.icon, /^M/i, `${character.id}: invalid SVG path`);
   }
 });
