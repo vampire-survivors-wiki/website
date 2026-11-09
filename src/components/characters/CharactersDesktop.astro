@@ -6,9 +6,13 @@ interface Props {
 }
 
 const { characters } = Astro.props;
-const standardCount = characters.filter((c) => c.category === 'standard').length;
-const unlockableCount = characters.filter((c) => c.category === 'unlockable').length;
-const dlcCount = characters.filter((c) => c.category === 'dlc').length;
+const standardCharacters = characters.filter((c) => c.category === 'standard').slice(0, 1);
+const unlockableCharacters = characters.filter((c) => c.category === 'unlockable').slice(0, 1);
+const dlcCharacters = characters.filter((c) => c.category === 'dlc').slice(0, 1);
+const visibleCharacters = [...standardCharacters, ...unlockableCharacters, ...dlcCharacters];
+const standardCount = standardCharacters.length;
+const unlockableCount = unlockableCharacters.length;
+const dlcCount = dlcCharacters.length;
 ---
 
 <div class="w-full">
@@ -39,7 +43,7 @@ const dlcCount = characters.filter((c) => c.category === 'dlc').length;
           aria-pressed="true"
           class="px-4 py-1.5 rounded-lg text-xs font-semibold bg-slate-950 text-white shadow-xs transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-950"
         >
-          全キャラクター ({characters.length})
+          全キャラクター ({visibleCharacters.length})
         </button>
         <button
           type="button"
@@ -82,9 +86,7 @@ const dlcCount = characters.filter((c) => c.category === 'dlc').length;
       </div>
 
       <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-        {characters
-          .filter((c) => c.category === 'standard')
-          .map((char) => (
+        {standardCharacters.map((char) => (
             <div class="glass-panel rounded-xl p-3 flex flex-col justify-between group hover:shadow-md transition-all">
               <!-- Image Frame -->
               <div class="w-full aspect-square rounded-lg bg-white/70 border border-slate-200/50 flex items-center justify-center mb-3 group-hover:scale-102 transition-transform">
@@ -122,9 +124,7 @@ const dlcCount = characters.filter((c) => c.category === 'dlc').length;
       </div>
 
       <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-        {characters
-          .filter((c) => c.category === 'unlockable')
-          .map((char) => (
+        {unlockableCharacters.map((char) => (
             <div class="glass-panel rounded-xl p-3 flex flex-col justify-between group hover:shadow-md transition-all">
               <div class="w-full aspect-square rounded-lg bg-white/70 border border-slate-200/50 flex items-center justify-center mb-3 group-hover:scale-102 transition-transform">
                 <svg
@@ -161,9 +161,7 @@ const dlcCount = characters.filter((c) => c.category === 'dlc').length;
       </div>
 
       <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-        {characters
-          .filter((c) => c.category === 'dlc')
-          .map((char) => (
+        {dlcCharacters.map((char) => (
             <div class="glass-panel rounded-xl p-3 flex flex-col justify-between group hover:shadow-md transition-all">
               <div class="w-full aspect-square rounded-lg bg-white/70 border border-slate-200/50 flex items-center justify-center mb-3 group-hover:scale-102 transition-transform">
                 <svg
