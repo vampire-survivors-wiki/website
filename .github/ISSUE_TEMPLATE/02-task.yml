@@ -1,0 +1,43 @@
+name: 作業・タスク
+description: 設計、実装、保守などの具体的な作業を管理する
+title: "[TASK] "
+body:
+  - type: textarea
+    id: purpose
+    attributes:
+      label: 作業の目的
+      description: なぜこの作業が必要なのか、どの課題や機能に関係するのかを書いてください。
+      placeholder: "..."
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: 作業内容・対象範囲
+      description: 対象ファイル、ページ、機能、実施する作業を分かる範囲で記載してください。
+      placeholder: "- ..."
+    validations:
+      required: true
+  - type: textarea
+    id: done
+    attributes:
+      label: 完了条件
+      description: 作業が完了したと判断できる条件を書いてください。
+      placeholder: "- ...が実装されている。\n- ...で確認できる。"
+    validations:
+      required: true
+  - type: textarea
+    id: verification
+    attributes:
+      label: 検証方法
+      description: 必要なビルド、CI、手動確認、スマートフォン表示確認などを書いてください。
+      placeholder: "- npm run build\n- PC / スマートフォンで表示確認"
+    validations:
+      required: false
+  - type: textarea
+    id: related
+    attributes:
+      label: 関連Issue・参考資料
+      description: 関連する機能提案、バグ、設計資料などがあれば記載してください。
+    validations:
+      required: false
