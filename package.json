@@ -14,7 +14,7 @@
     "build": "astro check && astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "test": "node --test",
+    "test": "node --experimental-strip-types --test",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "lint": "eslint \"src/**/*.{astro,ts}\"",
