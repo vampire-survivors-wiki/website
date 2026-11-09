@@ -1,6 +1,7 @@
 name: 不具合報告
 description: 表示崩れ、動作不良、リンク切れなどの不具合を報告する
 title: '[BUG] '
+type: Bug
 body:
   - type: textarea
     id: summary
