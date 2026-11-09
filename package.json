@@ -3,14 +3,18 @@
   "type": "module",
   "version": "1.0.0",
   "engines": {
-    "node": ">=22.12.0"
+    "node": ">=22.22.3"
   },
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro check && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint": "eslint \"src/**/*.{astro,ts}\"",
+    "lint:fix": "eslint \"src/**/*.{astro,ts}\" --fix"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
@@ -18,5 +22,13 @@
     "astro": "7.4.5",
     "tailwindcss": "^4.0.9",
     "typescript": "^5.8.2"
+  },
+  "devDependencies": {
+    "eslint": "10.14.0",
+    "eslint-config-prettier": "10.1.8",
+    "eslint-plugin-astro": "3.2.1",
+    "prettier": "3.9.10",
+    "prettier-plugin-astro": "1.1.2",
+    "typescript-eslint": "8.72.1"
   }
 }
