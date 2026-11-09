@@ -43,7 +43,7 @@ function getPageRoutes() {
   );
 }
 
-test('キャラクターのアイコンデータがSVGパスとして成立する', () => {
+test('キャラクターのアイコンデータにSVGパスとして許可されない文字が含まれない', () => {
   const validPathCharacters = /^[MmZzLlHhVvCcSsQqTtAa0-9eE.,+\-\s]+$/;
 
   for (const character of characters) {
