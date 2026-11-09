@@ -108,7 +108,7 @@ test.describe('スマートフォン操作', () => {
       .getByRole('link', { name: /キャラクター一覧/ })
       .click();
 
-    await expect(page).toHaveURL(/\\/characters\\/$/);
+    await expect(page).toHaveURL(/\/characters\/$/);
     await expect(page).toHaveTitle(/キャラクター一覧/);
   });
 });
