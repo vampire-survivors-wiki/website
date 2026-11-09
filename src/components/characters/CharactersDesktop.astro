@@ -35,6 +35,7 @@ const dlcCount = characters.filter((c) => c.category === 'dlc').length;
         <button
           type="button"
           data-character-filter="all"
+          data-filter-label="全キャラクター"
           aria-pressed="true"
           class="px-4 py-1.5 rounded-lg text-xs font-semibold bg-slate-950 text-white shadow-xs transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-950"
         >
@@ -43,6 +44,7 @@ const dlcCount = characters.filter((c) => c.category === 'dlc').length;
         <button
           type="button"
           data-character-filter="standard"
+          data-filter-label="通常キャラクター"
           aria-pressed="false"
           class="px-4 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-950 hover:bg-white/60 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-950"
         >
@@ -51,6 +53,7 @@ const dlcCount = characters.filter((c) => c.category === 'dlc').length;
         <button
           type="button"
           data-character-filter="unlockable"
+          data-filter-label="隠しキャラクター"
           aria-pressed="false"
           class="px-4 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-950 hover:bg-white/60 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-950"
         >
@@ -59,6 +62,7 @@ const dlcCount = characters.filter((c) => c.category === 'dlc').length;
         <button
           type="button"
           data-character-filter="dlc"
+          data-filter-label="Foscariの潮流"
           aria-pressed="false"
           class="px-4 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-950 hover:bg-white/60 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-950"
         >
@@ -239,7 +243,7 @@ const dlcCount = characters.filter((c) => c.category === 'dlc').length;
         filterStatus.textContent =
           selectedFilter === 'all'
             ? '全キャラクターを表示中'
-            : `${button.textContent?.trim().replace(/\\s*\\(\\d+\\)\\s*$/, '') ?? ''}を表示中`;
+            : `${button.dataset.filterLabel ?? ''}を表示中`;
       }
     });
   });
