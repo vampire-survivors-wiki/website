@@ -18,21 +18,12 @@ test('キャラクターデータが1件以上登録されている', () => {
 });
 
 test('キャラクターIDが重複していない', () => {
-  assertUnique(
-    characters.map((character) => character.id),
-    'ID',
-  );
+  assertUnique(characters.map((character) => character.id), 'ID');
 });
 
 test('キャラクターの日本語名と英語名が重複していない', () => {
-  assertUnique(
-    characters.map((character) => character.name),
-    '日本語名',
-  );
-  assertUnique(
-    characters.map((character) => character.nameEn),
-    '英語名',
-  );
+  assertUnique(characters.map((character) => character.name), '日本語名');
+  assertUnique(characters.map((character) => character.nameEn), '英語名');
 });
 
 test('各キャラクターに必須項目が設定されている', () => {
