@@ -39,10 +39,10 @@ const dlcCount = characters.filter((c) => c.category === 'dlc').length;
           通常キャラクター ({standardCount})
         </button>
         <button class="px-4 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-950 hover:bg-white/60 transition-colors">
-          隠し・アンロック ({unlockableCount})
+          隠しキャラクター ({unlockableCount})
         </button>
         <button class="px-4 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-950 hover:bg-white/60 transition-colors">
-          DLC生存者 ({dlcCount})
+          Foscariの潮流 ({dlcCount})
         </button>
       </div>
       <div class="text-xs font-mono text-slate-500 flex items-center gap-1.5">
@@ -103,8 +103,8 @@ const dlcCount = characters.filter((c) => c.category === 'dlc').length;
         <div class="flex items-baseline gap-2">
           <span class="text-xs font-mono text-red-600 font-bold">SECTION 02</span>
           <span class="text-slate-300 font-light">/</span>
-          <h2 class="text-base font-bold text-slate-950">解放・アンロック生存者</h2>
-          <span class="text-xs font-mono text-slate-500 uppercase">UNLOCKABLE & SECRET</span>
+          <h2 class="text-base font-bold text-slate-950">隠しキャラクター</h2>
+          <span class="text-xs font-mono text-slate-500 uppercase">HIDDEN SURVIVORS</span>
         </div>
         <span class="text-xs font-mono text-slate-500">CAT-COUNT: {unlockableCount} REG</span>
       </div>
@@ -148,8 +148,8 @@ const dlcCount = characters.filter((c) => c.category === 'dlc').length;
         <div class="flex items-baseline gap-2">
           <span class="text-xs font-mono text-red-600 font-bold">SECTION 03</span>
           <span class="text-slate-300 font-light">/</span>
-          <h2 class="text-base font-bold text-slate-950">DLC生存者アーカイブ</h2>
-          <span class="text-xs font-mono text-slate-500 uppercase">EXPANSION REGISTRY</span>
+          <h2 class="text-base font-bold text-slate-950">Foscariの潮流</h2>
+          <span class="text-xs font-mono text-slate-500 uppercase">TIDES OF THE FOSCARI</span>
         </div>
         <span class="text-xs font-mono text-slate-500">CAT-COUNT: {dlcCount} REG</span>
       </div>
