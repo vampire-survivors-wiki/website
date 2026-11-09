@@ -128,9 +128,7 @@ test.describe('スマートフォン操作', () => {
     await page.goto('/');
   });
 
-  test('キャラクター一覧ではPC用フィルターを表示せず、分類別の一覧を維持する', async ({
-    page,
-  }) => {
+  test('キャラクター一覧ではPC用フィルターを表示せず、分類別の一覧を維持する', async ({ page }) => {
     await page.goto('/characters/');
 
     await expect(page.locator('[data-character-filter]:visible')).toHaveCount(0);
