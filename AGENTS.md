@@ -27,7 +27,7 @@
 - TypeScriptはstrict設定を維持する。安易なany、型アサーション、エラーの握り潰しでチェックを回避しない。
 - Tailwind CSS v4を使用し、既存の @tailwindcss/vite 構成に合わせる。
 - パッケージ管理はnpmに統一する。依存関係を変更した場合はpackage-lock.jsonも更新し、pnpmやyarnのロックファイルを追加しない。
-- Node.jsは22.12.0以上を使用する。ローカル開発環境はflake.nixと.envrcで管理する。
+- Node.jsは22.23.4以上を使用する。ローカル開発環境はflake.nixと.envrcで管理する。
 - 依存パッケージは必要性を説明できる場合に限って追加する。
 - 現在の静的サイト構成を維持し、SSR・サーバー機能・Cloudflare固有機能は要件ができるまで導入しない。
 
