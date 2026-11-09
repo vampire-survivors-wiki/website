@@ -4,7 +4,11 @@ import HomeDesktop from '../components/home/HomeDesktop.astro';
 import HomeMobile from '../components/home/HomeMobile.astro';
 ---
 
-<Layout title="Vampire Survivors 攻略 | VS GUIDE" currentPath="/">
+<Layout
+  title="Vampire Survivors 攻略 | VS GUIDE"
+  description="Vampire Survivorsの攻略情報を紹介するサイト。ステージ攻略、キャラクター・武器の解説、金策方法など、初心者向けからやり込み向けまで幅広く掲載します。"
+  currentPath="/"
+>
   <!-- PC画面 (md以上で自動表示) -->
   <div class="hidden md:block">
     <HomeDesktop />

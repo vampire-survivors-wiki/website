@@ -6,6 +6,10 @@ test.describe('サイトのルーティングと共通コンポーネント', ()
 
     expect(response?.status()).toBe(200);
     await expect(page).toHaveTitle(/Vampire Survivors 攻略/);
+    await expect(page.locator('meta[name="description"]')).toHaveAttribute(
+      'content',
+      'Vampire Survivorsの攻略情報を紹介するサイト。ステージ攻略、キャラクター・武器の解説、金策方法など、初心者向けからやり込み向けまで幅広く掲載します。',
+    );
     await expect(page.locator('header')).toBeAttached();
     await expect(page.locator('main')).toBeAttached();
     await expect(page.locator('footer')).toHaveCount(2);
@@ -18,6 +22,10 @@ test.describe('サイトのルーティングと共通コンポーネント', ()
 
     expect(response?.status()).toBe(200);
     await expect(page).toHaveTitle(/キャラクター一覧/);
+    await expect(page.locator('meta[name="description"]')).toHaveAttribute(
+      'content',
+      'Vampire Survivorsのキャラクター一覧。通常・隠し・DLCキャラクターの初期武器、固有能力・パッシブ効果、キャラクターごとの解放条件を紹介します。',
+    );
     await expect(page.locator('main')).toContainText('アントニオ');
     await expect(page.locator('main')).toContainText('初期・通常キャラクター');
     await expect(page.locator('main')).toContainText('Foscariの潮流');

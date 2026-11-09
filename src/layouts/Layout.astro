@@ -6,10 +6,11 @@ import '../styles/global.css';
 
 interface Props {
   title: string;
+  description: string;
   currentPath: '/' | '/characters/';
 }
 
-const { title, currentPath } = Astro.props;
+const { title, description, currentPath } = Astro.props;
 ---
 
 <!doctype html>
@@ -19,6 +20,7 @@ const { title, currentPath } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
+    <meta name="description" content={description} />
   </head>
   <body class="bg-responsive-portal text-slate-900 min-h-screen flex flex-col relative overflow-x-hidden">
     <Header currentPath={currentPath} />
