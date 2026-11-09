@@ -59,3 +59,9 @@ test('キャラクターアイコンがSVGパスデータになっている', ()
     assert.match(character.icon, /^M/i, `${character.id}: invalid SVG path`);
   }
 });
+
+test('キャラクターIDが所定の形式になっている', () => {
+  for (const character of characters) {
+    assert.match(character.id, /^\\d{2}$/, `${character.name}: IDは2桁の数字である必要があります。`);
+  }
+});
