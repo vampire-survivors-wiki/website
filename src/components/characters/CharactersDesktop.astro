@@ -69,12 +69,6 @@ const dlcCount = characters.filter((c) => c.category === 'dlc').length;
           Foscariの潮流 ({dlcCount})
         </button>
       </div>
-      <div class="text-xs font-mono text-slate-500 flex items-center gap-1.5">
-        <span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
-        <span id="character-filter-status" aria-live="polite" aria-atomic="true">
-          全キャラクターを表示中
-        </span>
-      </div>
     </div>
 
     <!-- Section 01: Standard Survivors -->
@@ -86,7 +80,6 @@ const dlcCount = characters.filter((c) => c.category === 'dlc').length;
           <h2 class="text-base font-bold text-slate-950">初期・通常キャラクター</h2>
           <span class="text-xs font-mono text-slate-500 uppercase">STANDARD SURVIVORS</span>
         </div>
-        <span class="text-xs font-mono text-slate-500">CAT-COUNT: {standardCount} REG</span>
       </div>
 
       <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
@@ -132,7 +125,6 @@ const dlcCount = characters.filter((c) => c.category === 'dlc').length;
           <h2 class="text-base font-bold text-slate-950">隠しキャラクター</h2>
           <span class="text-xs font-mono text-slate-500 uppercase">HIDDEN SURVIVORS</span>
         </div>
-        <span class="text-xs font-mono text-slate-500">CAT-COUNT: {unlockableCount} REG</span>
       </div>
 
       <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
@@ -177,7 +169,6 @@ const dlcCount = characters.filter((c) => c.category === 'dlc').length;
           <h2 class="text-base font-bold text-slate-950">Foscariの潮流</h2>
           <span class="text-xs font-mono text-slate-500 uppercase">TIDES OF THE FOSCARI</span>
         </div>
-        <span class="text-xs font-mono text-slate-500">CAT-COUNT: {dlcCount} REG</span>
       </div>
 
       <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
@@ -218,7 +209,6 @@ const dlcCount = characters.filter((c) => c.category === 'dlc').length;
 <script>
   const filterButtons = document.querySelectorAll<HTMLButtonElement>('[data-character-filter]');
   const characterSections = document.querySelectorAll<HTMLElement>('[data-character-section]');
-  const filterStatus = document.getElementById('character-filter-status');
 
   filterButtons.forEach((button) => {
     button.addEventListener('click', () => {
@@ -244,12 +234,6 @@ const dlcCount = characters.filter((c) => c.category === 'dlc').length;
         section.hidden = !isVisible;
       });
 
-      if (filterStatus) {
-        filterStatus.textContent =
-          selectedFilter === 'all'
-            ? '全キャラクターを表示中'
-            : `${button.dataset.filterLabel ?? ''}を表示中`;
-      }
     });
   });
 </script>
