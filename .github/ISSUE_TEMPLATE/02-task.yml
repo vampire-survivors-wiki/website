@@ -9,7 +9,7 @@ body:
         **原則としてPBIの子Issueとして管理します。** 起票後に親PBIを開き、「Sub-issues」欄の「Add existing issue」からこのIssueを追加してください。フォーム本文にPBI番号を書くことと、GitHub上の親子リンクを設定することは別です。対応するPBIがまだ決まっていない場合は、先に作業Issueを起票して後から紐づけても構いません。
   - type: markdown
     attributes:
-      value: '利用者に届ける価値や体験そのものはPBIで管理し、Taskでは担当する具体的な作業を管理します。関連するPBIがある場合は親子関係で紐づけ、下の欄にも番号を記載してください。'
+      value: 'PBIでは利用者に届ける価値や体験を管理し、Taskではそれを実現する具体的な作業を管理します。'
   - type: textarea
     id: purpose
     attributes:
@@ -45,8 +45,8 @@ body:
   - type: textarea
     id: related
     attributes:
-      label: 親PBI・関連Issue・参考資料
-      description: 親PBIの番号、関連するバグ・調査Issue、参考資料などを記載してください。可能ならIssueの親子関係も設定してください。
-      placeholder: "親PBI: #...\n関連Issue: #..."
+      label: 関連Issue・参考資料
+      description: 親PBIとの実際の紐づけは本文への番号記載ではなく、GitHubのSub-issues機能で設定してください。ここには関連Issueや参考資料を記載します。
+      placeholder: "関連Issue: #...\n参考URL: ..."
     validations:
       required: false
