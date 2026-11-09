@@ -14,13 +14,13 @@ test.describe('サイトのルーティングと共通コンポーネント', ()
   test(
     'キャラクター一覧ページとPC・スマートフォン用コンポーネントが描画される',
     async ({ page }) => {
-    const response = await page.goto('/characters/');
+      const response = await page.goto('/characters/');
 
-    expect(response?.status()).toBe(200);
-    await expect(page).toHaveTitle(/キャラクター一覧/);
-    await expect(page.locator('main')).toContainText('アントニオ');
-    await expect(page.locator('main')).toContainText('初期・通常キャラクター');
-    await expect(page.locator('main')).toContainText('DLC生存者');
+      expect(response?.status()).toBe(200);
+      await expect(page).toHaveTitle(/キャラクター一覧/);
+      await expect(page.locator('main')).toContainText('アントニオ');
+      await expect(page.locator('main')).toContainText('初期・通常キャラクター');
+      await expect(page.locator('main')).toContainText('DLC生存者');
       await expect(page.locator('main svg path[d]')).not.toHaveCount(0);
     },
   );
