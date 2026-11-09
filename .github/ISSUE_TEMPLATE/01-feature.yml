@@ -1,0 +1,54 @@
+name: 機能提案・改善
+description: サイトに新しい機能を追加したり、既存の使い勝手を改善したりする
+title: "[FEATURE] "
+body:
+  - type: markdown
+    attributes:
+      value: "実装方法よりも、解決したい問題と利用者にとっての価値を中心に記載してください。"
+  - type: textarea
+    id: background
+    attributes:
+      label: 背景・解決したい問題
+      description: 現状の何が問題なのか、どのような場面で困るのかを書いてください。
+      placeholder: "現在は...のため、利用者が...しにくい。"
+    validations:
+      required: true
+  - type: textarea
+    id: outcome
+    attributes:
+      label: 期待する状態・利用者にとっての価値
+      description: 変更後に利用者が何をできるようになるか、どのような体験になるかを書いてください。
+      placeholder: "利用者が...できるようになる。"
+    validations:
+      required: true
+  - type: textarea
+    id: requirements
+    attributes:
+      label: 要件・受け入れ条件
+      description: 完了したと判断できる条件を、確認可能な形で記載してください。
+      placeholder: "- ...の場合に...と表示される。\n- PCとスマートフォンの両方で...できる。"
+    validations:
+      required: false
+  - type: textarea
+    id: scope
+    attributes:
+      label: 対象範囲・対象外
+      description: 対象となるページや機能、今回扱わないこと、制約などを記載してください。
+      placeholder: "対象: ...\n対象外: ..."
+    validations:
+      required: false
+  - type: textarea
+    id: references
+    attributes:
+      label: 参考資料・関連Issue
+      description: 参考サイト、デザイン、画像、関連Issueなどがあれば記載してください。
+      placeholder: "- URL: ..."
+    validations:
+      required: false
+  - type: textarea
+    id: notes
+    attributes:
+      label: 補足
+      description: その他の検討事項や未確定事項があれば記載してください。
+    validations:
+      required: false
