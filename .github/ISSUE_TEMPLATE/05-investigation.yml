@@ -3,6 +3,10 @@ description: 原因、実現可能性、ゲーム仕様などを調査して判�
 title: '[RESEARCH] '
 type: Task
 body:
+  - type: markdown
+    attributes:
+      value: >-
+        既存PBIの判断に必要な調査・検証は、そのPBIの子Issueとして管理してください。起票後に親PBIを開き、「Sub-issues」欄の「Add existing issue」からこのIssueを追加します。調査の結果、PBI自体がまだないと分かった場合は、後から適切なPBIを作成して紐づけてください。
   - type: textarea
     id: question
     attributes:
