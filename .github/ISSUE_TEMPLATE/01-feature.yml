@@ -1,10 +1,10 @@
-name: 機能提案・改善
-description: サイトに新しい機能を追加したり、既存の使い勝手を改善したりする
+name: 機能提案・改善（PBI候補）
+description: 利用者に届けたい体験がまだ整理できていない機能提案や改善案を相談する
 title: '[FEATURE] '
 body:
   - type: markdown
     attributes:
-      value: '実装方法よりも、解決したい問題と利用者にとっての価値を中心に記載してください。'
+      value: '利用者・目的・望む体験がある程度整理できている場合は「PBI」を使用してください。このフォームは、まだPBIとして具体化できていないアイデアや改善の相談に使用します。'
   - type: textarea
     id: background
     attributes:
@@ -17,15 +17,15 @@ body:
     id: outcome
     attributes:
       label: 期待する状態・利用者にとっての価値
-      description: 変更後に利用者が何をできるようになるか、どのような体験になるかを書いてください。
+      description: 変更後に利用者が何をできるようになるか、どのような体験になるとよいかを書いてください。
       placeholder: '利用者が...できるようになる。'
     validations:
       required: true
   - type: textarea
     id: requirements
     attributes:
-      label: 要件・受け入れ条件
-      description: 完了したと判断できる条件を、確認可能な形で記載してください。
+      label: 要件・受け入れ条件（任意）
+      description: 現時点で決まっている条件があれば記載してください。未確定でも起票できます。
       placeholder: "- ...の場合に...と表示される。\n- PCとスマートフォンの両方で...できる。"
     validations:
       required: false
@@ -48,7 +48,7 @@ body:
   - type: textarea
     id: notes
     attributes:
-      label: 補足
+      label: 補足・未確定事項
       description: その他の検討事項や未確定事項があれば記載してください。
     validations:
       required: false
