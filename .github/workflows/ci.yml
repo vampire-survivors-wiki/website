@@ -39,9 +39,6 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Show formatted test file temporarily
-        run: npx prettier tests/characters.test.mjs
-
       - name: Check formatting
         run: npm run format:check
 
