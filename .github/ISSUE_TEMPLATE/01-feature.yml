@@ -5,6 +5,10 @@ type: Feature
 body:
   - type: markdown
     attributes:
+      value: >-
+        既存PBIの範囲に属する提案であれば、起票後に親PBIの「Sub-issues」欄から「Add existing issue」でこのIssueを子Issueとして追加してください。新しい利用者価値の候補で、対応するPBIがまだない場合は、無理に親を指定せず、内容を整理してPBI化する段階で親子関係を設定してください。
+  - type: markdown
+    attributes:
       value: '利用者・目的・望む体験がある程度整理できている場合は「PBI」を使用してください。このフォームは、まだPBIとして具体化できていないアイデアや改善の相談に使用します。'
   - type: textarea
     id: background
