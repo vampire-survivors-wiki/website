@@ -1,6 +1,7 @@
 name: 攻略・記事コンテンツの修正
 description: 攻略情報、ゲーム仕様、キャラクター情報などの追加・修正を提案する
 title: '[CONTENT] '
+type: Task
 body:
   - type: input
     id: target
