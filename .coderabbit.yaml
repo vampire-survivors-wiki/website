@@ -1,0 +1,30 @@
+language: "ja"
+
+reviews:
+  profile: "assertive"
+  request_changes_workflow: false
+  high_level_summary: true
+  poem: false
+
+  auto_review:
+    enabled: true
+    drafts: false
+
+  path_instructions:
+    - path: "**/*"
+      instructions: |
+        レビュー前に、ルートのAGENTS.mdと.github/AI_REVIEW_GUIDELINES.mdを確認してください。
+        AIレビュー規約に従い、PR差分によって発生する具体的な問題を優先してください。
+        指摘は日本語で、根拠・発生条件・影響を説明してください。
+        単なる好みや根拠の薄い改善案を指摘にしないでください。
+
+    - path: "src/**/*.astro"
+      instructions: |
+        Astroコンポーネントをレビューするときは、既存のレイアウト・コンポーネント責務・静的生成との整合性を確認してください。
+        PCとスマートフォンの両方で表示が成立するか、既存デザインを不必要に変更していないかを重視してください。
+        HTMLセマンティクス、アクセシビリティ、内部リンク、不要なクライアントJavaScriptにも注意してください。
+
+    - path: "src/data/**/*.ts"
+      instructions: |
+        構造化データの欠落、重複、誤った関連付け、型の不整合を確認してください。
+        ゲーム仕様や数値を根拠なく追加・変更していないか確認し、未検証情報を確定情報として扱わないでください。
