@@ -18,7 +18,8 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "lint": "eslint \"src/**/*.{astro,ts}\"",
-    "lint:fix": "eslint \"src/**/*.{astro,ts}\" --fix"
+    "lint:fix": "eslint \"src/**/*.{astro,ts}\" --fix",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
