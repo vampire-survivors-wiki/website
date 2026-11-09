@@ -1,6 +1,7 @@
 name: 技術調査・検証
 description: 原因、実現可能性、ゲーム仕様などを調査して判断材料を残す
 title: '[RESEARCH] '
+type: Task
 body:
   - type: textarea
     id: question
