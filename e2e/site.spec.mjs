@@ -54,7 +54,7 @@ test.describe('スマートフォン操作', () => {
     await page.getByRole('button', { name: 'メニューを開く' }).click();
     await page.locator('#drawer-panel').getByRole('link', { name: /キャラクター一覧/ }).click();
 
-    await expect(page).toHaveURL(/\\/characters\\/$/);
+    await expect(page).toHaveURL(/\/characters\/$/);
     await expect(page).toHaveTitle(/キャラクター一覧/);
   });
 });
