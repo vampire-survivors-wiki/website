@@ -5,6 +5,10 @@ type: Task
 body:
   - type: markdown
     attributes:
+      value: >-
+        **原則としてPBIの子Issueとして管理します。** 起票後に親PBIを開き、「Sub-issues」欄の「Add existing issue」からこのIssueを追加してください。フォーム本文にPBI番号を書くことと、GitHub上の親子リンクを設定することは別です。対応するPBIがまだ決まっていない場合は、先に作業Issueを起票して後から紐づけても構いません。
+  - type: markdown
+    attributes:
       value: '利用者に届ける価値や体験そのものはPBIで管理し、Taskでは担当する具体的な作業を管理します。関連するPBIがある場合は親子関係で紐づけ、下の欄にも番号を記載してください。'
   - type: textarea
     id: purpose
