@@ -91,9 +91,6 @@ jobs:
       - name: Build site for browser tests
         run: npm run build
 
-      - name: Install Playwright
-        run: npm install --no-save --package-lock=false @playwright/test@1.65.0
-
       - name: Install Chromium
         run: npx playwright install --with-deps chromium
 
