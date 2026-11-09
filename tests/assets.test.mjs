@@ -44,7 +44,7 @@ function getPageRoutes() {
 }
 
 test('キャラクターのアイコンデータがSVGパスとして成立する', () => {
-  const validPathCharacters = /^[MmZzLlHhVvCcSsQqTtAa0-9eE.,+\\-\\s]+$/;
+  const validPathCharacters = /^[MmZzLlHhVvCcSsQqTtAa0-9eE.,+\-\s]+$/;
 
   for (const character of characters) {
     assert.match(
@@ -62,14 +62,14 @@ test('public配下のfaviconが存在し、SVGとして定義されている', (
   assert.ok(existsSync(faviconPath), 'public/favicon.svg が存在しません。');
 
   const favicon = readFileSync(faviconPath, 'utf8');
-  assert.match(favicon, /<svg\\b/i);
-  assert.match(favicon, /<\\/svg>/i);
+  assert.match(favicon, /<svg\b/i);
+  assert.match(favicon, /<\/svg>/i);
 });
 
 test('Astroソース内のローカル参照先がページまたはpublicアセットとして存在する', () => {
   const pageRoutes = getPageRoutes();
   const sourceFiles = collectFiles(sourceRoot, ['.astro', '.css', '.ts']);
-  const localReferencePattern = /(?:href|src)\\s*=\\s*["'](\\/[^"'?#]*)/g;
+  const localReferencePattern = /(?:href|src)\s*=\s*["'](\/[^"'?#]*)/g;
   const unresolvedReferences = [];
 
   for (const sourceFile of sourceFiles) {
@@ -77,7 +77,7 @@ test('Astroソース内のローカル参照先がページまたはpublicアセ
 
     for (const match of source.matchAll(localReferencePattern)) {
       const reference = match[1];
-      const assetPath = path.join(publicRoot, reference.replace(/^\\//, ''));
+      const assetPath = path.join(publicRoot, reference.replace(/^\//, ''));
 
       if (existsSync(assetPath) || pageRoutes.has(reference)) {
         continue;
