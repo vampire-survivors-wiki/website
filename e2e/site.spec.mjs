@@ -24,6 +24,19 @@ test.describe('サイトのルーティングと共通コンポーネント', ()
     await expect(page.locator('main svg path[d]')).not.toHaveCount(0);
   });
 
+  test('ヘッダーがPCとスマートフォンで適切に切り替わる', async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await page.goto('/');
+
+    await expect(page.locator('header nav')).toBeVisible();
+    await expect(page.getByRole('button', { name: 'メニューを開く' })).toBeHidden();
+
+    await page.setViewportSize({ width: 390, height: 844 });
+
+    await expect(page.locator('header nav')).toBeHidden();
+    await expect(page.getByRole('button', { name: 'メニューを開く' })).toBeVisible();
+  });
+
   test('faviconが正常に配信される', async ({ request }) => {
     const response = await request.get('/favicon.svg');
 
