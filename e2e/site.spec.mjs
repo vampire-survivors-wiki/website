@@ -42,7 +42,7 @@ test.describe('サイトのルーティングと共通コンポーネント', ()
     const dlcCount = await dlcSection.locator('.glass-panel').count();
     const getButtonCount = async (name) => {
       const text = await page.getByRole('button', { name }).textContent();
-      const match = text?.match(/\\((\\d+)\\)/);
+      const match = text?.match(/\((\d+)\)/);
       expect(match).not.toBeNull();
       return Number(match?.[1]);
     };
