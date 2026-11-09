@@ -6,11 +6,7 @@ import { characters } from '../src/data/characters.ts';
 const allowedCategories = new Set(['standard', 'unlockable', 'dlc']);
 
 function assertUnique(values, label) {
-  assert.equal(
-    new Set(values).size,
-    values.length,
-    `キャラクターの${label}に重複があります。`,
-  );
+  assert.equal(new Set(values).size, values.length, `キャラクターの${label}に重複があります。`);
 }
 
 test('キャラクターデータが1件以上登録されている', () => {
