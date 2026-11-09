@@ -1,6 +1,7 @@
 name: 作業・タスク
 description: PBIなどで決めた体験を実現するための具体的な作業を管理する
 title: '[TASK] '
+type: Task
 body:
   - type: markdown
     attributes:
