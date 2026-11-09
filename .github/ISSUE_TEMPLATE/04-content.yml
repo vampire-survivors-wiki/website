@@ -1,0 +1,51 @@
+name: 攻略・記事コンテンツの修正
+description: 攻略情報、ゲーム仕様、キャラクター情報などの追加・修正を提案する
+title: "[CONTENT] "
+body:
+  - type: input
+    id: target
+    attributes:
+      label: 対象ページ・記事
+      description: 対象ページのURL、ページ名、または追加予定のカテゴリを記載してください。
+      placeholder: "例: キャラクター一覧 / ボス攻略 / URL"
+    validations:
+      required: true
+  - type: textarea
+    id: issue
+    attributes:
+      label: 追加・修正したい内容
+      description: 何を追加・修正したいのか、現在の記載と変更案を分けて書いてください。
+      placeholder: "現在の内容: ...\n変更案: ..."
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: 根拠・出典
+      description: ゲーム内での確認、公式情報、検証動画、スクリーンショットなど、内容を裏付ける情報を記載してください。未検証の場合は明記してください。
+      placeholder: "- 出典URL: ...\n- ゲーム内での確認条件: ..."
+    validations:
+      required: false
+  - type: input
+    id: version
+    attributes:
+      label: ゲームバージョン・DLC
+      description: 確認したバージョンやDLC、プラットフォームを分かる範囲で記載してください。
+      placeholder: "例: v1.xx / DLC名 / Steam版"
+    validations:
+      required: false
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: 修正完了の条件
+      description: どのような情報が掲載されれば完了かを書いてください。
+      placeholder: "- 条件・手順・結果が分かる。\n- 検証済みと未検証の情報が区別されている。"
+    validations:
+      required: false
+  - type: textarea
+    id: notes
+    attributes:
+      label: 補足
+      description: 関連記事や注意点などがあれば記載してください。
+    validations:
+      required: false
