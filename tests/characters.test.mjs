@@ -61,7 +61,6 @@ test('キャラクターIDが所定の形式になっている', () => {
   }
 });
 
-
 test('PC版とスマートフォン版で共通の表示対象が使われる', () => {
   assert.deepEqual(
     characterDisplayGroups.standard.map((character) => character.id),
