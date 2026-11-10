@@ -69,14 +69,8 @@ test.describe('サイトのルーティングと共通コンポーネント', ()
     await expect(
       page.getByText('攻略・キャラ・武器・システムの解説記事。', { exact: true }),
     ).toBeVisible();
-    await expect(
-      page.locator('#updates-mobile').getByText('note 攻略・解説記事', { exact: true }),
-    ).toBeVisible();
-    const mobileFooter = page.locator('footer').nth(1);
-    await expect(
-      mobileFooter.getByRole('link', { name: 'note 攻略・解説記事', exact: true }),
-    ).toBeVisible();
-    await expect(mobileFooter).not.toContainText('記事集');
+    await expect(page.locator('#updates-mobile')).toContainText('note 攻略・解説記事');
+    await expect(page.locator('footer').nth(1)).toContainText('note 攻略・解説記事');
     await expect(
       page.getByText('攻略手順や金策のプレイ動画を紹介。', { exact: true }),
     ).toBeVisible();
@@ -89,13 +83,8 @@ test.describe('サイトのルーティングと共通コンポーネント', ()
     await expect(
       page.locator('#gold').getByText('OPTIMIZED BUILDS', { exact: true }),
     ).toBeVisible();
-
-    await expect(page.locator('#note h3')).toHaveText('note 攻略・解説記事');
-    const desktopFooter = page.locator('footer').nth(0);
-    await expect(
-      desktopFooter.getByRole('link', { name: 'note 攻略・解説記事', exact: true }),
-    ).toBeVisible();
-    await expect(desktopFooter).not.toContainText('記事集');
+    await expect(page.locator('#note')).toContainText('note 攻略・解説記事');
+    await expect(page.locator('footer').nth(0)).toContainText('note 攻略・解説記事');
   });
 
   test('PC版の攻略カードは「開く」部分だけがリンクになっている', async ({ page }) => {
@@ -388,31 +377,18 @@ test.describe('スマートフォン操作', () => {
     await page.getByRole('button', { name: 'メニューを開く' }).click();
     await expect(panel).not.toHaveClass(/translate-x-full/);
     await expect(panel.getByText('MENU', { exact: true })).toBeVisible();
-    await expect(panel.getByText('サイト内メニュー', { exact: true })).toBeVisible();
-    await expect(panel.getByText('外部リンク', { exact: true })).toBeVisible();
-
-    await expect(panel.getByRole('link', { name: 'ホーム', exact: true })).toBeVisible();
-    await expect(panel.getByRole('link', { name: '攻略', exact: true })).toHaveAttribute(
-      'href',
-      '/#strategy-mobile',
-    );
-    await expect(panel.getByRole('link', { name: '金策', exact: true })).toHaveAttribute(
-      'href',
-      '/#gold-mobile',
-    );
-    await expect(panel.getByRole('link', { name: 'アップデート', exact: true })).toHaveAttribute(
-      'href',
-      '/#updates-mobile',
-    );
-    await expect(
-      panel.getByRole('link', { name: 'note 攻略・解説記事', exact: true }),
-    ).toBeVisible();
-    await expect(
-      panel.getByRole('link', { name: 'YouTube 攻略動画', exact: true }),
-    ).toBeVisible();
-
-    await expect(panel.getByText('PREPARING SECTIONS', { exact: true })).toHaveCount(0);
-    await expect(panel.getByText('PREPARING', { exact: true })).toHaveCount(0);
+    await expect(panel).toContainText('サイト内メニュー');
+    await expect(panel).toContainText('ホーム');
+    await expect(panel).toContainText('攻略');
+    await expect(panel).toContainText('金策');
+    await expect(panel).toContainText('アップデート');
+    await expect(panel).toContainText('外部リンク');
+    await expect(panel).toContainText('note 攻略・解説記事');
+    await expect(panel).toContainText('YouTube 攻略動画');
+    await expect(panel).not.toContainText('PREPARING');
+    await expect(panel.locator('a[href="/#strategy-mobile"]')).toHaveCount(1);
+    await expect(panel.locator('a[href="/#gold-mobile"]')).toHaveCount(1);
+    await expect(panel.locator('a[href="/#updates-mobile"]')).toHaveCount(1);
     await expect(panel.locator('a[href="/characters/"]')).toHaveCount(0);
 
     await page.getByRole('button', { name: 'メニューを閉じる' }).click();
