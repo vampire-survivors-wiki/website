@@ -27,7 +27,6 @@ test.describe('サイトのルーティングと共通コンポーネント', ()
       'CHS 01.03',
       'SECRETS 01.04',
       'HIGH EFFICIENCY',
-      'OPTIMIZED BUILDS',
       '2026.08',
     ]) {
       await expect(page.getByText(label, { exact: true })).toHaveCount(0);
@@ -65,6 +64,13 @@ test.describe('サイトのルーティングと共通コンポーネント', ()
     await expect(updates.locator('p')).toHaveText('アップデート・DLCの追加要素を紹介。');
     await expect(page.getByText('攻略・キャラ・武器・システムの解説記事。', { exact: true })).toBeVisible();
     await expect(page.getByText('攻略手順や金策のプレイ動画を紹介。', { exact: true })).toBeVisible();
+  });
+
+  test('PC版の金策カードには英語補助表示を維持する', async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await page.goto('/');
+
+    await expect(page.locator('#gold').getByText('OPTIMIZED BUILDS', { exact: true })).toBeVisible();
   });
 
   test('キャラクター一覧ページとPC・スマートフォン用コンポーネントが描画される', async ({
