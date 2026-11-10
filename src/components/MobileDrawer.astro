@@ -59,6 +59,7 @@ const { currentPath } = Astro.props;
 
       <a
         href="/#strategy-mobile"
+        data-close-drawer
         class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-medium text-slate-700 hover:bg-slate-100"
       >
         <span>攻略</span>
@@ -66,6 +67,7 @@ const { currentPath } = Astro.props;
 
       <a
         href="/#gold-mobile"
+        data-close-drawer
         class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-medium text-slate-700 hover:bg-slate-100"
       >
         <span>金策</span>
@@ -73,6 +75,7 @@ const { currentPath } = Astro.props;
 
       <a
         href="/#updates-mobile"
+        data-close-drawer
         class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-medium text-slate-700 hover:bg-slate-100"
       >
         <span>アップデート</span>
@@ -157,6 +160,10 @@ const { currentPath } = Astro.props;
     panel?.classList.add('translate-x-full');
     document.body.style.overflow = '';
   }
+
+  panel?.querySelectorAll('[data-close-drawer]').forEach((link) => {
+    link.addEventListener('click', closeDrawer);
+  });
 
   btn?.addEventListener('click', openDrawer);
   closeBtn?.addEventListener('click', closeDrawer);
