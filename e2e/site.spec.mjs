@@ -187,6 +187,7 @@ test.describe('サイトのルーティングと共通コンポーネント', ()
     expect(invalidPathResults.incompleteMove).toBe(0);
     expect(invalidPathResults.incompleteLine).toBe(0);
   });
+});
 
 test.describe('スマートフォン操作', () => {
   test.beforeEach(async ({ page }) => {
