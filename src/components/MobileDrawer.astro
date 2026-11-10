@@ -52,19 +52,6 @@ const { currentPath } = Astro.props;
         <span>ホーム</span>
       </a>
 
-      <!-- キャラクター一覧 -->
-      <a
-        href="/characters/"
-        class:list={[
-          'flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-colors',
-          currentPath === '/characters/'
-            ? 'bg-slate-950 text-white shadow-xs'
-            : 'text-slate-700 hover:bg-slate-100',
-        ]}
-      >
-        <span>キャラクター一覧</span>
-      </a>
-
       <!-- 未実装セクション群（ステータスバッジ明記） -->
       <div class="pt-3 pb-1">
         <span class="text-[10px] font-mono text-slate-400 tracking-wider block px-3 mb-1">
