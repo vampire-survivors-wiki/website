@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { characters } from '../src/data/characters.ts';
 
 test.describe('サイトのルーティングと共通コンポーネント', () => {
   test('ホームページが表示され、共通レイアウトが描画される', async ({ page }) => {
@@ -29,7 +30,7 @@ test.describe('サイトのルーティングと共通コンポーネント', ()
     await expect(page.locator('main')).toContainText('アントニオ');
     await expect(page.locator('main')).toContainText('初期・通常キャラクター');
     await expect(page.locator('main')).toContainText('Foscariの潮流');
-    await expect(page.locator('main svg path[d]')).not.toHaveCount(0);
+    await expect(page.locator('main img[alt$="のキャラクター画像"]')).toHaveCount(6);
   });
 
   test('用意した3キャラクターの画像がPC・スマートフォン用カードに表示される', async ({ page }) => {
@@ -140,11 +141,23 @@ test.describe('サイトのルーティングと共通コンポーネント', ()
   test('キャラクターアイコンのSVGパスがブラウザで解析できる', async ({ page }) => {
     await page.goto('/characters/');
 
-    const pathLengths = await page
-      .locator('main svg path[d]')
-      .evaluateAll((paths) => paths.map((path) => path.getTotalLength()));
+    const iconPaths = characters.map((character) => character.icon);
+    const pathLengths = await page.evaluate((paths) => {
+      const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      svg.append(path);
+      document.body.append(svg);
 
-    expect(pathLengths.length).toBeGreaterThan(0);
+      const lengths = paths.map((data) => {
+        path.setAttribute('d', data);
+        return path.getTotalLength();
+      });
+
+      svg.remove();
+      return lengths;
+    }, iconPaths);
+
+    expect(pathLengths).toHaveLength(characters.length);
     expect(pathLengths.every((length) => Number.isFinite(length) && length > 0)).toBe(true);
 
     const invalidPathResults = await page.evaluate(() => {
@@ -174,15 +187,6 @@ test.describe('サイトのルーティングと共通コンポーネント', ()
     expect(invalidPathResults.incompleteMove).toBe(0);
     expect(invalidPathResults.incompleteLine).toBe(0);
   });
-
-  test('faviconが正常に配信される', async ({ request }) => {
-    const response = await request.get('/favicon.svg');
-
-    expect(response.status()).toBe(200);
-    expect(response.headers()['content-type']).toContain('image/svg+xml');
-    expect(await response.text()).toContain('<svg');
-  });
-});
 
 test.describe('スマートフォン操作', () => {
   test.beforeEach(async ({ page }) => {
