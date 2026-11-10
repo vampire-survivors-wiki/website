@@ -74,6 +74,39 @@ test.describe('サイトのルーティングと共通コンポーネント', ()
     ).toBeVisible();
   });
 
+  test('note記事リンクの表記をPC・スマートフォンで統一する', async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await page.goto('/');
+
+    await expect(page.locator('#note h3')).toHaveText('note 攻略・解説記事');
+    const desktopFooter = page.locator('footer').nth(0);
+    await expect(
+      desktopFooter.getByRole('link', { name: 'note 攻略・解説記事', exact: true }),
+    ).toBeVisible();
+    await expect(page.locator('#note')).not.toContainText('記事集');
+    await expect(desktopFooter).not.toContainText('記事集');
+
+    await page.setViewportSize({ width: 390, height: 844 });
+    await expect(
+      page.locator('#updates-mobile').getByText('note 攻略・解説記事', { exact: true }),
+    ).toBeVisible();
+
+    await page.getByRole('button', { name: 'メニューを開く' }).click();
+    const drawer = page.locator('#drawer-panel');
+    await expect(
+      drawer.getByRole('link', { name: 'note 攻略・解説記事', exact: true }),
+    ).toBeVisible();
+
+    const mobileFooter = page.locator('footer').nth(1);
+    await expect(
+      mobileFooter.getByRole('link', { name: 'note 攻略・解説記事', exact: true }),
+    ).toBeVisible();
+
+    await expect(page.locator('#updates-mobile')).not.toContainText('記事集');
+    await expect(drawer).not.toContainText('記事集');
+    await expect(mobileFooter).not.toContainText('記事集');
+  });
+
   test('PC版の金策カードには英語補助表示を維持する', async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 900 });
     await page.goto('/');
