@@ -264,7 +264,9 @@ test.describe('サイトのルーティングと共通コンポーネント', ()
     await expect(desktopNav).toBeVisible();
     await expect(desktopNav.getByRole('link')).toHaveCount(6);
     await expect(desktopNav.getByRole('link', { name: '攻略', exact: true })).toBeVisible();
-    await expect(desktopNav.getByRole('link', { name: 'キャラクター', exact: true })).toHaveCount(0);
+    await expect(
+      desktopNav.getByRole('link', { name: 'キャラクター', exact: true }),
+    ).toHaveCount(0);
     await expect(page.getByRole('button', { name: 'メニューを開く' })).toBeHidden();
 
     await page.setViewportSize({ width: 390, height: 844 });
@@ -375,7 +377,9 @@ test.describe('スマートフォン操作', () => {
     await expect(panel.getByText('INDEX', { exact: true })).toHaveCount(0);
     await expect(panel.getByText('84 CHS', { exact: true })).toHaveCount(0);
     await expect(panel.getByRole('link', { name: 'ホーム', exact: true })).toBeVisible();
-    await expect(panel.getByRole('link', { name: 'キャラクター一覧', exact: true })).toHaveCount(0);
+    await expect(
+      panel.getByRole('link', { name: 'キャラクター一覧', exact: true }),
+    ).toHaveCount(0);
 
     await page.getByRole('button', { name: 'メニューを閉じる' }).click();
     await expect(panel).toHaveClass(/translate-x-full/);
