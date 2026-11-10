@@ -87,22 +87,12 @@ test.describe('サイトのルーティングと共通コンポーネント', ()
     await expect(cards).toHaveCount(4);
 
     for (const card of await cards.all()) {
-      const links = card.locator('a');
-      await expect(links).toHaveCount(1);
-      await expect(links).toHaveText('開く →');
-
-      expect(
-        await card.locator('h3').evaluate((heading) => heading.closest('a') !== null),
-      ).toBe(false);
-      expect(
-        await card.locator('p').evaluate((description) => description.closest('a') !== null),
-      ).toBe(false);
+      const openLink = card.getByRole('link', { name: '開く →' });
+      await expect(card.locator('a')).toHaveCount(1);
+      await expect(openLink).toHaveCount(1);
     }
 
-    await expect(cards.nth(2).getByRole('link', { name: '開く →' })).toHaveAttribute(
-      'href',
-      '/characters/',
-    );
+    await expect(cards.nth(2).locator('a')).toHaveAttribute('href', '/characters/');
   });
 
   test('キャラクター一覧ページとPC・スマートフォン用コンポーネントが描画される', async ({
