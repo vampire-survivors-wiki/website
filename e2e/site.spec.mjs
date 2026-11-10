@@ -418,9 +418,10 @@ test.describe('スマートフォン操作', () => {
       'href',
       '/#gold-mobile',
     );
-    await expect(
-      panel.getByRole('link', { name: 'アップデート', exact: true }),
-    ).toHaveAttribute('href', '/#updates-mobile');
+    await expect(panel.getByRole('link', { name: 'アップデート', exact: true })).toHaveAttribute(
+      'href',
+      '/#updates-mobile',
+    );
     await expect(
       panel.getByRole('link', { name: 'note 攻略・解説記事', exact: true }),
     ).toBeVisible();
