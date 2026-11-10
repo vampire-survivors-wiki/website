@@ -405,9 +405,31 @@ test.describe('スマートフォン操作', () => {
     await expect(panel).toHaveClass(/translate-x-full/);
     await page.getByRole('button', { name: 'メニューを開く' }).click();
     await expect(panel).not.toHaveClass(/translate-x-full/);
-    await expect(panel.getByText('INDEX', { exact: true })).toHaveCount(0);
-    await expect(panel.getByText('84 CHS', { exact: true })).toHaveCount(0);
+    await expect(panel.getByText('MENU', { exact: true })).toBeVisible();
+    await expect(panel.getByText('サイト内メニュー', { exact: true })).toBeVisible();
+    await expect(panel.getByText('外部リンク', { exact: true })).toBeVisible();
+
     await expect(panel.getByRole('link', { name: 'ホーム', exact: true })).toBeVisible();
+    await expect(panel.getByRole('link', { name: '攻略', exact: true })).toHaveAttribute(
+      'href',
+      '/#strategy-mobile',
+    );
+    await expect(panel.getByRole('link', { name: '金策', exact: true })).toHaveAttribute(
+      'href',
+      '/#gold-mobile',
+    );
+    await expect(
+      panel.getByRole('link', { name: 'アップデート', exact: true }),
+    ).toHaveAttribute('href', '/#updates-mobile');
+    await expect(
+      panel.getByRole('link', { name: 'note 攻略・解説記事', exact: true }),
+    ).toBeVisible();
+    await expect(
+      panel.getByRole('link', { name: 'YouTube 攻略動画', exact: true }),
+    ).toBeVisible();
+
+    await expect(panel.getByText('PREPARING SECTIONS', { exact: true })).toHaveCount(0);
+    await expect(panel.getByText('PREPARING', { exact: true })).toHaveCount(0);
     await expect(panel.locator('a[href="/characters/"]')).toHaveCount(0);
 
     await page.getByRole('button', { name: 'メニューを閉じる' }).click();
