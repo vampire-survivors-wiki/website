@@ -86,10 +86,21 @@ test.describe('サイトのルーティングと共通コンポーネント', ()
     const cards = page.locator('#strategy .grid > div');
     await expect(cards).toHaveCount(4);
 
-    for (const card of await cards.all()) {
-      const openLink = card.getByRole('link', { name: '開く →' });
+    const expectedLinkNames = [
+      'ステージ攻略を開く',
+      'ボス攻略を開く',
+      'キャラクターを開く',
+      'アンロックを開く',
+    ];
+
+    for (const [index, name] of expectedLinkNames.entries()) {
+      const card = cards.nth(index);
+      const openLink = card.getByRole('link', { name });
+
       await expect(card.locator('a')).toHaveCount(1);
       await expect(openLink).toHaveCount(1);
+      await expect(openLink).toHaveAttribute('aria-label', name);
+      await expect(openLink).toHaveText('開く →');
     }
 
     await expect(cards.nth(2).locator('a')).toHaveAttribute('href', '/characters/');
