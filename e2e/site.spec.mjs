@@ -74,7 +74,9 @@ test.describe('サイトのルーティングと共通コンポーネント', ()
     await page.setViewportSize({ width: 1280, height: 900 });
     await page.goto('/');
 
-    await expect(page.locator('#gold').getByText('OPTIMIZED BUILDS', { exact: true })).toBeVisible();
+    await expect(
+      page.locator('#gold').getByText('OPTIMIZED BUILDS', { exact: true }),
+    ).toBeVisible();
   });
 
   test('キャラクター一覧ページとPC・スマートフォン用コンポーネントが描画される', async ({
@@ -337,9 +339,7 @@ test.describe('スマートフォン操作', () => {
     await expect(panel.getByText('INDEX', { exact: true })).toHaveCount(0);
     await expect(panel.getByText('84 CHS', { exact: true })).toHaveCount(0);
     await expect(panel.getByRole('link', { name: 'ホーム', exact: true })).toBeVisible();
-    await expect(
-      panel.getByRole('link', { name: 'キャラクター一覧', exact: true }),
-    ).toBeVisible();
+    await expect(panel.getByRole('link', { name: 'キャラクター一覧', exact: true })).toBeVisible();
 
     await page.getByRole('button', { name: 'メニューを閉じる' }).click();
     await expect(panel).toHaveClass(/translate-x-full/);
