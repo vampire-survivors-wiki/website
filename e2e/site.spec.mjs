@@ -50,7 +50,9 @@ test.describe('サイトのルーティングと共通コンポーネント', ()
     await expect(gold).toContainText('SECTION 02');
     await expect(gold).toContainText('金策 / GOLD FARMING ARCHIVE');
     await expect(gold).toContainText('仕組み・解説');
-    await expect(gold.getByText('THEORY & MECHANICS', { exact: true })).toHaveCount(0);
+    await expect(
+      gold.getByText('THEORY & MECHANICS', { exact: true }),
+    ).toHaveCount(0);
     await expect(gold.locator('p').nth(0)).toHaveText(
       '金策の種類・ゴールドフィーバー・効率の仕組み',
     );
@@ -60,7 +62,9 @@ test.describe('サイトのルーティングと共通コンポーネント', ()
 
     const updates = page.locator('#updates-mobile');
     await expect(updates).toContainText('アップデート / PATCH LOGS');
-    await expect(updates.getByText('アップデート・DLCの検証アーカイブ', { exact: true })).toHaveCount(0);
+    await expect(
+      updates.getByText('アップデート・DLCの検証アーカイブ', { exact: true }),
+    ).toHaveCount(0);
     await expect(updates.locator('p')).toHaveText('アップデート・DLCの追加要素を紹介。');
     await expect(
       page.getByText('攻略・キャラ・武器・システムの解説記事。', { exact: true }),
