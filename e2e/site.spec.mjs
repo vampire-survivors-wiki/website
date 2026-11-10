@@ -40,10 +40,10 @@ test.describe('サイトのルーティングと共通コンポーネント', ()
     await expect(strategy).toContainText('03 CHARACTERS');
     await expect(strategy).toContainText('04 SECRETS');
     await expect(strategy.locator('p')).toHaveText([
-      '各ステージの特徴と攻略手順。',
-      'ボスの特徴と討伐方法。',
-      '初期武器や固有能力を紹介。',
-      'キャラ・武器・ステージの解放条件。',
+      '本編・DLC各ステージの特徴やギミック、隠し要素と攻略手順を紹介。',
+      'ボスの出現条件や攻撃・ギミック、討伐に使った構成と攻略手順を紹介。',
+      'キャラクターごとの性能や初期武器、固有能力・パッシブ効果を解説。',
+      'キャラクター・武器・ステージなどの解放条件や達成手順を紹介。',
     ]);
 
     const gold = page.locator('#gold-mobile');
