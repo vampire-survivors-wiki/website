@@ -12,10 +12,10 @@ interface Props {
 
 const { title, description, currentPath } = Astro.props;
 
-const publicSiteUrl = import.meta.env.PUBLIC_SITE_URL?.replace(/\\/$/, '') ?? Astro.site?.origin;
+const publicSiteUrl = import.meta.env.PUBLIC_SITE_URL ?? Astro.site?.origin;
 const ogImagePath = '/ogp/vs-guide-ogp.png';
-const ogImageUrl = publicSiteUrl ? new URL(ogImagePath, `${publicSiteUrl}/`).toString() : ogImagePath;
-const pageUrl = publicSiteUrl ? new URL(Astro.url.pathname, `${publicSiteUrl}/`).toString() : undefined;
+const ogImageUrl = publicSiteUrl ? new URL(ogImagePath, publicSiteUrl).toString() : ogImagePath;
+const pageUrl = publicSiteUrl ? new URL(Astro.url.pathname, publicSiteUrl).toString() : undefined;
 const ogImageAlt = 'VS GUIDE - Vampire Survivors strategy archive';
 ---
 
