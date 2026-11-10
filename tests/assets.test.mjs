@@ -68,6 +68,7 @@ test('public配下のfaviconが存在し、SVGとして定義されている', (
 
 test('Astroソース内のローカル参照先がページまたはpublicアセットとして存在する', () => {
   const pageRoutes = getPageRoutes();
+  const generatedRoutes = new Set(['/sitemap-index.xml']);
   const sourceFiles = collectFiles(sourceRoot, ['.astro', '.css', '.ts']);
   const localReferencePattern = /(?:href|src)\s*=\s*["'](\/[^"'?#]*)/g;
   const unresolvedReferences = [];
@@ -79,7 +80,7 @@ test('Astroソース内のローカル参照先がページまたはpublicアセ
       const reference = match[1];
       const assetPath = path.join(publicRoot, reference.replace(/^\//, ''));
 
-      if (existsSync(assetPath) || pageRoutes.has(reference)) {
+      if (existsSync(assetPath) || pageRoutes.has(reference) || generatedRoutes.has(reference)) {
         continue;
       }
 
