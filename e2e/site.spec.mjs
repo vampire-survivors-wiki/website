@@ -101,9 +101,7 @@ test.describe('サイトのルーティングと共通コンポーネント', ()
     expect(await getButtonCount(/通常キャラクター/)).toBe(standardCount);
     expect(await getButtonCount(/隠しキャラクター/)).toBe(hiddenCount);
     expect(await getButtonCount(/Foscariの潮流/)).toBe(dlcCount);
-    expect(await getButtonCount(/全キャラクター/)).toBe(
-      standardCount + hiddenCount + dlcCount,
-    );
+    expect(await getButtonCount(/全キャラクター/)).toBe(standardCount + hiddenCount + dlcCount);
 
     await page.getByRole('button', { name: /通常キャラクター/ }).click();
     await expect(standardSection).toBeVisible();
