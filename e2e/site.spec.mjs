@@ -61,10 +61,9 @@ test.describe('サイトのルーティングと共通コンポーネント', ()
 
     const updates = page.locator('#updates-mobile');
     await expect(updates).toContainText('アップデート / PATCH LOGS');
-    const updateArchiveLabel = updates.getByText(
-      'アップデート・DLCの検証アーカイブ',
-      { exact: true },
-    );
+    const updateArchiveLabel = updates.getByText('アップデート・DLCの検証アーカイブ', {
+      exact: true,
+    });
     await expect(updateArchiveLabel).toHaveCount(0);
     await expect(updates.locator('p')).toHaveText('アップデート・DLCの追加要素を紹介。');
     await expect(
