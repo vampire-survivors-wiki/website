@@ -16,9 +16,7 @@ test.describe('サイトのルーティングと共通コンポーネント', ()
     await expect(page.locator('footer')).toHaveCount(2);
   });
 
-  test('スマートフォン版ホームの文言をPC版に統一し、余分なラベルを表示しない', async ({
-    page,
-  }) => {
+  test('スマホ版ホームの文言をPC版にそろえ、余分なラベルを表示しない', async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto('/');
 
@@ -278,9 +276,7 @@ test.describe('スマートフォン操作', () => {
     await page.goto('/');
   });
 
-  test('スマートフォン版キャラクター一覧にフィルター用の補助ラベルを表示しない', async ({
-    page,
-  }) => {
+  test('スマホ版キャラクター一覧に不要な補助ラベルを表示しない', async ({ page }) => {
     await page.goto('/characters/');
 
     const mobileView = page.locator('[data-character-view="mobile"]');
