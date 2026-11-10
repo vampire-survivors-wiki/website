@@ -79,6 +79,32 @@ test.describe('サイトのルーティングと共通コンポーネント', ()
     ).toBeVisible();
   });
 
+  test('PC版の攻略カードは「開く」部分だけがリンクになっている', async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await page.goto('/');
+
+    const cards = page.locator('#strategy .grid > div');
+    await expect(cards).toHaveCount(4);
+
+    for (const card of await cards.all()) {
+      const links = card.locator('a');
+      await expect(links).toHaveCount(1);
+      await expect(links).toHaveText('開く →');
+
+      expect(
+        await card.locator('h3').evaluate((heading) => heading.closest('a') !== null),
+      ).toBe(false);
+      expect(
+        await card.locator('p').evaluate((description) => description.closest('a') !== null),
+      ).toBe(false);
+    }
+
+    await expect(cards.nth(2).getByRole('link', { name: '開く →' })).toHaveAttribute(
+      'href',
+      '/characters/',
+    );
+  });
+
   test('キャラクター一覧ページとPC・スマートフォン用コンポーネントが描画される', async ({
     page,
   }) => {
