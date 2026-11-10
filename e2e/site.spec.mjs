@@ -101,6 +101,7 @@ test.describe('サイトのルーティングと共通コンポーネント', ()
       await expect(openLink).toHaveCount(1);
       await expect(openLink).toHaveAttribute('aria-label', name);
       await expect(openLink).toHaveText('開く →');
+      await expect(openLink.locator('h3, p')).toHaveCount(0);
     }
 
     await expect(cards.nth(2).locator('a')).toHaveAttribute('href', '/characters/');
