@@ -1,14 +1,21 @@
 ---
-import type { CharacterItem } from '../../data/characters';
+import type { CharacterDisplayGroups } from '../../data/character-display';
 
 interface Props {
-  characters: CharacterItem[];
+  characterGroups: CharacterDisplayGroups;
 }
 
-const { characters } = Astro.props;
-const standardCount = characters.filter((c) => c.category === 'standard').length;
-const unlockableCount = characters.filter((c) => c.category === 'unlockable').length;
-const dlcCount = characters.filter((c) => c.category === 'dlc').length;
+const { characterGroups } = Astro.props;
+const {
+  standard: standardCharacters,
+  unlockable: unlockableCharacters,
+  dlc: dlcCharacters,
+} = characterGroups;
+const totalCharacters =
+  standardCharacters.length + unlockableCharacters.length + dlcCharacters.length;
+const standardCount = standardCharacters.length;
+const unlockableCount = unlockableCharacters.length;
+const dlcCount = dlcCharacters.length;
 ---
 
 <div class="px-4 py-6 space-y-6">
@@ -22,7 +29,7 @@ const dlcCount = characters.filter((c) => c.category === 'dlc').length;
         </span>
       </div>
       <span class="text-[10px] font-mono bg-slate-200/60 px-2 py-0.5 rounded-sm text-slate-600">
-        {characters.length} SURVIVORS
+        {totalCharacters} SURVIVORS
       </span>
     </div>
     <h1 class="text-2xl font-extrabold tracking-tight text-slate-950">キャラクター一覧</h1>
@@ -42,39 +49,37 @@ const dlcCount = characters.filter((c) => c.category === 'dlc').length;
     </div>
 
     <div class="grid grid-cols-2 gap-3">
-      {characters
-        .filter((c) => c.category === 'standard')
-        .map((char) => (
-          <div class="glass-panel rounded-xl p-2.5 flex flex-col items-center text-center">
-            <!-- 正方形画像枠 -->
-            <div class="w-full aspect-square rounded-lg bg-white/70 border border-slate-200/60 flex items-center justify-center mb-1.5">
-              {char.image ? (
-                <img
-                  src={char.image}
-                  alt={`${char.name}のキャラクター画像`}
-                  class="w-full h-full object-contain"
-                  loading={char.id === '01' ? 'eager' : 'lazy'}
-                  fetchpriority={char.id === '01' ? 'high' : undefined}
-                  decoding="async"
-                />
-              ) : (
-                <svg
-                  class="w-8 h-8 text-slate-600"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.5"
-                  viewBox="0 0 24 24"
-                >
-                  <path d={char.icon}></path>
-                </svg>
-              )}
-            </div>
-            <!-- タイトなキャラクター名のみ -->
-            <span class="text-[11px] font-bold text-slate-900 leading-tight truncate w-full">
-              {char.name}
-            </span>
+      {standardCharacters.map((char) => (
+        <div class="glass-panel rounded-xl p-2.5 flex flex-col items-center text-center">
+          <!-- 正方形画像枠 -->
+          <div class="w-full aspect-square rounded-lg bg-white/70 border border-slate-200/60 flex items-center justify-center mb-1.5">
+            {char.image ? (
+              <img
+                src={char.image}
+                alt={`${char.name}のキャラクター画像`}
+                class="w-full h-full object-contain"
+                loading={char.id === '01' ? 'eager' : 'lazy'}
+                fetchpriority={char.id === '01' ? 'high' : undefined}
+                decoding="async"
+              />
+            ) : (
+              <svg
+                class="w-8 h-8 text-slate-600"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                viewBox="0 0 24 24"
+              >
+                <path d={char.icon}></path>
+              </svg>
+            )}
           </div>
-        ))}
+          <!-- タイトなキャラクター名のみ -->
+          <span class="text-[11px] font-bold text-slate-900 leading-tight truncate w-full">
+            {char.name}
+          </span>
+        </div>
+      ))}
     </div>
   </div>
 
@@ -89,37 +94,35 @@ const dlcCount = characters.filter((c) => c.category === 'dlc').length;
     </div>
 
     <div class="grid grid-cols-2 gap-3">
-      {characters
-        .filter((c) => c.category === 'unlockable')
-        .map((char) => (
-          <div class="glass-panel rounded-xl p-2.5 flex flex-col items-center text-center">
-            <div class="w-full aspect-square rounded-lg bg-white/70 border border-slate-200/60 flex items-center justify-center mb-1.5">
-              {char.image ? (
-                <img
-                  src={char.image}
-                  alt={`${char.name}のキャラクター画像`}
-                  class="w-full h-full object-contain"
-                  loading={char.id === '01' ? 'eager' : 'lazy'}
-                  fetchpriority={char.id === '01' ? 'high' : undefined}
-                  decoding="async"
-                />
-              ) : (
-                <svg
-                  class="w-8 h-8 text-slate-600"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.5"
-                  viewBox="0 0 24 24"
-                >
-                  <path d={char.icon}></path>
-                </svg>
-              )}
-            </div>
-            <span class="text-[11px] font-bold text-slate-900 leading-tight truncate w-full">
-              {char.name}
-            </span>
+      {unlockableCharacters.map((char) => (
+        <div class="glass-panel rounded-xl p-2.5 flex flex-col items-center text-center">
+          <div class="w-full aspect-square rounded-lg bg-white/70 border border-slate-200/60 flex items-center justify-center mb-1.5">
+            {char.image ? (
+              <img
+                src={char.image}
+                alt={`${char.name}のキャラクター画像`}
+                class="w-full h-full object-contain"
+                loading={char.id === '01' ? 'eager' : 'lazy'}
+                fetchpriority={char.id === '01' ? 'high' : undefined}
+                decoding="async"
+              />
+            ) : (
+              <svg
+                class="w-8 h-8 text-slate-600"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                viewBox="0 0 24 24"
+              >
+                <path d={char.icon}></path>
+              </svg>
+            )}
           </div>
-        ))}
+          <span class="text-[11px] font-bold text-slate-900 leading-tight truncate w-full">
+            {char.name}
+          </span>
+        </div>
+      ))}
     </div>
   </div>
 
@@ -134,37 +137,35 @@ const dlcCount = characters.filter((c) => c.category === 'dlc').length;
     </div>
 
     <div class="grid grid-cols-2 gap-3">
-      {characters
-        .filter((c) => c.category === 'dlc')
-        .map((char) => (
-          <div class="glass-panel rounded-xl p-2.5 flex flex-col items-center text-center">
-            <div class="w-full aspect-square rounded-lg bg-white/70 border border-slate-200/60 flex items-center justify-center mb-1.5">
-              {char.image ? (
-                <img
-                  src={char.image}
-                  alt={`${char.name}のキャラクター画像`}
-                  class="w-full h-full object-contain"
-                  loading={char.id === '01' ? 'eager' : 'lazy'}
-                  fetchpriority={char.id === '01' ? 'high' : undefined}
-                  decoding="async"
-                />
-              ) : (
-                <svg
-                  class="w-8 h-8 text-slate-600"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.5"
-                  viewBox="0 0 24 24"
-                >
-                  <path d={char.icon}></path>
-                </svg>
-              )}
-            </div>
-            <span class="text-[11px] font-bold text-slate-900 leading-tight truncate w-full">
-              {char.name}
-            </span>
+      {dlcCharacters.map((char) => (
+        <div class="glass-panel rounded-xl p-2.5 flex flex-col items-center text-center">
+          <div class="w-full aspect-square rounded-lg bg-white/70 border border-slate-200/60 flex items-center justify-center mb-1.5">
+            {char.image ? (
+              <img
+                src={char.image}
+                alt={`${char.name}のキャラクター画像`}
+                class="w-full h-full object-contain"
+                loading={char.id === '01' ? 'eager' : 'lazy'}
+                fetchpriority={char.id === '01' ? 'high' : undefined}
+                decoding="async"
+              />
+            ) : (
+              <svg
+                class="w-8 h-8 text-slate-600"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                viewBox="0 0 24 24"
+              >
+                <path d={char.icon}></path>
+              </svg>
+            )}
           </div>
-        ))}
+          <span class="text-[11px] font-bold text-slate-900 leading-tight truncate w-full">
+            {char.name}
+          </span>
+        </div>
+      ))}
     </div>
   </div>
 </div>

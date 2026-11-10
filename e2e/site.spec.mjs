@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { characters } from '../src/data/characters.ts';
 
 test.describe('サイトのルーティングと共通コンポーネント', () => {
   test('ホームページが表示され、共通レイアウトが描画される', async ({ page }) => {
@@ -29,10 +30,12 @@ test.describe('サイトのルーティングと共通コンポーネント', ()
     await expect(page.locator('main')).toContainText('アントニオ');
     await expect(page.locator('main')).toContainText('初期・通常キャラクター');
     await expect(page.locator('main')).toContainText('Foscariの潮流');
-    await expect(page.locator('main svg path[d]')).not.toHaveCount(0);
+    await expect(
+      page.locator('[data-character-view="desktop"] img[alt$="のキャラクター画像"]'),
+    ).toHaveCount(3);
   });
 
-  test('用意した3キャラクターの画像がPC・スマートフォン用カードに表示される', async ({ page }) => {
+  test('PC版とスマートフォン版で同じ3キャラクターが表示される', async ({ page }) => {
     const response = await page.goto('/characters/');
 
     expect(response?.status()).toBe(200);
@@ -52,23 +55,57 @@ test.describe('サイトのルーティングと共通コンポーネント', ()
       },
     ];
 
-    for (const asset of imageAssets) {
-      const images = page.locator(`img[src="${asset.src}"]`);
-      await expect(images).toHaveCount(2);
-      await expect(images.first()).toHaveAttribute('alt', asset.alt);
+    const viewports = [
+      {
+        name: 'PC',
+        width: 1280,
+        height: 900,
+        visible: 'desktop',
+        hidden: 'mobile',
+      },
+      {
+        name: 'スマートフォン',
+        width: 390,
+        height: 844,
+        visible: 'mobile',
+        hidden: 'desktop',
+      },
+    ];
 
-      if (asset.src.includes('antonio-belpaese')) {
-        for (const image of await images.all()) {
+    for (const viewport of viewports) {
+      await page.setViewportSize({ width: viewport.width, height: viewport.height });
+
+      const visibleView = page.locator(`[data-character-view="${viewport.visible}"]`);
+      const hiddenView = page.locator(`[data-character-view="${viewport.hidden}"]`);
+
+      await expect(visibleView, `${viewport.name}版の表示領域`).toBeVisible();
+      await expect(hiddenView, `${viewport.name}版では非表示の領域`).toBeHidden();
+
+      const visibleImages = visibleView.locator('img[alt$="のキャラクター画像"]');
+      await expect(visibleImages).toHaveCount(3);
+
+      const displayedAlts = await visibleImages.evaluateAll((images) =>
+        images.map((image) => image.getAttribute('alt')),
+      );
+      expect(displayedAlts).toEqual(imageAssets.map((asset) => asset.alt));
+
+      for (const asset of imageAssets) {
+        const image = visibleView.locator(`img[src="${asset.src}"]`);
+        await expect(image).toHaveCount(1);
+        await expect(image).toBeVisible();
+        await expect(image).toHaveAttribute('alt', asset.alt);
+
+        if (asset.src.includes('antonio-belpaese')) {
           await expect(image).toHaveAttribute('loading', 'eager');
           await expect(image).toHaveAttribute('fetchpriority', 'high');
-        }
-      } else {
-        for (const image of await images.all()) {
+        } else {
           await expect(image).toHaveAttribute('loading', 'lazy');
           await expect(image).not.toHaveAttribute('fetchpriority');
         }
       }
+    }
 
+    for (const asset of imageAssets) {
       const imageResponse = await page.request.get(asset.src);
       expect(imageResponse.status()).toBe(200);
       expect(imageResponse.headers()['content-type']).toContain('image/webp');
@@ -140,11 +177,23 @@ test.describe('サイトのルーティングと共通コンポーネント', ()
   test('キャラクターアイコンのSVGパスがブラウザで解析できる', async ({ page }) => {
     await page.goto('/characters/');
 
-    const pathLengths = await page
-      .locator('main svg path[d]')
-      .evaluateAll((paths) => paths.map((path) => path.getTotalLength()));
+    const iconPaths = characters.map((character) => character.icon);
+    const pathLengths = await page.evaluate((paths) => {
+      const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      svg.append(path);
+      document.body.append(svg);
 
-    expect(pathLengths.length).toBeGreaterThan(0);
+      const lengths = paths.map((data) => {
+        path.setAttribute('d', data);
+        return path.getTotalLength();
+      });
+
+      svg.remove();
+      return lengths;
+    }, iconPaths);
+
+    expect(pathLengths).toHaveLength(characters.length);
     expect(pathLengths.every((length) => Number.isFinite(length) && length > 0)).toBe(true);
 
     const invalidPathResults = await page.evaluate(() => {

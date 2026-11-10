@@ -2,7 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import CharactersDesktop from '../../components/characters/CharactersDesktop.astro';
 import CharactersMobile from '../../components/characters/CharactersMobile.astro';
-import { characters } from '../../data/characters';
+import { characterDisplayGroups } from '../../data/character-display';
 ---
 
 <Layout
@@ -11,12 +11,12 @@ import { characters } from '../../data/characters';
   currentPath="/characters/"
 >
   <!-- PC画面 (md以上で自動表示) -->
-  <div class="hidden md:block">
-    <CharactersDesktop characters={characters} />
+  <div data-character-view="desktop" class="hidden md:block">
+    <CharactersDesktop characterGroups={characterDisplayGroups} />
   </div>
 
   <!-- スマホ画面 (md未満で自動表示) -->
-  <div class="block md:hidden">
-    <CharactersMobile characters={characters} />
+  <div data-character-view="mobile" class="block md:hidden">
+    <CharactersMobile characterGroups={characterDisplayGroups} />
   </div>
 </Layout>
