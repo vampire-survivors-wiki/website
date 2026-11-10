@@ -46,12 +46,12 @@ test.describe('サイトのルーティングと共通コンポーネント', ()
     await expect(gold).toContainText('仕組み・解説');
     await expect(gold).toContainText('THEORY & MECHANICS');
     await expect(gold.locator('p').nth(0)).toHaveText(
-      'ゴールドフィーバーや金貨袋、悪食の瞳など、主な金策方法と仕組みを解説。',
+      '金策の種類・ゴールドフィーバー・効率の仕組み',
     );
     await expect(gold).toContainText('金策構築');
     await expect(gold).toContainText('OPTIMIZED BUILDS');
     await expect(gold.locator('p').nth(1)).toHaveText(
-      'サミーやビッグ・トラウザーを使った金策構築と、黄金の卵の所持数に応じた周回手順を紹介。',
+      'サミー・トラウザーの構築と獲得効率',
     );
 
     const updates = page.locator('#updates-mobile');
