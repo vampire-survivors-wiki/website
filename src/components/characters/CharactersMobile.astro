@@ -1,14 +1,20 @@
 ---
-import type { CharacterItem } from '../../data/characters';
+import type { CharacterDisplayGroups } from '../../data/character-display';
 
 interface Props {
-  characters: CharacterItem[];
+  characterGroups: CharacterDisplayGroups;
 }
 
-const { characters } = Astro.props;
-const standardCount = characters.filter((c) => c.category === 'standard').length;
-const unlockableCount = characters.filter((c) => c.category === 'unlockable').length;
-const dlcCount = characters.filter((c) => c.category === 'dlc').length;
+const { characterGroups } = Astro.props;
+const {
+  standard: standardCharacters,
+  unlockable: unlockableCharacters,
+  dlc: dlcCharacters,
+} = characterGroups;
+const totalCharacters = standardCharacters.length + unlockableCharacters.length + dlcCharacters.length;
+const standardCount = standardCharacters.length;
+const unlockableCount = unlockableCharacters.length;
+const dlcCount = dlcCharacters.length;
 ---
 
 <div class="px-4 py-6 space-y-6">
@@ -22,7 +28,7 @@ const dlcCount = characters.filter((c) => c.category === 'dlc').length;
         </span>
       </div>
       <span class="text-[10px] font-mono bg-slate-200/60 px-2 py-0.5 rounded-sm text-slate-600">
-        {characters.length} SURVIVORS
+        {totalCharacters} SURVIVORS
       </span>
     </div>
     <h1 class="text-2xl font-extrabold tracking-tight text-slate-950">キャラクター一覧</h1>
@@ -42,9 +48,7 @@ const dlcCount = characters.filter((c) => c.category === 'dlc').length;
     </div>
 
     <div class="grid grid-cols-2 gap-3">
-      {characters
-        .filter((c) => c.category === 'standard')
-        .map((char) => (
+      {standardCharacters.map((char) => (
           <div class="glass-panel rounded-xl p-2.5 flex flex-col items-center text-center">
             <!-- 正方形画像枠 -->
             <div class="w-full aspect-square rounded-lg bg-white/70 border border-slate-200/60 flex items-center justify-center mb-1.5">
@@ -89,9 +93,7 @@ const dlcCount = characters.filter((c) => c.category === 'dlc').length;
     </div>
 
     <div class="grid grid-cols-2 gap-3">
-      {characters
-        .filter((c) => c.category === 'unlockable')
-        .map((char) => (
+      {unlockableCharacters.map((char) => (
           <div class="glass-panel rounded-xl p-2.5 flex flex-col items-center text-center">
             <div class="w-full aspect-square rounded-lg bg-white/70 border border-slate-200/60 flex items-center justify-center mb-1.5">
               {char.image ? (
@@ -134,9 +136,7 @@ const dlcCount = characters.filter((c) => c.category === 'dlc').length;
     </div>
 
     <div class="grid grid-cols-2 gap-3">
-      {characters
-        .filter((c) => c.category === 'dlc')
-        .map((char) => (
+      {dlcCharacters.map((char) => (
           <div class="glass-panel rounded-xl p-2.5 flex flex-col items-center text-center">
             <div class="w-full aspect-square rounded-lg bg-white/70 border border-slate-200/60 flex items-center justify-center mb-1.5">
               {char.image ? (
