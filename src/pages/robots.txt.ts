@@ -1,22 +1,10 @@
 import type { APIRoute } from 'astro';
 
 export const GET: APIRoute = ({ site }) => {
-  if (!site) {
-    return new Response('Site URL is not configured.', { status: 500 });
-  }
+  const sitemapUrl = new URL('sitemap-index.xml', site ?? 'https://website.niri.workers.dev');
+  const robotsContent = `User-agent: *\\nAllow: /\\n\\nSitemap: ${sitemapUrl.href}\\n`;
 
-  const sitemapUrl = new URL('sitemap-index.xml', site);
-  const body = [
-    'User-agent: *',
-    'Allow: /',
-    '',
-    `Sitemap: ${sitemapUrl.href}`,
-    '',
-  ].join('\n');
-
-  return new Response(body, {
-    headers: {
-      'Content-Type': 'text/plain; charset=utf-8',
-    },
+  return new Response(robotsContent, {
+    headers: { 'Content-Type': 'text/plain; charset=utf-8' },
   });
 };
