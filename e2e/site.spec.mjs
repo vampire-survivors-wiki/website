@@ -57,6 +57,18 @@ test.describe('サイトのルーティングと共通コンポーネント', ()
       await expect(images).toHaveCount(2);
       await expect(images.first()).toHaveAttribute('alt', asset.alt);
 
+      if (asset.src.includes('antonio-belpaese')) {
+        for (const image of await images.all()) {
+          await expect(image).toHaveAttribute('loading', 'eager');
+          await expect(image).toHaveAttribute('fetchpriority', 'high');
+        }
+      } else {
+        for (const image of await images.all()) {
+          await expect(image).toHaveAttribute('loading', 'lazy');
+          await expect(image).toHaveAttribute('fetchpriority', 'auto');
+        }
+      }
+
       const imageResponse = await page.request.get(asset.src);
       expect(imageResponse.status()).toBe(200);
       expect(imageResponse.headers()['content-type']).toContain('image/webp');
