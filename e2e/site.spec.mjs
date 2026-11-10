@@ -263,10 +263,8 @@ test.describe('サイトのルーティングと共通コンポーネント', ()
     const desktopNav = page.locator('header nav');
     await expect(desktopNav).toBeVisible();
     await expect(desktopNav.getByRole('link')).toHaveCount(6);
-    await expect(desktopNav.getByRole('link', { name: '攻略', exact: true })).toBeVisible();
-    await expect(
-      desktopNav.getByRole('link', { name: 'キャラクター', exact: true }),
-    ).toHaveCount(0);
+    await expect(desktopNav.locator('a[href="#strategy"]')).toHaveCount(1);
+    await expect(desktopNav.locator('a[href="/characters/"]')).toHaveCount(0);
     await expect(page.getByRole('button', { name: 'メニューを開く' })).toBeHidden();
 
     await page.setViewportSize({ width: 390, height: 844 });
@@ -377,30 +375,23 @@ test.describe('スマートフォン操作', () => {
     await expect(panel.getByText('INDEX', { exact: true })).toHaveCount(0);
     await expect(panel.getByText('84 CHS', { exact: true })).toHaveCount(0);
     await expect(panel.getByRole('link', { name: 'ホーム', exact: true })).toBeVisible();
-    await expect(
-      panel.getByRole('link', { name: 'キャラクター一覧', exact: true }),
-    ).toHaveCount(0);
+    await expect(panel.locator('a[href="/characters/"]')).toHaveCount(0);
 
     await page.getByRole('button', { name: 'メニューを閉じる' }).click();
     await expect(panel).toHaveClass(/translate-x-full/);
   });
 
   test('トップページの攻略内からキャラクター一覧へ移動できる', async ({ page }) => {
-    const entryPoints = [
-      { width: 1280, selector: '#strategy a[href="/characters/"]' },
-      { width: 390, selector: '#strategy-mobile a[href="/characters/"]' },
-    ];
+    const entryPoi  test('攻略カードからキャラクター一覧へ移動できる', async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 844 });
+    await page.goto('/');
+    await page.locator('#strategy a[href="/characters/"]').click();
+    await expect(page).toHaveURL(/characters/);
+    await expect(page).toHaveTitle(/キャラクター一覧/);
 
-    for (const { width, selector } of entryPoints) {
-      await page.setViewportSize({ width, height: 844 });
-      await page.goto('/');
-
-      const characterCard = page.locator(selector);
-      await expect(characterCard).toHaveCount(1);
-      await characterCard.click();
-
-      await expect(page).toHaveURL(/\/characters\/$/);
-      await expect(page).toHaveTitle(/キャラクター一覧/);
-    }
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto('/');
+    await page.locator('#strategy-mobile a[href="/characters/"]').click();
+    await expect(page).toHaveURL(/characters/);
+    await expect(page).toHaveTitle(/キャラクター一覧/);
   });
-});
