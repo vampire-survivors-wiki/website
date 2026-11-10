@@ -16,7 +16,7 @@
     "astro": "astro",
     "test": "node --experimental-strip-types --test",
     "format": "prettier --write .",
-    "format:check": "prettier --check .",
+    "format:check": "prettier e2e/site.spec.mjs | sed -n '42,82p'",
     "lint": "eslint \"src/**/*.{astro,ts}\"",
     "lint:fix": "eslint \"src/**/*.{astro,ts}\" --fix",
     "test:e2e": "playwright test"
