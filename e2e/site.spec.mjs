@@ -63,7 +63,10 @@ test.describe('サイトのルーティングと共通コンポーネント', ()
     const updates = page.locator('#updates-mobile');
     await expect(updates).toContainText('アップデート / PATCH LOGS');
     await expect(
-      updates.getByText('アップデート・DLCの検証アーカイブ', { exact: true }),
+      updates.getByText(
+        'アップデート・DLCの検証アーカイブ',
+        { exact: true },
+      ),
     ).toHaveCount(0);
     await expect(updates.locator('p')).toHaveText('アップデート・DLCの追加要素を紹介。');
     await expect(
