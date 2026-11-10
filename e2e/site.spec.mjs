@@ -62,8 +62,12 @@ test.describe('サイトのルーティングと共通コンポーネント', ()
     await expect(updates).toContainText('アップデート / PATCH LOGS');
     await expect(updates).toContainText('アップデート・DLCの検証アーカイブ');
     await expect(updates.locator('p')).toHaveText('アップデート・DLCの追加要素を紹介。');
-    await expect(page.getByText('攻略・キャラ・武器・システムの解説記事。', { exact: true })).toBeVisible();
-    await expect(page.getByText('攻略手順や金策のプレイ動画を紹介。', { exact: true })).toBeVisible();
+    await expect(
+      page.getByText('攻略・キャラ・武器・システムの解説記事。', { exact: true }),
+    ).toBeVisible();
+    await expect(
+      page.getByText('攻略手順や金策のプレイ動画を紹介。', { exact: true }),
+    ).toBeVisible();
   });
 
   test('PC版の金策カードには英語補助表示を維持する', async ({ page }) => {
