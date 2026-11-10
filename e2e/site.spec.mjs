@@ -27,6 +27,7 @@ test.describe('サイトのルーティングと共通コンポーネント', ()
       'CHS 01.03',
       'SECRETS 01.04',
       'HIGH EFFICIENCY',
+      'OPTIMIZED BUILDS',
       '2026.08',
     ]) {
       await expect(page.getByText(label, { exact: true })).toHaveCount(0);
@@ -39,6 +40,12 @@ test.describe('サイトのルーティングと共通コンポーネント', ()
     await expect(strategy).toContainText('02 BOSSES');
     await expect(strategy).toContainText('03 CHARACTERS');
     await expect(strategy).toContainText('04 SECRETS');
+    await expect(strategy.locator('p')).toHaveText([
+      '各ステージの特徴と攻略手順。',
+      'ボスの特徴と討伐方法。',
+      '初期武器や固有能力を紹介。',
+      'キャラ・武器・ステージの解放条件。',
+    ]);
 
     const gold = page.locator('#gold-mobile');
     await expect(gold).toContainText('SECTION 02');
@@ -49,12 +56,15 @@ test.describe('サイトのルーティングと共通コンポーネント', ()
       '金策の種類・ゴールドフィーバー・効率の仕組み',
     );
     await expect(gold).toContainText('金策構築');
-    await expect(gold).toContainText('OPTIMIZED BUILDS');
+    await expect(gold.getByText('OPTIMIZED BUILDS', { exact: true })).toHaveCount(0);
     await expect(gold.locator('p').nth(1)).toHaveText('サミー・トラウザーの構築と獲得効率');
 
     const updates = page.locator('#updates-mobile');
     await expect(updates).toContainText('アップデート / PATCH LOGS');
-    await expect(updates).toContainText('パッチ履歴・DLC追加要素の検証アーカイブ');
+    await expect(updates).toContainText('アップデート・DLCの検証アーカイブ');
+    await expect(updates.locator('p')).toHaveText('アップデート・DLCの追加要素を紹介。');
+    await expect(page.getByText('攻略・キャラ・武器・システムの解説記事。', { exact: true })).toBeVisible();
+    await expect(page.getByText('攻略手順や金策のプレイ動画を紹介。', { exact: true })).toBeVisible();
   });
 
   test('キャラクター一覧ページとPC・スマートフォン用コンポーネントが描画される', async ({
@@ -314,6 +324,12 @@ test.describe('スマートフォン操作', () => {
     await expect(panel).toHaveClass(/translate-x-full/);
     await page.getByRole('button', { name: 'メニューを開く' }).click();
     await expect(panel).not.toHaveClass(/translate-x-full/);
+    await expect(panel.getByText('INDEX', { exact: true })).toHaveCount(0);
+    await expect(panel.getByText('84 CHS', { exact: true })).toHaveCount(0);
+    await expect(panel.getByRole('link', { name: 'ホーム', exact: true })).toBeVisible();
+    await expect(
+      panel.getByRole('link', { name: 'キャラクター一覧', exact: true }),
+    ).toBeVisible();
 
     await page.getByRole('button', { name: 'メニューを閉じる' }).click();
     await expect(panel).toHaveClass(/translate-x-full/);
