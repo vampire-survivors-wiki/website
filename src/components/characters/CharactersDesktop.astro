@@ -96,7 +96,7 @@ const dlcCount = dlcCharacters.length;
                     alt={`${char.name}のキャラクター画像`}
                     class="w-full h-full object-contain"
                     loading={char.id === '01' ? 'eager' : 'lazy'}
-                    fetchpriority={char.id === '01' ? 'high' : 'auto'}
+                    fetchpriority={char.id === '01' ? 'high' : undefined}
                     decoding="async"
                   />
                 ) : (
@@ -144,7 +144,7 @@ const dlcCount = dlcCharacters.length;
                     alt={`${char.name}のキャラクター画像`}
                     class="w-full h-full object-contain"
                     loading={char.id === '01' ? 'eager' : 'lazy'}
-                    fetchpriority={char.id === '01' ? 'high' : 'auto'}
+                    fetchpriority={char.id === '01' ? 'high' : undefined}
                     decoding="async"
                   />
                 ) : (
@@ -192,7 +192,7 @@ const dlcCount = dlcCharacters.length;
                     alt={`${char.name}のキャラクター画像`}
                     class="w-full h-full object-contain"
                     loading={char.id === '01' ? 'eager' : 'lazy'}
-                    fetchpriority={char.id === '01' ? 'high' : 'auto'}
+                    fetchpriority={char.id === '01' ? 'high' : undefined}
                     decoding="async"
                   />
                 ) : (

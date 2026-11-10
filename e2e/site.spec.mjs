@@ -65,7 +65,7 @@ test.describe('サイトのルーティングと共通コンポーネント', ()
       } else {
         for (const image of await images.all()) {
           await expect(image).toHaveAttribute('loading', 'lazy');
-          await expect(image).toHaveAttribute('fetchpriority', 'auto');
+          await expect(image).not.toHaveAttribute('fetchpriority');
         }
       }
 
