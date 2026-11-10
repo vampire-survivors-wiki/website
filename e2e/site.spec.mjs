@@ -16,6 +16,47 @@ test.describe('サイトのルーティングと共通コンポーネント', ()
     await expect(page.locator('footer')).toHaveCount(2);
   });
 
+  test('スマホ版ホームの文言をPC版にそろえ、余分なラベルを表示しない', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto('/');
+
+    for (const label of [
+      '4 CATEGORIES',
+      'MAPS 01.01',
+      'BOSSES 01.02',
+      'CHS 01.03',
+      'SECRETS 01.04',
+      'HIGH EFFICIENCY',
+      '2026.08',
+    ]) {
+      await expect(page.getByText(label, { exact: true })).toHaveCount(0);
+    }
+
+    const strategy = page.locator('#strategy-mobile');
+    await expect(strategy).toContainText('SECTION 01');
+    await expect(strategy).toContainText('攻略 / STRATEGY DIRECTORY');
+    await expect(strategy).toContainText('01 STAGES');
+    await expect(strategy).toContainText('02 BOSSES');
+    await expect(strategy).toContainText('03 CHARACTERS');
+    await expect(strategy).toContainText('04 SECRETS');
+
+    const gold = page.locator('#gold-mobile');
+    await expect(gold).toContainText('SECTION 02');
+    await expect(gold).toContainText('金策 / GOLD FARMING ARCHIVE');
+    await expect(gold).toContainText('仕組み・解説');
+    await expect(gold).toContainText('THEORY & MECHANICS');
+    await expect(gold.locator('p').nth(0)).toHaveText(
+      '金策の種類・ゴールドフィーバー・効率の仕組み',
+    );
+    await expect(gold).toContainText('金策構築');
+    await expect(gold).toContainText('OPTIMIZED BUILDS');
+    await expect(gold.locator('p').nth(1)).toHaveText('サミー・トラウザーの構築と獲得効率');
+
+    const updates = page.locator('#updates-mobile');
+    await expect(updates).toContainText('アップデート / PATCH LOGS');
+    await expect(updates).toContainText('パッチ履歴・DLC追加要素の検証アーカイブ');
+  });
+
   test('キャラクター一覧ページとPC・スマートフォン用コンポーネントが描画される', async ({
     page,
   }) => {
@@ -237,6 +278,25 @@ test.describe('スマートフォン操作', () => {
   test.beforeEach(async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto('/');
+  });
+
+  test('スマホ版キャラクター一覧に不要な補助ラベルを表示しない', async ({ page }) => {
+    await page.goto('/characters/');
+
+    const mobileView = page.locator('[data-character-view="mobile"]');
+    for (const label of [
+      'SURVIVOR ARCHIVE',
+      '3 SURVIVORS',
+      'STD (1)',
+      'HIDDEN (1)',
+      'FOSCARI (1)',
+    ]) {
+      await expect(mobileView.getByText(label, { exact: true })).toHaveCount(0);
+    }
+
+    await expect(mobileView).toContainText('SECTION 01');
+    await expect(mobileView).toContainText('SECTION 02');
+    await expect(mobileView).toContainText('SECTION 03');
   });
 
   test('キャラクター一覧ではPC用フィルターを表示せず、分類別の一覧を維持する', async ({ page }) => {
