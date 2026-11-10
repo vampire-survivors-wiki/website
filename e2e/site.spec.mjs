@@ -381,8 +381,7 @@ test.describe('スマートフォン操作', () => {
     await expect(panel).toHaveClass(/translate-x-full/);
   });
 
-  test('トップページの攻略内からキャラクター一覧へ移動できる', async ({ page }) => {
-    const entryPoi  test('攻略カードからキャラクター一覧へ移動できる', async ({ page }) => {
+  test('攻略カードからキャラクター一覧へ移動できる', async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 844 });
     await page.goto('/');
     await page.locator('#strategy a[href="/characters/"]').click();
@@ -395,3 +394,4 @@ test.describe('スマートフォン操作', () => {
     await expect(page).toHaveURL(/characters/);
     await expect(page).toHaveTitle(/キャラクター一覧/);
   });
+});
