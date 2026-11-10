@@ -70,6 +70,12 @@ test.describe('サイトのルーティングと共通コンポーネント', ()
       page.getByText('攻略・キャラ・武器・システムの解説記事。', { exact: true }),
     ).toBeVisible();
     await expect(
+      page.locator('#updates-mobile a[href="https://note.com/neo_magical"] div.text-xs'),
+    ).toHaveText('note 攻略・解説記事');
+    await expect(
+      page.locator('footer').nth(1).locator('a[href="https://note.com/neo_magical"]'),
+    ).toHaveText('note 攻略・解説記事');
+    await expect(
       page.getByText('攻略手順や金策のプレイ動画を紹介。', { exact: true }),
     ).toBeVisible();
   });
@@ -81,6 +87,10 @@ test.describe('サイトのルーティングと共通コンポーネント', ()
     await expect(
       page.locator('#gold').getByText('OPTIMIZED BUILDS', { exact: true }),
     ).toBeVisible();
+    await expect(page.locator('#note h3')).toHaveText('note 攻略・解説記事');
+    await expect(
+      page.locator('footer').nth(0).locator('a[href="https://note.com/neo_magical"]'),
+    ).toHaveText('note 攻略・解説記事');
   });
 
   test('PC版の攻略カードは「開く」部分だけがリンクになっている', async ({ page }) => {
@@ -260,7 +270,11 @@ test.describe('サイトのルーティングと共通コンポーネント', ()
     await page.setViewportSize({ width: 1280, height: 900 });
     await page.goto('/');
 
-    await expect(page.locator('header nav')).toBeVisible();
+    const desktopNav = page.locator('header nav');
+    await expect(desktopNav).toBeVisible();
+    await expect(desktopNav.getByRole('link')).toHaveCount(6);
+    await expect(desktopNav.locator('a[href="#strategy"]')).toHaveCount(1);
+    await expect(desktopNav.locator('a[href="/characters/"]')).toHaveCount(0);
     await expect(page.getByRole('button', { name: 'メニューを開く' })).toBeHidden();
 
     await page.setViewportSize({ width: 390, height: 844 });
@@ -368,23 +382,58 @@ test.describe('スマートフォン操作', () => {
     await expect(panel).toHaveClass(/translate-x-full/);
     await page.getByRole('button', { name: 'メニューを開く' }).click();
     await expect(panel).not.toHaveClass(/translate-x-full/);
-    await expect(panel.getByText('INDEX', { exact: true })).toHaveCount(0);
-    await expect(panel.getByText('84 CHS', { exact: true })).toHaveCount(0);
-    await expect(panel.getByRole('link', { name: 'ホーム', exact: true })).toBeVisible();
-    await expect(panel.getByRole('link', { name: 'キャラクター一覧', exact: true })).toBeVisible();
+    await expect(panel.getByText('MENU', { exact: true })).toBeVisible();
+    await expect(panel).toContainText('サイト内メニュー');
+    await expect(panel).toContainText('ホーム');
+    await expect(panel).toContainText('攻略');
+    await expect(panel).toContainText('金策');
+    await expect(panel).toContainText('アップデート');
+    await expect(panel).toContainText('外部リンク');
+    await expect(panel.locator('a[href="https://note.com/neo_magical"]')).toHaveText(
+      'note 攻略・解説記事',
+    );
+    await expect(panel).toContainText('YouTube 攻略動画');
+    await expect(panel).not.toContainText('PREPARING');
+    await expect(panel.locator('a[href="/#strategy-mobile"]')).toHaveCount(1);
+    await expect(panel.locator('a[href="/#gold-mobile"]')).toHaveCount(1);
+    await expect(panel.locator('a[href="/#updates-mobile"]')).toHaveCount(1);
+    await expect(panel.locator('a[href="/characters/"]')).toHaveCount(0);
 
     await page.getByRole('button', { name: 'メニューを閉じる' }).click();
     await expect(panel).toHaveClass(/translate-x-full/);
   });
+  test('セクションリンクを選択するとドロワーが閉じる', async ({ page }) => {
+    const panel = page.locator('#drawer-panel');
+    const sectionLinks = [
+      { href: '/#strategy-mobile', hash: '#strategy-mobile' },
+      { href: '/#gold-mobile', hash: '#gold-mobile' },
+      { href: '/#updates-mobile', hash: '#updates-mobile' },
+    ];
 
-  test('ドロワーのリンクからキャラクター一覧へ移動できる', async ({ page }) => {
-    await page.getByRole('button', { name: 'メニューを開く' }).click();
-    await page
-      .locator('#drawer-panel')
-      .getByRole('link', { name: /キャラクター一覧/ })
-      .click();
+    for (const section of sectionLinks) {
+      await page.goto('/');
+      await page.getByRole('button', { name: 'メニューを開く' }).click();
+      await expect(panel).not.toHaveClass(/translate-x-full/);
 
-    await expect(page).toHaveURL(/\/characters\/$/);
+      await panel.locator('a[href="' + section.href + '"]').click();
+
+      await expect(page).toHaveURL(new RegExp(section.hash + '$'));
+      await expect(panel).toHaveClass(/translate-x-full/);
+      await expect(page.locator('body')).not.toHaveCSS('overflow', 'hidden');
+    }
+  });
+
+  test('攻略カードからキャラクター一覧へ移動できる', async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 844 });
+    await page.goto('/');
+    await page.locator('#strategy a[href="/characters/"]').click();
+    await expect(page).toHaveURL(/characters/);
+    await expect(page).toHaveTitle(/キャラクター一覧/);
+
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto('/');
+    await page.locator('#strategy-mobile a[href="/characters/"]').click();
+    await expect(page).toHaveURL(/characters/);
     await expect(page).toHaveTitle(/キャラクター一覧/);
   });
 });
