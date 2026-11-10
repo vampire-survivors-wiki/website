@@ -45,7 +45,9 @@ test.describe('サイトのルーティングと共通コンポーネント', ()
     await expect(gold).toContainText('金策 / GOLD FARMING ARCHIVE');
     await expect(gold).toContainText('仕組み・解説');
     await expect(gold).toContainText('THEORY & MECHANICS');
-    await expect(gold.locator('p').nth(0)).toHaveText('金策の種類・ゴールドフィーバー・効率の仕組み');
+    await expect(gold.locator('p').nth(0)).toHaveText(
+      '金策の種類・ゴールドフィーバー・効率の仕組み',
+    );
     await expect(gold).toContainText('金策構築');
     await expect(gold).toContainText('OPTIMIZED BUILDS');
     await expect(gold.locator('p').nth(1)).toHaveText('サミー・トラウザーの構築と獲得効率');
