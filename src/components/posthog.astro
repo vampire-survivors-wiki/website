@@ -115,6 +115,7 @@
       );
 
       pageRoots.forEach((root) => {
+        // Ignore the hidden responsive variant to prevent duplicate page-level events.
         if (!root.getClientRects().length) return;
 
         const pageType = root.getAttribute('data-posthog-page');
