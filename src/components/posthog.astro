@@ -107,5 +107,33 @@
         posthog.capture('external_content_opened', { destination });
       }
     });
+
+    // Record each scroll-depth milestone once per page view.
+    const scrollDepthMilestones = [25, 50, 75, 100];
+    const recordedScrollDepths = new Set<number>();
+
+    function trackScrollDepth() {
+      const scrollableHeight =
+        document.documentElement.scrollHeight - window.innerHeight;
+
+      if (scrollableHeight <= 0) return;
+
+      const scrollProgress = Math.min(
+        100,
+        Math.round((window.scrollY / scrollableHeight) * 100),
+      );
+
+      scrollDepthMilestones.forEach((milestone) => {
+        if (scrollProgress >= milestone && !recordedScrollDepths.has(milestone)) {
+          recordedScrollDepths.add(milestone);
+          posthog.capture('article_scroll_depth', {
+            page_path: window.location.pathname,
+            depth_percent: milestone,
+          });
+        }
+      });
+    }
+
+    window.addEventListener('scroll', trackScrollDepth, { passive: true });
   }
 </script>
