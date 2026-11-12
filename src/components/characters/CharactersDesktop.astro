@@ -242,6 +242,8 @@ const dlcCount = dlcCharacters.length;
       if (!selectedFilter) return;
 
       posthog?.capture('character_filter_selected', {
+        page_path: window.location.pathname,
+        listing_name: 'characters',
         filter: selectedFilter,
       });
       posthog?.logger?.info('character_filter_changed', {
