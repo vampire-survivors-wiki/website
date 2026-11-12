@@ -146,8 +146,18 @@ const { currentPath } = Astro.props;
   const closeBtn = document.getElementById('drawer-close-btn');
   const overlay = document.getElementById('drawer-overlay');
   const panel = document.getElementById('drawer-panel');
+  const posthog = (
+    window as Window & {
+      posthog?: {
+        capture: (event: string) => void;
+        logger?: { info: (message: string) => void };
+      };
+    }
+  ).posthog;
 
   function openDrawer() {
+    posthog?.capture('navigation_drawer_opened');
+    posthog?.logger?.info('navigation_drawer_opened');
     overlay?.classList.remove('opacity-0', 'pointer-events-none');
     overlay?.classList.add('opacity-100');
     panel?.classList.remove('translate-x-full');
