@@ -40,6 +40,8 @@ const navItems = [
           <a
             href={item.href}
             target={item.target}
+            data-posthog-home-category={['strategy', 'gold', 'updates'].includes(item.id) ? item.id : undefined}
+            data-posthog-home-category-surface="header"
             class:list={[
               'relative py-5 transition-colors hover:text-slate-950',
               isActive ? 'text-slate-950 font-semibold' : 'text-slate-600',
