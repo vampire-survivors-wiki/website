@@ -179,10 +179,7 @@
         if (articleHeight <= 0) return 0;
 
         const viewportBottom = window.scrollY + window.innerHeight;
-        return Math.max(
-          0,
-          Math.min(100, ((viewportBottom - articleTop) / articleHeight) * 100),
-        );
+        return Math.max(0, Math.min(100, ((viewportBottom - articleTop) / articleHeight) * 100));
       }
 
       // Record scroll milestones relative to the article body, not the full page.
