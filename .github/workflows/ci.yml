@@ -39,11 +39,6 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Format PostHog and show diff
-        run: |
-          npx prettier --write src/components/posthog.astro
-          git --no-pager diff -- src/components/posthog.astro
-
       - name: Check formatting
         run: npm run format:check
 
