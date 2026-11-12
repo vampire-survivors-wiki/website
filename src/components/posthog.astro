@@ -245,6 +245,20 @@
       window.addEventListener('scroll', trackScrollDepth, { passive: true });
       document.addEventListener('visibilitychange', trackArticleEngagement);
       window.setInterval(trackArticleEngagement, 1000);
+      window.addEventListener(
+        'pagehide',
+        () => {
+          trackArticleEngagement();
+          if (visibleTimeMs > 0) {
+            posthog.capture('article_time_spent', {
+              page_path: pagePath,
+              visible_time_seconds: Math.round(visibleTimeMs / 1000),
+              max_scroll_depth_percent: Math.floor(getArticleProgressPercent()),
+            });
+          }
+        },
+        { once: true },
+      );
       trackScrollDepth();
     }
 
