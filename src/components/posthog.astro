@@ -110,7 +110,7 @@
 
     // Record each scroll-depth milestone once per page view.
     const scrollDepthMilestones = [25, 50, 75, 100];
-    const recordedScrollDepths = new Set<number>();
+    const recordedScrollDepths = new Set();
 
     function trackScrollDepth() {
       const scrollableHeight =
