@@ -1,9 +1,9 @@
 ---
 ---
 
-<div class="w-full">
+<div class="w-full" data-posthog-page="home" data-posthog-layout="desktop">
   <!-- 共通化されたヒーローエリア (フロストガラス帯) -->
-  <section class="w-full hero-glass-band pt-12 pb-8 mb-10">
+  <section class="w-full hero-glass-band pt-12 pb-8 mb-10" data-posthog-home-section="intro">
     <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
       <span class="text-xs font-mono font-medium tracking-widest text-slate-500 uppercase block mb-2">
         ARCHIVE & VERIFICATION COMPENDIUM
@@ -15,19 +15,19 @@
         ステージ攻略からキャラクター・武器の解説、金策まで。初心者向けの情報からやり込み向けの攻略まで幅広く紹介します。
       </p>
       <div class="flex items-center gap-6 mt-6 text-xs font-mono text-slate-500">
-        <a href="#strategy" class="hover:text-slate-900 transition-colors">
+        <a href="#strategy" data-posthog-home-category="strategy" data-posthog-home-category-surface="home_shortcut" class="hover:text-slate-900 transition-colors">
           01 攻略 ↓
         </a>
-        <a href="#gold" class="hover:text-slate-900 transition-colors">
+        <a href="#gold" data-posthog-home-category="gold" data-posthog-home-category-surface="home_shortcut" class="hover:text-slate-900 transition-colors">
           02 金策 ↓
         </a>
-        <a href="#updates" class="hover:text-slate-900 transition-colors">
+        <a href="#updates" data-posthog-home-category="updates" data-posthog-home-category-surface="home_shortcut" class="hover:text-slate-900 transition-colors">
           03 アップデート ↓
         </a>
-        <a href="#note" class="hover:text-slate-900 transition-colors">
+        <a href="#note" data-posthog-home-category="note" data-posthog-home-category-surface="home_shortcut" class="hover:text-slate-900 transition-colors">
           04 note ↓
         </a>
-        <a href="#youtube" class="hover:text-slate-900 transition-colors">
+        <a href="#youtube" data-posthog-home-category="youtube" data-posthog-home-category-surface="home_shortcut" class="hover:text-slate-900 transition-colors">
           05 YouTube ↓
         </a>
       </div>
@@ -37,7 +37,7 @@
   <!-- メインコンテンツ -->
   <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 pb-16">
     <!-- Section 01: 攻略ディレクトリ -->
-    <section id="strategy" class="mb-16">
+    <section id="strategy" class="mb-16" data-posthog-home-section="strategy">
       <div class="flex items-center justify-between mb-6 pb-2 border-b border-slate-200/50">
         <div class="flex items-baseline gap-3">
           <span class="text-xs font-mono text-slate-500">SECTION 01</span>
@@ -60,6 +60,8 @@
               <a
                 href="#"
                 aria-label="ステージ攻略を開く"
+                data-posthog-home-category="stages"
+                data-posthog-home-category-surface="home_card"
                 class="group inline-flex hover:text-blue-700 transition-colors"
               >
                 <span class="group-hover:translate-x-1 transition-transform">開く →</span>
@@ -82,6 +84,8 @@
               <a
                 href="#"
                 aria-label="ボス攻略を開く"
+                data-posthog-home-category="bosses"
+                data-posthog-home-category-surface="home_card"
                 class="group inline-flex hover:text-blue-700 transition-colors"
               >
                 <span class="group-hover:translate-x-1 transition-transform">開く →</span>
@@ -104,6 +108,8 @@
               <a
                 href="/characters/"
                 aria-label="キャラクターを開く"
+                data-posthog-home-category="characters"
+                data-posthog-home-category-surface="home_card"
                 class="group inline-flex font-semibold text-blue-600 hover:text-blue-700 transition-colors"
               >
                 <span class="group-hover:translate-x-1 transition-transform">開く →</span>
@@ -126,6 +132,8 @@
               <a
                 href="#"
                 aria-label="アンロックを開く"
+                data-posthog-home-category="unlocks"
+                data-posthog-home-category-surface="home_card"
                 class="group inline-flex hover:text-blue-700 transition-colors"
               >
                 <span class="group-hover:translate-x-1 transition-transform">開く →</span>
@@ -137,7 +145,7 @@
     </section>
 
     <!-- Section 02: 金策アーカイブ -->
-    <section id="gold" class="mb-16">
+    <section id="gold" class="mb-16" data-posthog-home-section="gold">
       <div class="flex items-center justify-between mb-6 pb-2 border-b border-slate-200/50">
         <div class="flex items-baseline gap-3">
           <span class="text-xs font-mono text-slate-500">SECTION 02</span>
@@ -160,7 +168,7 @@
             </p>
           </div>
           <div class="flex justify-end pt-4 border-t border-slate-200/60 text-xs">
-            <a href="#" class="font-semibold text-slate-900 hover:text-blue-700 transition-colors">
+            <a href="#" data-posthog-home-category="gold_mechanics" data-posthog-home-category-surface="home_card" class="font-semibold text-slate-900 hover:text-blue-700 transition-colors">
               金策の仕組みを読む →
             </a>
           </div>
@@ -178,7 +186,7 @@
             </p>
           </div>
           <div class="flex justify-end pt-4 border-t border-slate-200/60 text-xs">
-            <a href="#" class="font-semibold text-slate-900 hover:text-blue-700 transition-colors">
+            <a href="#" data-posthog-home-category="gold_build" data-posthog-home-category-surface="home_card" class="font-semibold text-slate-900 hover:text-blue-700 transition-colors">
               金策ビルドを見る →
             </a>
           </div>
@@ -187,7 +195,7 @@
     </section>
 
     <!-- Section: アップデートログ -->
-    <section id="updates" class="mb-16">
+    <section id="updates" class="mb-16" data-posthog-home-section="updates">
       <div class="flex items-center justify-between mb-4 pb-2 border-b border-slate-200/50">
         <div class="flex items-baseline gap-3">
           <span class="text-xs font-mono text-slate-500">SECTION</span>
@@ -205,6 +213,8 @@
         </div>
         <a
           href="#"
+          data-posthog-home-category="updates"
+          data-posthog-home-category-surface="home_card"
           class="text-xs font-semibold px-4 py-2 rounded-lg bg-white/70 hover:bg-white border border-slate-200 shadow-xs transition-colors flex items-center gap-1"
         >
           一覧を見る →
@@ -213,7 +223,7 @@
     </section>
 
     <!-- Section: note コラム -->
-    <section id="note" class="mb-16">
+    <section id="note" class="mb-16" data-posthog-home-section="note">
       <div class="flex items-center justify-between mb-4 pb-2 border-b border-slate-200/50">
         <div class="flex items-baseline gap-3">
           <span class="text-xs font-mono text-slate-500">SECTION</span>
@@ -230,6 +240,8 @@
         </div>
         <a
           href="https://note.com/neo_magical"
+          data-posthog-home-category="note"
+          data-posthog-home-category-surface="home_card"
           target="_blank"
           class="text-xs font-semibold px-4 py-2 rounded-lg bg-white/70 hover:bg-white border border-slate-200 shadow-xs transition-colors flex items-center gap-1"
         >
@@ -253,7 +265,7 @@
     </section>
 
     <!-- Section: YouTube ライブラリ -->
-    <section id="youtube" class="mb-16">
+    <section id="youtube" class="mb-16" data-posthog-home-section="youtube">
       <div class="flex items-center justify-between mb-4 pb-2 border-b border-slate-200/50">
         <div class="flex items-baseline gap-3">
           <span class="text-xs font-mono text-slate-500">SECTION</span>
@@ -269,6 +281,8 @@
         </div>
         <a
           href="https://www.youtube.com/@hirakouki_vs"
+          data-posthog-home-category="youtube"
+          data-posthog-home-category-surface="home_card"
           target="_blank"
           class="text-xs font-semibold px-4 py-2 rounded-lg bg-white/70 hover:bg-white border border-slate-200 shadow-xs transition-colors flex items-center gap-1"
         >
