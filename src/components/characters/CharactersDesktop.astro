@@ -227,11 +227,28 @@ const dlcCount = dlcCharacters.length;
 <script>
   const filterButtons = document.querySelectorAll<HTMLButtonElement>('[data-character-filter]');
   const characterSections = document.querySelectorAll<HTMLElement>('[data-character-section]');
+  const posthog = (
+    window as Window & {
+      posthog?: {
+        capture: (event: string, properties?: Record<string, string>) => void;
+        logger?: { info: (message: string, attributes?: Record<string, string>) => void };
+      };
+    }
+  ).posthog;
 
   filterButtons.forEach((button) => {
     button.addEventListener('click', () => {
       const selectedFilter = button.dataset.characterFilter;
       if (!selectedFilter) return;
+
+      posthog?.capture('character_filter_selected', {
+        page_path: window.location.pathname,
+        listing_name: 'characters',
+        filter: selectedFilter,
+      });
+      posthog?.logger?.info('character_filter_changed', {
+        filter: selectedFilter,
+      });
 
       filterButtons.forEach((filterButton) => {
         const isActive = filterButton === button;

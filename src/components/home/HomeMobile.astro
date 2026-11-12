@@ -1,14 +1,14 @@
 ---
 ---
 
-<div class="px-4 py-6 space-y-6">
+<div class="px-4 py-6 space-y-6" data-posthog-page="home" data-posthog-layout="mobile">
   <!-- スマホ版純化ヒーローエリア -->
   <div class="space-y-1">
     <h1 class="text-2xl font-extrabold tracking-tight text-slate-950">Vampire Survivors 攻略</h1>
   </div>
 
   <!-- 01 攻略メインインデックス (2×2グリッド) -->
-  <div id="strategy-mobile" class="space-y-3">
+  <div id="strategy-mobile" class="space-y-3" data-posthog-home-section="strategy">
     <div class="flex items-baseline gap-2">
       <span class="text-[10px] font-mono text-slate-500">SECTION 01</span>
       <h2 class="text-xs font-bold text-slate-950">攻略 / STRATEGY DIRECTORY</h2>
@@ -18,6 +18,8 @@
       <!-- 01.01 Stages -->
       <a
         href="#strategy-mobile"
+        data-posthog-home-category="stages"
+        data-posthog-home-category-surface="home_card"
         class="glass-panel rounded-xl overflow-hidden flex flex-col group active:scale-98 transition-transform"
       >
         <div class="bg-slate-900 text-white px-2.5 py-1.5 text-[10px] font-mono">
@@ -39,6 +41,8 @@
       <!-- 01.02 Bosses -->
       <a
         href="#strategy"
+        data-posthog-home-category="bosses"
+        data-posthog-home-category-surface="home_card"
         class="glass-panel rounded-xl overflow-hidden flex flex-col group active:scale-98 transition-transform"
       >
         <div class="bg-slate-900 text-white px-2.5 py-1.5 text-[10px] font-mono">
@@ -58,6 +62,8 @@
       <!-- 01.03 Characters -->
       <a
         href="/characters/"
+        data-posthog-home-category="characters"
+        data-posthog-home-category-surface="home_card"
         class="glass-panel rounded-xl overflow-hidden flex flex-col group active:scale-98 transition-transform"
       >
         <div class="bg-slate-900 text-white px-2.5 py-1.5 text-[10px] font-mono">
@@ -79,6 +85,8 @@
       <!-- 01.04 Secrets -->
       <a
         href="#strategy"
+        data-posthog-home-category="unlocks"
+        data-posthog-home-category-surface="home_card"
         class="glass-panel rounded-xl overflow-hidden flex flex-col group active:scale-98 transition-transform"
       >
         <div class="bg-slate-900 text-white px-2.5 py-1.5 text-[10px] font-mono">
@@ -100,14 +108,23 @@
   </div>
 
   <!-- 02 金策アーカイブ / GOLD -->
-  <div id="gold-mobile" class="glass-panel rounded-2xl p-4 shadow-xs">
+  <div
+    id="gold-mobile"
+    class="glass-panel rounded-2xl p-4 shadow-xs"
+    data-posthog-home-section="gold"
+  >
     <div class="flex items-baseline gap-2 pb-3 mb-2 border-b border-slate-200/60">
       <span class="text-[10px] font-mono text-slate-500">SECTION 02</span>
       <h3 class="text-xs font-bold text-slate-950">金策 / GOLD FARMING ARCHIVE</h3>
     </div>
 
     <div class="divide-y divide-slate-100/80">
-      <a href="#gold-mobile" class="py-2.5 flex items-start justify-between group">
+      <a
+        href="#gold-mobile"
+        data-posthog-home-category="gold_mechanics"
+        data-posthog-home-category-surface="home_card"
+        class="py-2.5 flex items-start justify-between group"
+      >
         <div class="flex items-start gap-2.5">
           <span class="text-[10px] font-mono text-slate-500 bg-slate-100 px-1.5 py-0.5 rounded-sm border border-slate-200/60 mt-0.5">
             02.01
@@ -126,7 +143,12 @@
         </span>
       </a>
 
-      <a href="#gold" class="py-2.5 flex items-start justify-between group">
+      <a
+        href="#gold"
+        data-posthog-home-category="gold_build"
+        data-posthog-home-category-surface="home_card"
+        class="py-2.5 flex items-start justify-between group"
+      >
         <div class="flex items-start gap-2.5">
           <span class="text-[10px] font-mono text-slate-500 bg-slate-100 px-1.5 py-0.5 rounded-sm border border-slate-200/60 mt-0.5">
             02.02
@@ -148,9 +170,15 @@
   </div>
 
   <!-- 03 アップデート・外部メディア連携 -->
-  <div id="updates-mobile" class="glass-panel rounded-2xl p-3.5 space-y-2">
+  <div
+    id="updates-mobile"
+    class="glass-panel rounded-2xl p-3.5 space-y-2"
+    data-posthog-home-section="updates"
+  >
     <a
       href="#updates-mobile"
+      data-posthog-home-category="updates"
+      data-posthog-home-category-surface="home_card"
       class="flex items-center justify-between p-2 rounded-xl hover:bg-white/50 transition-colors group"
     >
       <div class="flex items-center gap-3">
@@ -178,6 +206,8 @@
 
     <a
       href="https://note.com/neo_magical"
+      data-posthog-home-category="note"
+      data-posthog-home-category-surface="home_card"
       target="_blank"
       class="flex items-center justify-between p-2 rounded-xl hover:bg-white/50 transition-colors group"
     >
@@ -219,6 +249,8 @@
 
     <a
       href="https://www.youtube.com/@hirakouki_vs"
+      data-posthog-home-category="youtube"
+      data-posthog-home-category-surface="home_card"
       target="_blank"
       class="flex items-center justify-between p-2 rounded-xl hover:bg-white/50 transition-colors group"
     >

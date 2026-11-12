@@ -1,0 +1,399 @@
+<script
+  is:inline
+  define:vars={{
+    apiKey: import.meta.env.PUBLIC_POSTHOG_PROJECT_TOKEN,
+    apiHost: import.meta.env.PUBLIC_POSTHOG_HOST,
+    isDev: import.meta.env.DEV,
+  }}
+>
+  if (!apiKey || !apiHost) {
+    if (isDev) {
+      const missingVariable = !apiKey ? 'PUBLIC_POSTHOG_PROJECT_TOKEN' : 'PUBLIC_POSTHOG_HOST';
+      throw new Error(
+        `${missingVariable} variable required by PostHog is missing or un-configured, this causes events to be silently missed. This error stops appearing once ${missingVariable} is configured`,
+      );
+    }
+  } else {
+    // POSTHOG_BROWSER_SNIPPET_START
+    /* eslint-disable @typescript-eslint/no-unused-expressions, prefer-rest-params */
+    !(function (t, e) {
+      let o, n, p, r;
+      e.__SV ||
+        ((window.posthog = e),
+        (e._i = []),
+        (e.init = function (i, s, a) {
+          function g(t, e) {
+            const o = e.split('.');
+            if (o.length === 2) {
+              t = t[o[0]];
+              e = o[1];
+            }
+            t[e] = function () {
+              t.push([e].concat(Array.prototype.slice.call(arguments, 0)));
+            };
+          }
+          (((p = t.createElement('script')).type = 'text/javascript'),
+            (p.crossOrigin = 'anonymous'),
+            (p.async = !0),
+            (p.src = s.api_host + '/static/array.js'),
+            (r = t.getElementsByTagName('script')[0]).parentNode.insertBefore(p, r));
+          let u = e;
+          for (
+            void 0 !== a ? (u = e[a] = []) : (a = 'posthog'),
+              u.people = u.people || {},
+              Object.defineProperty(u, 'toString', {
+                configurable: !0,
+                enumerable: !0,
+                writable: !0,
+                value: function (t) {
+                  let e = 'posthog';
+                  return ('posthog' !== a && (e += '.' + a), t || (e += ' (stub)'), e);
+                },
+              }),
+              Object.defineProperty(u.people, 'toString', {
+                configurable: !0,
+                enumerable: !0,
+                writable: !0,
+                value: function () {
+                  return u.toString(1) + '.people (stub)';
+                },
+              }),
+              o =
+                'capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys getNextSurveyStep onSessionId'.split(
+                  ' ',
+                ),
+              n = 0;
+            n < o.length;
+            n++
+          )
+            g(u, o[n]);
+          e._i.push([i, s, a]);
+        }),
+        (e.__SV = 1));
+    })(document, window.posthog || []);
+    /* eslint-enable @typescript-eslint/no-unused-expressions, prefer-rest-params */
+    // POSTHOG_BROWSER_SNIPPET_END
+
+    posthog.init(apiKey, {
+      api_host: apiHost,
+      capture_exceptions: {
+        capture_unhandled_errors: true,
+        capture_unhandled_rejections: true,
+        capture_console_errors: false,
+      },
+      logs: {
+        serviceName: 'vampire-survivors-guide',
+        environment: isDev ? 'development' : 'production',
+      },
+      loaded: (posthog) => {
+        posthog.logger?.info('posthog_log_capture_initialized', {
+          page_path: window.location.pathname,
+        });
+      },
+    });
+
+    document.addEventListener('click', (event) => {
+      const link = event.target instanceof Element ? event.target.closest('a[href]') : null;
+      if (!link || link.origin === window.location.origin) return;
+
+      const destination =
+        link.hostname === 'note.com'
+          ? 'note'
+          : link.hostname === 'www.youtube.com'
+            ? 'youtube'
+            : undefined;
+
+      if (destination) {
+        posthog.capture('external_content_opened', { destination });
+      }
+    });
+
+    // Track meaningful navigation and engagement on the homepage and listing pages.
+    function initializePageAnalytics() {
+      const pageRoots = document.querySelectorAll(
+        '[data-posthog-page="home"], [data-posthog-page="listing"]',
+      );
+
+      pageRoots.forEach((root) => {
+        // Ignore the hidden responsive variant to prevent duplicate page-level events.
+        if (!root.getClientRects().length) return;
+
+        const pageType = root.getAttribute('data-posthog-page');
+        const pagePath = window.location.pathname;
+        const listingName = root.getAttribute('data-posthog-listing-name') || undefined;
+        const isHomePage = pageType === 'home';
+        const scrollEventName = isHomePage ? 'home_scroll_depth' : 'listing_scroll_depth';
+        const recordedMilestones = new Set();
+
+        function getPageProgressPercent() {
+          const rootTop = root.getBoundingClientRect().top + window.scrollY;
+          const rootHeight = Math.max(root.scrollHeight, root.getBoundingClientRect().height);
+          if (rootHeight <= 0) return 0;
+
+          const viewportBottom = window.scrollY + window.innerHeight;
+          return Math.max(0, Math.min(100, ((viewportBottom - rootTop) / rootHeight) * 100));
+        }
+
+        function trackPageScrollDepth() {
+          const progress = Math.floor(getPageProgressPercent());
+
+          [25, 50, 75, 100].forEach((milestone) => {
+            if (progress < milestone || recordedMilestones.has(milestone)) return;
+
+            recordedMilestones.add(milestone);
+            posthog.capture(scrollEventName, {
+              page_path: pagePath,
+              depth_percent: milestone,
+              ...(listingName ? { listing_name: listingName } : {}),
+            });
+          });
+        }
+
+        window.addEventListener('scroll', trackPageScrollDepth, { passive: true });
+        trackPageScrollDepth();
+
+        const sectionSelector = isHomePage
+          ? '[data-posthog-home-section]'
+          : '[data-character-section], [data-posthog-listing-section]';
+        const sections = root.querySelectorAll(sectionSelector);
+
+        if ('IntersectionObserver' in window && sections.length > 0) {
+          const viewedSections = new Set();
+          const sectionEventName = isHomePage ? 'home_section_viewed' : 'listing_section_viewed';
+          const observer = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                if (!entry.isIntersecting || entry.intersectionRatio < 0.1) return;
+
+                const section = entry.target;
+                const sectionName = isHomePage
+                  ? section.getAttribute('data-posthog-home-section')
+                  : section.getAttribute('data-posthog-listing-section') ||
+                    section.getAttribute('data-character-section');
+
+                if (!sectionName || viewedSections.has(sectionName)) return;
+
+                viewedSections.add(sectionName);
+                posthog.capture(sectionEventName, {
+                  page_path: pagePath,
+                  section: sectionName,
+                  ...(listingName ? { listing_name: listingName } : {}),
+                });
+                observer.unobserve(section);
+              });
+            },
+            { threshold: 0.1 },
+          );
+
+          sections.forEach((section) => observer.observe(section));
+        }
+      });
+    }
+
+    document.addEventListener('click', (event) => {
+      const target = event.target instanceof Element ? event.target : null;
+      const categoryLink = target?.closest('[data-posthog-home-category]');
+
+      if (categoryLink) {
+        const category = categoryLink.getAttribute('data-posthog-home-category');
+        if (category) {
+          posthog.capture('home_category_clicked', {
+            category,
+            source_path: window.location.pathname,
+            surface:
+              categoryLink.getAttribute('data-posthog-home-category-surface') || 'home_content',
+            link_text: (categoryLink.textContent || '').trim().replace(/\\s+/g, ' ').slice(0, 100),
+            destination: categoryLink.getAttribute('href') || '',
+          });
+        }
+      }
+
+      const listItemLink = target?.closest('a[data-posthog-list-item]');
+      const listingRoot = listItemLink?.closest('[data-posthog-page="listing"]');
+
+      if (listItemLink && listingRoot) {
+        posthog.capture('listing_item_clicked', {
+          page_path: window.location.pathname,
+          listing_name: listingRoot.getAttribute('data-posthog-listing-name') || 'unknown',
+          item_id: listItemLink.getAttribute('data-posthog-list-item') || '',
+          item_text: (listItemLink.textContent || '').trim().replace(/\\s+/g, ' ').slice(0, 100),
+          destination: listItemLink.getAttribute('href') || '',
+        });
+      }
+    });
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initializePageAnalytics, { once: true });
+    } else {
+      initializePageAnalytics();
+    }
+
+    // Article templates should expose the content root as <article> or
+    // [data-article-content]. Mark the table of contents with
+    // [data-posthog-toc] and the related-links wrapper with
+    // [data-posthog-related-articles] for reliable event attribution.
+    function initializeArticleAnalytics() {
+      const articleRoot = document.querySelector(
+        'main article, main [data-article-content], main [data-page-type="article"]',
+      );
+
+      // The current site has no article pages yet. Keep homepage and directory
+      // interactions out of article engagement metrics until article templates exist.
+      if (!articleRoot) return;
+
+      const pagePath = window.location.pathname;
+      const tocSelector = [
+        '[data-posthog-toc]',
+        '[data-article-toc]',
+        '#toc',
+        '#table-of-contents',
+        '.toc',
+        '.table-of-contents',
+        'nav[aria-label="目次"]',
+        'nav[aria-label="Table of contents"]',
+      ].join(', ');
+      const relatedLinksSelector = [
+        'a[data-posthog-related-article]',
+        '[data-posthog-related-articles] a[href]',
+        '[data-related-articles] a[href]',
+        '#related-articles a[href]',
+        '.related-articles a[href]',
+        'section[aria-label="関連記事"] a[href]',
+        'section[aria-label="Related articles"] a[href]',
+      ].join(', ');
+
+      document.addEventListener('click', (event) => {
+        const target = event.target instanceof Element ? event.target : null;
+        const link = target?.closest('a[href]');
+        if (!link) return;
+
+        const destination = new URL(link.href, window.location.href);
+        const linkText = (link.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 100);
+        const tocContainer = link.closest(tocSelector);
+
+        if (
+          tocContainer &&
+          destination.origin === window.location.origin &&
+          destination.pathname === pagePath &&
+          destination.hash
+        ) {
+          posthog.capture('article_toc_clicked', {
+            page_path: pagePath,
+            section_id: destination.hash.slice(1),
+            link_text: linkText,
+          });
+          return;
+        }
+
+        const isRelatedLink =
+          link.matches('a[data-posthog-related-article]') ||
+          Boolean(link.closest(relatedLinksSelector));
+
+        if (
+          isRelatedLink &&
+          destination.origin === window.location.origin &&
+          destination.pathname !== pagePath
+        ) {
+          posthog.capture('related_article_clicked', {
+            source_path: pagePath,
+            destination_path: destination.pathname,
+            link_text: linkText,
+          });
+        }
+      });
+
+      function getArticleProgressPercent() {
+        const articleTop = articleRoot.getBoundingClientRect().top + window.scrollY;
+        const articleHeight = Math.max(
+          articleRoot.scrollHeight,
+          articleRoot.getBoundingClientRect().height,
+        );
+        if (articleHeight <= 0) return 0;
+
+        const viewportBottom = window.scrollY + window.innerHeight;
+        return Math.max(0, Math.min(100, ((viewportBottom - articleTop) / articleHeight) * 100));
+      }
+
+      const scrollDepthMilestones = [25, 50, 75, 100];
+      const recordedScrollDepths = new Set();
+      let maxScrollDepthPercent = 0;
+
+      function trackScrollDepth() {
+        const currentProgress = getArticleProgressPercent();
+        maxScrollDepthPercent = Math.max(maxScrollDepthPercent, currentProgress);
+        const scrollProgress = Math.floor(currentProgress);
+
+        scrollDepthMilestones.forEach((milestone) => {
+          if (scrollProgress >= milestone && !recordedScrollDepths.has(milestone)) {
+            recordedScrollDepths.add(milestone);
+            posthog.capture('article_scroll_depth', {
+              page_path: pagePath,
+              depth_percent: milestone,
+            });
+          }
+        });
+
+        trackArticleEngagement();
+      }
+
+      // Count time only while the article's tab is visible.
+      let visibleTimeMs = 0;
+      let lastTimeCheck = performance.now();
+      let wasVisible = document.visibilityState === 'visible';
+      let viewed30SecondsSent = false;
+      let articleReadSent = false;
+      let articleTimeSpentSent = false;
+
+      function trackArticleEngagement() {
+        const now = performance.now();
+        if (wasVisible) visibleTimeMs += now - lastTimeCheck;
+        lastTimeCheck = now;
+        wasVisible = document.visibilityState === 'visible';
+
+        const visibleTimeSeconds = Math.floor(visibleTimeMs / 1000);
+        if (!viewed30SecondsSent && visibleTimeMs >= 30_000) {
+          viewed30SecondsSent = true;
+          posthog.capture('article_viewed_30s', {
+            page_path: pagePath,
+            visible_time_seconds: visibleTimeSeconds,
+          });
+        }
+
+        if (!articleReadSent && visibleTimeMs >= 30_000 && maxScrollDepthPercent >= 90) {
+          articleReadSent = true;
+          posthog.capture('article_read', {
+            page_path: pagePath,
+            visible_time_seconds: visibleTimeSeconds,
+            read_depth_percent: 90,
+          });
+        }
+      }
+
+      window.addEventListener('scroll', trackScrollDepth, { passive: true });
+      document.addEventListener('visibilitychange', trackArticleEngagement);
+      window.setInterval(trackArticleEngagement, 1000);
+      window.addEventListener('pagehide', () => {
+        trackArticleEngagement();
+        maxScrollDepthPercent = Math.max(maxScrollDepthPercent, getArticleProgressPercent());
+
+        if (!articleTimeSpentSent && visibleTimeMs > 0) {
+          articleTimeSpentSent = true;
+          posthog.capture('article_time_spent', {
+            page_path: pagePath,
+            visible_time_seconds: Math.round(visibleTimeMs / 1000),
+            max_scroll_depth_percent: Math.floor(maxScrollDepthPercent),
+          });
+        }
+      });
+      trackScrollDepth();
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initializeArticleAnalytics, {
+        once: true,
+      });
+    } else {
+      initializeArticleAnalytics();
+    }
+  }
+</script>
