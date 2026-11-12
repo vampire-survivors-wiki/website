@@ -134,7 +134,10 @@
         if (!link) return;
 
         const destination = new URL(link.href, window.location.href);
-        const linkText = (link.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 100);
+        const linkText = (link.textContent || '')
+          .trim()
+          .replace(/\s+/g, ' ')
+          .slice(0, 100);
 
         const tocContainer = link.closest(tocSelector);
         if (
