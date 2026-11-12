@@ -134,7 +134,7 @@
         if (!link) return;
 
         const destination = new URL(link.href, window.location.href);
-        const linkText = (link.textContent || '')
+        const linkText = (link.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 100);
           .trim()
           .replace(/\s+/g, ' ')
           .slice(0, 100);
@@ -185,9 +185,12 @@
       // Record scroll milestones relative to the article body, not the full page.
       const scrollDepthMilestones = [25, 50, 75, 100];
       const recordedScrollDepths = new Set();
+      let maxScrollDepthPercent = 0;
 
       function trackScrollDepth() {
-        const scrollProgress = Math.floor(getArticleProgressPercent());
+        const currentProgress = getArticleProgressPercent();
+        maxScrollDepthPercent = Math.max(maxScrollDepthPercent, currentProgress);
+        const scrollProgress = Math.floor(currentProgress);
 
         scrollDepthMilestones.forEach((milestone) => {
           if (scrollProgress >= milestone && !recordedScrollDepths.has(milestone)) {
@@ -225,10 +228,7 @@
           });
         }
 
-        if (
-          !articleReadSent &&
-          visibleTimeMs >= 30_000 &&
-          getArticleProgressPercent() >= 90
+        if (!articleReadSent && visibleTimeMs >= 30_000 && getArticleProgressPercent() >= 90) {
         ) {
           articleReadSent = true;
           posthog.capture('article_read', {
@@ -254,6 +254,10 @@
             });
           }
         },
+          maxScrollDepthPercent = Math.max(
+            maxScrollDepthPercent,
+            getArticleProgressPercent(),
+          );
         { once: true },
       );
       trackScrollDepth();
