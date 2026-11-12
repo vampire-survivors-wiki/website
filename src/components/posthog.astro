@@ -108,32 +108,149 @@
       }
     });
 
-    // Record each scroll-depth milestone once per page view.
-    const scrollDepthMilestones = [25, 50, 75, 100];
-    const recordedScrollDepths = new Set();
-
-    function trackScrollDepth() {
-      const scrollableHeight =
-        document.documentElement.scrollHeight - window.innerHeight;
-
-      if (scrollableHeight <= 0) return;
-
-      const scrollProgress = Math.min(
-        100,
-        Math.round((window.scrollY / scrollableHeight) * 100),
+    // Article templates should expose the content root as <article> or
+    // [data-article-content]. Mark the table of contents with
+    // [data-posthog-toc] and the related-links wrapper with
+    // [data-posthog-related-articles] for reliable event attribution.
+    function initializeArticleAnalytics() {
+      const articleRoot = document.querySelector(
+        'main article, main [data-article-content], main [data-page-type="article"]',
       );
 
-      scrollDepthMilestones.forEach((milestone) => {
-        if (scrollProgress >= milestone && !recordedScrollDepths.has(milestone)) {
-          recordedScrollDepths.add(milestone);
-          posthog.capture('article_scroll_depth', {
-            page_path: window.location.pathname,
-            depth_percent: milestone,
+      // The current site has no article pages yet. Keep homepage and directory
+      // interactions out of article engagement metrics until article templates exist.
+      if (!articleRoot) return;
+
+      const pagePath = window.location.pathname;
+      const tocSelector =
+        '[data-posthog-toc], [data-article-toc], #toc, #table-of-contents, .toc, .table-of-contents, nav[aria-label="目次"], nav[aria-label="Table of contents"]';
+      const relatedLinksSelector =
+        'a[data-posthog-related-article], [data-posthog-related-articles] a[href], [data-related-articles] a[href], #related-articles a[href], .related-articles a[href], section[aria-label="関連記事"] a[href], section[aria-label="Related articles"] a[href]';
+
+      // Delegate clicks so dynamically rendered article navigation is tracked too.
+      document.addEventListener('click', (event) => {
+        const target = event.target instanceof Element ? event.target : null;
+        const link = target?.closest('a[href]');
+        if (!link) return;
+
+        const destination = new URL(link.href, window.location.href);
+        const linkText = (link.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 100);
+
+        const tocContainer = link.closest(tocSelector);
+        if (
+          tocContainer &&
+          destination.origin === window.location.origin &&
+          destination.pathname === pagePath &&
+          destination.hash
+        ) {
+          posthog.capture('article_toc_clicked', {
+            page_path: pagePath,
+            section_id: destination.hash.slice(1),
+            link_text: linkText,
+          });
+          return;
+        }
+
+        const isRelatedLink =
+          link.matches('a[data-posthog-related-article]') ||
+          Boolean(link.closest(relatedLinksSelector));
+        if (
+          isRelatedLink &&
+          destination.origin === window.location.origin &&
+          destination.pathname !== pagePath
+        ) {
+          posthog.capture('related_article_clicked', {
+            source_path: pagePath,
+            destination_path: destination.pathname,
+            link_text: linkText,
           });
         }
       });
+
+      function getArticleProgressPercent() {
+        const articleTop = articleRoot.getBoundingClientRect().top + window.scrollY;
+        const articleHeight = Math.max(
+          articleRoot.scrollHeight,
+          articleRoot.getBoundingClientRect().height,
+        );
+        if (articleHeight <= 0) return 0;
+
+        const viewportBottom = window.scrollY + window.innerHeight;
+        return Math.max(
+          0,
+          Math.min(100, ((viewportBottom - articleTop) / articleHeight) * 100),
+        );
+      }
+
+      // Record scroll milestones relative to the article body, not the full page.
+      const scrollDepthMilestones = [25, 50, 75, 100];
+      const recordedScrollDepths = new Set();
+
+      function trackScrollDepth() {
+        const scrollProgress = Math.floor(getArticleProgressPercent());
+
+        scrollDepthMilestones.forEach((milestone) => {
+          if (scrollProgress >= milestone && !recordedScrollDepths.has(milestone)) {
+            recordedScrollDepths.add(milestone);
+            posthog.capture('article_scroll_depth', {
+              page_path: pagePath,
+              depth_percent: milestone,
+            });
+          }
+        });
+
+        trackArticleEngagement();
+      }
+
+      // Count time only while the article's tab is visible. A read completion
+      // requires both 30 seconds of visible time and reaching 90% of the article.
+      let visibleTimeMs = 0;
+      let lastTimeCheck = performance.now();
+      let wasVisible = document.visibilityState === 'visible';
+      let viewed30SecondsSent = false;
+      let articleReadSent = false;
+
+      function trackArticleEngagement() {
+        const now = performance.now();
+        if (wasVisible) visibleTimeMs += now - lastTimeCheck;
+        lastTimeCheck = now;
+        wasVisible = document.visibilityState === 'visible';
+
+        const visibleTimeSeconds = Math.floor(visibleTimeMs / 1000);
+        if (!viewed30SecondsSent && visibleTimeMs >= 30_000) {
+          viewed30SecondsSent = true;
+          posthog.capture('article_viewed_30s', {
+            page_path: pagePath,
+            visible_time_seconds: visibleTimeSeconds,
+          });
+        }
+
+        if (
+          !articleReadSent &&
+          visibleTimeMs >= 30_000 &&
+          getArticleProgressPercent() >= 90
+        ) {
+          articleReadSent = true;
+          posthog.capture('article_read', {
+            page_path: pagePath,
+            visible_time_seconds: visibleTimeSeconds,
+            read_depth_percent: 90,
+          });
+        }
+      }
+
+      window.addEventListener('scroll', trackScrollDepth, { passive: true });
+      document.addEventListener('visibilitychange', trackArticleEngagement);
+      window.setInterval(trackArticleEngagement, 1000);
+      trackScrollDepth();
     }
 
-    window.addEventListener('scroll', trackScrollDepth, { passive: true });
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initializeArticleAnalytics, {
+        once: true,
+      });
+    } else {
+      initializeArticleAnalytics();
+    }
   }
 </script>
