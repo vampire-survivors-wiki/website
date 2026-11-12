@@ -110,21 +110,26 @@
 
     // Track meaningful navigation and engagement on the homepage and listing pages.
     function initializePageAnalytics() {
-      const pageRoots = Array.from(
-        document.querySelectorAll('[data-posthog-page="home"], [data-posthog-page="listing"]'),
-      ).filter((root) => root.getClientRects().length > 0);
+      const pageRoots = document.querySelectorAll(
+        '[data-posthog-page="home"], [data-posthog-page="listing"]',
+      );
 
       pageRoots.forEach((root) => {
+        if (!root.getClientRects().length) return;
+
         const pageType = root.getAttribute('data-posthog-page');
         const pagePath = window.location.pathname;
         const listingName = root.getAttribute('data-posthog-listing-name') || undefined;
-        const scrollEventName =
-          pageType === 'home' ? 'home_scroll_depth' : 'listing_scroll_depth';
+        const isHomePage = pageType === 'home';
+        const scrollEventName = isHomePage ? 'home_scroll_depth' : 'listing_scroll_depth';
         const recordedMilestones = new Set();
 
         function getPageProgressPercent() {
           const rootTop = root.getBoundingClientRect().top + window.scrollY;
-          const rootHeight = Math.max(root.scrollHeight, root.getBoundingClientRect().height);
+          const rootHeight = Math.max(
+            root.scrollHeight,
+            root.getBoundingClientRect().height,
+          );
           if (rootHeight <= 0) return 0;
 
           const viewportBottom = window.scrollY + window.innerHeight;
@@ -133,51 +138,51 @@
 
         function trackPageScrollDepth() {
           const progress = Math.floor(getPageProgressPercent());
+
           [25, 50, 75, 100].forEach((milestone) => {
-            if (progress >= milestone && !recordedMilestones.has(milestone)) {
-              recordedMilestones.add(milestone);
-              posthog.capture(scrollEventName, {
-                page_path: pagePath,
-                depth_percent: milestone,
-                ...(listingName ? { listing_name: listingName } : {}),
-              });
-            }
+            if (progress < milestone || recordedMilestones.has(milestone)) return;
+
+            recordedMilestones.add(milestone);
+            posthog.capture(scrollEventName, {
+              page_path: pagePath,
+              depth_percent: milestone,
+              ...(listingName ? { listing_name: listingName } : {}),
+            });
           });
         }
 
         window.addEventListener('scroll', trackPageScrollDepth, { passive: true });
         trackPageScrollDepth();
 
-        const sectionSelector =
-          pageType === 'home'
-            ? '[data-posthog-home-section]'
-            : '[data-character-section], [data-posthog-listing-section]';
+        const sectionSelector = isHomePage
+          ? '[data-posthog-home-section]'
+          : '[data-character-section], [data-posthog-listing-section]';
         const sections = root.querySelectorAll(sectionSelector);
 
         if ('IntersectionObserver' in window && sections.length > 0) {
           const viewedSections = new Set();
+          const sectionEventName = isHomePage
+            ? 'home_section_viewed'
+            : 'listing_section_viewed';
           const observer = new IntersectionObserver(
             (entries) => {
               entries.forEach((entry) => {
                 if (!entry.isIntersecting || entry.intersectionRatio < 0.1) return;
 
                 const section = entry.target;
-                const sectionName =
-                  pageType === 'home'
-                    ? section.getAttribute('data-posthog-home-section')
-                    : section.getAttribute('data-posthog-listing-section') ||
-                      section.getAttribute('data-character-section');
+                const sectionName = isHomePage
+                  ? section.getAttribute('data-posthog-home-section')
+                  : section.getAttribute('data-posthog-listing-section') ||
+                    section.getAttribute('data-character-section');
 
                 if (!sectionName || viewedSections.has(sectionName)) return;
+
                 viewedSections.add(sectionName);
-                posthog.capture(
-                  pageType === 'home' ? 'home_section_viewed' : 'listing_section_viewed',
-                  {
-                    page_path: pagePath,
-                    section: sectionName,
-                    ...(listingName ? { listing_name: listingName } : {}),
-                  },
-                );
+                posthog.capture(sectionEventName, {
+                  page_path: pagePath,
+                  section: sectionName,
+                  ...(listingName ? { listing_name: listingName } : {}),
+                });
                 observer.unobserve(section);
               });
             },
@@ -201,7 +206,7 @@
             source_path: window.location.pathname,
             surface:
               categoryLink.getAttribute('data-posthog-home-category-surface') || 'home_content',
-            link_text: (categoryLink.textContent || '').trim().slice(0, 100),
+            link_text: (categoryLink.textContent || '').trim().replace(/\\s+/g, ' ').slice(0, 100),
             destination: categoryLink.getAttribute('href') || '',
           });
         }
@@ -209,12 +214,13 @@
 
       const listItemLink = target?.closest('a[data-posthog-list-item]');
       const listingRoot = listItemLink?.closest('[data-posthog-page="listing"]');
+
       if (listItemLink && listingRoot) {
         posthog.capture('listing_item_clicked', {
           page_path: window.location.pathname,
           listing_name: listingRoot.getAttribute('data-posthog-listing-name') || 'unknown',
           item_id: listItemLink.getAttribute('data-posthog-list-item') || '',
-          item_text: (listItemLink.textContent || '').trim().slice(0, 100),
+          item_text: (listItemLink.textContent || '').trim().replace(/\\s+/g, ' ').slice(0, 100),
           destination: listItemLink.getAttribute('href') || '',
         });
       }
