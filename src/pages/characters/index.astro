@@ -11,12 +11,22 @@ import { characterDisplayGroups } from '../../data/character-display';
   currentPath="/characters/"
 >
   <!-- PC画面 (md以上で自動表示) -->
-  <div data-character-view="desktop" data-posthog-page="listing" data-posthog-listing-name="characters" class="hidden md:block">
+  <div
+    data-character-view="desktop"
+    data-posthog-page="listing"
+    data-posthog-listing-name="characters"
+    class="hidden md:block"
+  >
     <CharactersDesktop characterGroups={characterDisplayGroups} />
   </div>
 
   <!-- スマホ画面 (md未満で自動表示) -->
-  <div data-character-view="mobile" data-posthog-page="listing" data-posthog-listing-name="characters" class="block md:hidden">
+  <div
+    data-character-view="mobile"
+    data-posthog-page="listing"
+    data-posthog-listing-name="characters"
+    class="block md:hidden"
+  >
     <CharactersMobile characterGroups={characterDisplayGroups} />
   </div>
 </Layout>
