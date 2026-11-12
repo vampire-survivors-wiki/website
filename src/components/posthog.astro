@@ -126,10 +126,7 @@
 
         function getPageProgressPercent() {
           const rootTop = root.getBoundingClientRect().top + window.scrollY;
-          const rootHeight = Math.max(
-            root.scrollHeight,
-            root.getBoundingClientRect().height,
-          );
+          const rootHeight = Math.max(root.scrollHeight, root.getBoundingClientRect().height);
           if (rootHeight <= 0) return 0;
 
           const viewportBottom = window.scrollY + window.innerHeight;
@@ -161,9 +158,7 @@
 
         if ('IntersectionObserver' in window && sections.length > 0) {
           const viewedSections = new Set();
-          const sectionEventName = isHomePage
-            ? 'home_section_viewed'
-            : 'listing_section_viewed';
+          const sectionEventName = isHomePage ? 'home_section_viewed' : 'listing_section_viewed';
           const observer = new IntersectionObserver(
             (entries) => {
               entries.forEach((entry) => {
