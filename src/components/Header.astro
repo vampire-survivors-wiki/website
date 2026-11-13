@@ -42,6 +42,7 @@ const navItems = [
           <a
             href={item.href}
             target={item.target}
+            aria-current={isActive ? 'page' : undefined}
             data-posthog-home-category={
               ['strategy', 'gold', 'updates'].includes(item.id) ? item.id : undefined
             }
