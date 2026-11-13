@@ -142,6 +142,7 @@ test.describe('サイトのルーティングと共通コンポーネント', ()
     await expect(desktop).toContainText('キャラクター情報');
     await expect(desktop).toContainText('アンロック攻略');
     await expect(desktop.locator('a[href="/characters/"]')).toHaveCount(1);
+    await expect(desktop.locator('[aria-disabled="true"]')).toHaveCount(3);
     await expect(page.locator('header nav a[href="/strategy/"]')).toHaveAttribute(
       'aria-current',
       'page',
@@ -150,7 +151,8 @@ test.describe('サイトのルーティングと共通コンポーネント', ()
     await page.setViewportSize({ width: 390, height: 844 });
     await expect(desktop).toBeHidden();
     await expect(mobile).toBeVisible();
-    await expect(mobile.locator('a[data-posthog-list-item]')).toHaveCount(4);
+    await expect(mobile.locator('a[data-posthog-list-item]')).toHaveCount(1);
+    await expect(mobile.locator('a[aria-disabled="true"]')).toHaveCount(3);
     await expect(mobile).toContainText('攻略ディレクトリ');
     await expect(mobile).toContainText('ステージ攻略');
     await expect(mobile).toContainText('ボス攻略');
