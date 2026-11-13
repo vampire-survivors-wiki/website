@@ -121,6 +121,43 @@ test.describe('サイトのルーティングと共通コンポーネント', ()
     await expect(cards.nth(2).locator('a')).toHaveAttribute('href', '/characters/');
   });
 
+  test('攻略TopページがPC・スマートフォンで表示される', async ({ page }) => {
+    const response = await page.goto('/strategy/');
+
+    expect(response?.status()).toBe(200);
+    await expect(page).toHaveTitle(/攻略ディレクトリ/);
+    await expect(page.locator('meta[name="description"]')).toHaveAttribute(
+      'content',
+      'Vampire Survivorsの攻略ディレクトリ。ステージ攻略、ボス攻略、キャラクター情報、アンロック攻略の各一覧への案内ハブです。',
+    );
+
+    await page.setViewportSize({ width: 1280, height: 900 });
+    const desktop = page.locator('[data-strategy-view="desktop"]');
+    const mobile = page.locator('[data-strategy-view="mobile"]');
+    await expect(desktop).toBeVisible();
+    await expect(mobile).toBeHidden();
+    await expect(desktop.locator('section[id]')).toHaveCount(4);
+    await expect(desktop).toContainText('ステージ攻略');
+    await expect(desktop).toContainText('ボス攻略');
+    await expect(desktop).toContainText('キャラクター情報');
+    await expect(desktop).toContainText('アンロック攻略');
+    await expect(desktop.locator('a[href="/characters/"]')).toHaveCount(1);
+    await expect(page.locator('header nav a[href="/strategy/"]')).toHaveAttribute(
+      'aria-current',
+      'page',
+    );
+
+    await page.setViewportSize({ width: 390, height: 844 });
+    await expect(desktop).toBeHidden();
+    await expect(mobile).toBeVisible();
+    await expect(mobile.locator('a[data-posthog-list-item]')).toHaveCount(4);
+    await expect(mobile).toContainText('攻略ディレクトリ');
+    await expect(mobile).toContainText('ステージ攻略');
+    await expect(mobile).toContainText('ボス攻略');
+    await expect(mobile).toContainText('キャラクター情報');
+    await expect(mobile).toContainText('アンロック攻略');
+  });
+
   test('キャラクター一覧ページとPC・スマートフォン用コンポーネントが描画される', async ({
     page,
   }) => {
@@ -273,7 +310,7 @@ test.describe('サイトのルーティングと共通コンポーネント', ()
     const desktopNav = page.locator('header nav');
     await expect(desktopNav).toBeVisible();
     await expect(desktopNav.getByRole('link')).toHaveCount(6);
-    await expect(desktopNav.locator('a[href="#strategy"]')).toHaveCount(1);
+    await expect(desktopNav.locator('a[href="/strategy/"]')).toHaveCount(1);
     await expect(desktopNav.locator('a[href="/characters/"]')).toHaveCount(0);
     await expect(page.getByRole('button', { name: 'メニューを開く' })).toBeHidden();
 
@@ -394,7 +431,7 @@ test.describe('スマートフォン操作', () => {
     );
     await expect(panel).toContainText('YouTube 攻略動画');
     await expect(panel).not.toContainText('PREPARING');
-    await expect(panel.locator('a[href="/#strategy-mobile"]')).toHaveCount(1);
+    await expect(panel.locator('a[href="/strategy/"]')).toHaveCount(1);
     await expect(panel.locator('a[href="/#gold-mobile"]')).toHaveCount(1);
     await expect(panel.locator('a[href="/#updates-mobile"]')).toHaveCount(1);
     await expect(panel.locator('a[href="/characters/"]')).toHaveCount(0);
@@ -405,7 +442,6 @@ test.describe('スマートフォン操作', () => {
   test('セクションリンクを選択するとドロワーが閉じる', async ({ page }) => {
     const panel = page.locator('#drawer-panel');
     const sectionLinks = [
-      { href: '/#strategy-mobile', hash: '#strategy-mobile' },
       { href: '/#gold-mobile', hash: '#gold-mobile' },
       { href: '/#updates-mobile', hash: '#updates-mobile' },
     ];
