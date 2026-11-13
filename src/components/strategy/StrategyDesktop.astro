@@ -74,7 +74,12 @@ const categories: CategoryItem[] = [
     data-posthog-listing-section="intro"
   >
     <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
-      <span class="text-xs font-mono font-medium tracking-widest text-slate-500 uppercase block mb-2">
+      <span
+        class:list={[
+          'text-xs font-mono font-medium tracking-widest text-slate-500',
+          'uppercase block mb-2',
+        ]}
+      >
         ARCHIVE & VERIFICATION COMPENDIUM
       </span>
       <h1 class="text-4xl lg:text-5xl font-extrabold tracking-tight text-slate-950 mb-3">
@@ -105,14 +110,26 @@ const categories: CategoryItem[] = [
         <section
           id={item.id}
           data-posthog-listing-section={item.id}
-          class="glass-panel rounded-2xl overflow-hidden p-6 lg:p-8 flex flex-col md:flex-row items-center gap-8 transition-all hover:shadow-md"
+          class:list={[
+            'glass-panel rounded-2xl overflow-hidden p-6 lg:p-8',
+            'flex flex-col md:flex-row items-center gap-8',
+            'transition-all hover:shadow-md',
+          ]}
         >
           <!-- 左側：画像配置予定領域 -->
           <div
-            class="w-full md:w-[380px] lg:w-[440px] h-[210px] rounded-xl bg-slate-100/90 border border-slate-200/60 flex flex-col items-center justify-center text-center p-6 shrink-0 group"
+            class:list={[
+              'w-full md:w-[380px] lg:w-[440px] h-[210px] rounded-xl',
+              'bg-slate-100/90 border border-slate-200/60',
+              'flex flex-col items-center justify-center text-center p-6 shrink-0 group',
+            ]}
           >
             <div
-              class="w-12 h-12 rounded-xl bg-white/80 border border-slate-200/80 flex items-center justify-center text-blue-600 shadow-xs mb-3 group-hover:scale-105 transition-transform"
+              class:list={[
+                'w-12 h-12 rounded-xl bg-white/80 border border-slate-200/80',
+                'flex items-center justify-center text-blue-600 shadow-xs mb-3',
+                'group-hover:scale-105 transition-transform',
+              ]}
             >
               <svg
                 class="w-6 h-6"
@@ -153,14 +170,21 @@ const categories: CategoryItem[] = [
                   href={item.href}
                   data-posthog-list-item={item.id}
                   aria-label={item.title + 'の一覧を見る'}
-                  class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-slate-950 text-white text-xs font-bold hover:bg-slate-800 transition-colors shadow-xs group"
+                  class:list={[
+                    'inline-flex items-center gap-2 px-5 py-2.5 rounded-xl',
+                    'bg-slate-950 text-white text-xs font-bold hover:bg-slate-800',
+                    'transition-colors shadow-xs group',
+                  ]}
                 >
                   <span>{item.ctaText}</span>
                 </a>
               ) : (
                 <span
                   aria-disabled="true"
-                  class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-slate-100 text-slate-400 text-xs font-bold cursor-default"
+                  class:list={[
+                    'inline-flex items-center gap-2 px-5 py-2.5 rounded-xl',
+                    'bg-slate-100 text-slate-400 text-xs font-bold cursor-default',
+                  ]}
                 >
                   準備中
                 </span>
