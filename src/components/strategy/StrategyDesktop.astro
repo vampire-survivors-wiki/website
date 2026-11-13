@@ -69,7 +69,10 @@ const categories: CategoryItem[] = [
 
 <div class="w-full" data-strategy-content="desktop">
   <!-- ヒーローフロストガラス帯 -->
-  <section class="w-full hero-glass-band pt-12 pb-8 mb-10" data-posthog-listing-section="intro">
+  <section
+    class="w-full hero-glass-band pt-12 pb-8 mb-10"
+    data-posthog-listing-section="intro"
+  >
     <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
       <span class="text-xs font-mono font-medium tracking-widest text-slate-500 uppercase block mb-2">
         ARCHIVE & VERIFICATION COMPENDIUM
@@ -82,7 +85,10 @@ const categories: CategoryItem[] = [
       </p>
 
       <!-- アンカーショートカット -->
-      <nav aria-label="攻略カテゴリ" class="flex items-center gap-6 mt-6 text-xs font-mono text-slate-500">
+      <nav
+        aria-label="攻略カテゴリ"
+        class="flex items-center gap-6 mt-6 text-xs font-mono text-slate-500"
+      >
         {categories.map((cat) => (
           <a href={'#' + cat.id} class="hover:text-slate-900 transition-colors">
             {cat.number} {cat.title.replace('情報', '').replace('攻略', '')} ↓
@@ -102,8 +108,12 @@ const categories: CategoryItem[] = [
           class="glass-panel rounded-2xl overflow-hidden p-6 lg:p-8 flex flex-col md:flex-row items-center gap-8 transition-all hover:shadow-md"
         >
           <!-- 左側：画像配置予定領域 -->
-          <div class="w-full md:w-[380px] lg:w-[440px] h-[210px] rounded-xl bg-slate-100/90 border border-slate-200/60 flex flex-col items-center justify-center text-center p-6 shrink-0 group">
-            <div class="w-12 h-12 rounded-xl bg-white/80 border border-slate-200/80 flex items-center justify-center text-blue-600 shadow-xs mb-3 group-hover:scale-105 transition-transform">
+          <div
+            class="w-full md:w-[380px] lg:w-[440px] h-[210px] rounded-xl bg-slate-100/90 border border-slate-200/60 flex flex-col items-center justify-center text-center p-6 shrink-0 group"
+          >
+            <div
+              class="w-12 h-12 rounded-xl bg-white/80 border border-slate-200/80 flex items-center justify-center text-blue-600 shadow-xs mb-3 group-hover:scale-105 transition-transform"
+            >
               <svg
                 class="w-6 h-6"
                 fill="none"
