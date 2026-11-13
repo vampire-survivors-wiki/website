@@ -439,6 +439,20 @@ test.describe('スマートフォン操作', () => {
     await page.getByRole('button', { name: 'メニューを閉じる' }).click();
     await expect(panel).toHaveClass(/translate-x-full/);
   });
+  test('攻略メニューから攻略Topへ移動し、ドロワーが閉じる', async ({ page }) => {
+    const panel = page.locator('#drawer-panel');
+
+    await page.getByRole('button', { name: 'メニューを開く' }).click();
+    await panel.locator('a[href="/strategy/"]').click();
+
+    await expect(page).toHaveURL(/\/strategy\/$/);
+    await expect(panel).toHaveClass(/translate-x-full/);
+    await expect(page.locator('body')).not.toHaveCSS('overflow', 'hidden');
+
+    await page.getByRole('button', { name: 'メニューを開く' }).click();
+    await expect(panel.locator('a[href="/strategy/"]')).toHaveAttribute('aria-current', 'page');
+  });
+
   test('セクションリンクを選択するとドロワーが閉じる', async ({ page }) => {
     const panel = page.locator('#drawer-panel');
     const sectionLinks = [
