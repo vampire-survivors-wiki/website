@@ -88,27 +88,36 @@ const bannerItems: MobileBannerItem[] = [
         aria-disabled={banner.href ? undefined : 'true'}
         tabindex={banner.href ? undefined : -1}
         class:list={[
-          'relative block w-full rounded-2xl overflow-hidden shadow-xs border border-slate-200/80 transition-transform duration-200',
+          'relative block w-full rounded-2xl overflow-hidden shadow-xs border border-slate-200/80',
+          'transition-transform duration-200',
           banner.href ? 'active:scale-[0.98]' : 'cursor-default',
         ]}
       >
         <!-- 背景ビジュアル領域（画像を後から配置する想定） -->
         <div
           class:list={[
-            'w-full min-h-[148px] p-5 flex items-center justify-between bg-gradient-to-r',
+            'w-full min-h-[148px] p-5 flex items-center justify-between',
+            'bg-gradient-to-r',
             banner.bgGradient,
             'relative',
           ]}
         >
           <!-- ドット/ノイズオーバーレイ -->
           <div
-            class="absolute inset-0 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:16px_16px] opacity-10"
+            class:list={[
+              'absolute inset-0 bg-[radial-gradient(#ffffff_1px,transparent_1px)]',
+              '[background-size:16px_16px] opacity-10',
+            ]}
           ></div>
 
           <!-- バナー情報（左側） -->
           <div class="relative z-10 flex-1 pr-4 space-y-1">
             <div
-              class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-white/10 backdrop-blur-xs border border-white/15 text-[10px] font-mono font-bold tracking-wider text-slate-200"
+              class:list={[
+                'inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md',
+                'bg-white/10 backdrop-blur-xs border border-white/15',
+                'text-[10px] font-mono font-bold tracking-wider text-slate-200',
+              ]}
             >
               <span>{banner.number} {banner.categoryTag}</span>
             </div>
@@ -122,7 +131,10 @@ const bannerItems: MobileBannerItem[] = [
 
           <!-- 親指操作用大型円形CTAボタン（右側） -->
           <div
-            class="relative z-10 w-11 h-11 rounded-full bg-white text-slate-950 flex items-center justify-center shrink-0 shadow-md"
+            class:list={[
+              'relative z-10 w-11 h-11 rounded-full bg-white text-slate-950',
+              'flex items-center justify-center shrink-0 shadow-md',
+            ]}
           >
             <svg
               class="w-5 h-5"
