@@ -4,7 +4,7 @@ interface MobileBannerItem {
   categoryTag: string;
   title: string;
   description: string;
-  href: string;
+  href: string | null;
   bgGradient: string;
 }
 
@@ -14,7 +14,7 @@ const bannerItems: MobileBannerItem[] = [
     categoryTag: 'STAGES',
     title: 'ステージ攻略',
     description: '本編・DLC全マップ構造と生存手順',
-    href: '/strategy/stages/',
+    href: null,
     bgGradient: 'from-slate-950/90 via-slate-900/80 to-slate-950/95',
   },
   {
@@ -22,7 +22,7 @@ const bannerItems: MobileBannerItem[] = [
     categoryTag: 'BOSSES',
     title: 'ボス攻略',
     description: '死神撃破・ギミックボスの行動パターン',
-    href: '/strategy/bosses/',
+    href: null,
     bgGradient: 'from-slate-950/90 via-red-950/70 to-slate-950/95',
   },
   {
@@ -38,7 +38,7 @@ const bannerItems: MobileBannerItem[] = [
     categoryTag: 'SECRETS',
     title: 'アンロック攻略',
     description: 'アチーブメント達成・モーベインの秘密の呪文',
-    href: '/strategy/unlocks/',
+    href: null,
     bgGradient: 'from-slate-950/90 via-amber-950/70 to-slate-950/95',
   },
 ];
@@ -80,9 +80,15 @@ const bannerItems: MobileBannerItem[] = [
     {bannerItems.map((banner) => (
       <a
         href={banner.href}
-        data-posthog-list-item={banner.number}
-        aria-label={banner.title + 'の一覧を見る'}
-        class="relative block w-full rounded-2xl overflow-hidden shadow-xs border border-slate-200/80 active:scale-[0.98] transition-transform duration-200"
+        href={banner.href ?? undefined}
+        data-posthog-list-item={banner.href ? banner.number : undefined}
+        aria-label={banner.href ? banner.title + 'の一覧を見る' : undefined}
+        aria-disabled={banner.href ? undefined : 'true'}
+        tabindex={banner.href ? undefined : -1}
+        class:list={[
+          'relative block w-full rounded-2xl overflow-hidden shadow-xs border border-slate-200/80 transition-transform duration-200',
+          banner.href ? 'active:scale-[0.98]' : 'cursor-default',
+        ]}
       >
         <!-- 背景ビジュアル領域（画像を後から配置する想定） -->
         <div class={'w-full min-h-[148px] p-5 flex items-center justify-between bg-gradient-to-r ' + banner.bgGradient + ' relative'}>
