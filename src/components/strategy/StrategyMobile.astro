@@ -1,0 +1,122 @@
+---
+interface MobileBannerItem {
+  number: string;
+  categoryTag: string;
+  title: string;
+  description: string;
+  href: string;
+  bgGradient: string;
+}
+
+const bannerItems: MobileBannerItem[] = [
+  {
+    number: '01',
+    categoryTag: 'STAGES',
+    title: 'ステージ攻略',
+    description: '本編・DLC全マップ構造と生存手順',
+    href: '/strategy/stages/',
+    bgGradient: 'from-slate-950/90 via-slate-900/80 to-slate-950/95',
+  },
+  {
+    number: '02',
+    categoryTag: 'BOSSES',
+    title: 'ボス攻略',
+    description: '死神撃破・ギミックボスの行動パターン',
+    href: '/strategy/bosses/',
+    bgGradient: 'from-slate-950/90 via-red-950/70 to-slate-950/95',
+  },
+  {
+    number: '03',
+    categoryTag: 'CHARACTERS',
+    title: 'キャラクター情報',
+    description: '通常・隠し・DLCキャラクターの性能と固有能力',
+    href: '/characters/',
+    bgGradient: 'from-slate-950/90 via-blue-950/70 to-slate-950/95',
+  },
+  {
+    number: '04',
+    categoryTag: 'SECRETS',
+    title: 'アンロック攻略',
+    description: 'アチーブメント達成・モーベインの秘密の呪文',
+    href: '/strategy/unlocks/',
+    bgGradient: 'from-slate-950/90 via-amber-950/70 to-slate-950/95',
+  },
+];
+---
+
+<div class="px-4 py-6 space-y-5" data-strategy-content="mobile">
+  <!-- スマホパンくず & タイトル -->
+  <div class="space-y-1.5" data-posthog-listing-section="intro">
+    <nav aria-label="パンくずリスト" class="flex items-center gap-1.5 text-[11px] font-medium text-slate-500">
+      <svg
+        class="w-3.5 h-3.5"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        stroke-width="2"
+        aria-hidden="true"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1-1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+        />
+      </svg>
+      <a href="/" class="hover:text-slate-900">ホーム</a>
+      <span aria-hidden="true">/</span>
+      <span class="text-slate-900 font-bold" aria-current="page">攻略</span>
+    </nav>
+
+    <h1 class="text-2xl font-extrabold tracking-tight text-slate-950">
+      攻略ディレクトリ
+    </h1>
+    <p class="text-xs text-slate-600 leading-relaxed">
+      確認したい攻略カテゴリーを選択してください。各一覧へ移動します。
+    </p>
+  </div>
+
+  <!-- スマホ専用ビジュアルバナーリスト -->
+  <div class="space-y-3.5 pt-1">
+    {bannerItems.map((banner) => (
+      <a
+        href={banner.href}
+        data-posthog-list-item={banner.number}
+        aria-label={banner.title + 'の一覧を見る'}
+        class="relative block w-full rounded-2xl overflow-hidden shadow-xs border border-slate-200/80 active:scale-[0.98] transition-transform duration-200"
+      >
+        <!-- 背景ビジュアル領域（画像を後から配置する想定） -->
+        <div class={'w-full min-h-[148px] p-5 flex items-center justify-between bg-gradient-to-r ' + banner.bgGradient + ' relative'}>
+          <!-- ドット/ノイズオーバーレイ -->
+          <div class="absolute inset-0 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:16px_16px] opacity-10"></div>
+
+          <!-- バナー情報（左側） -->
+          <div class="relative z-10 flex-1 pr-4 space-y-1">
+            <div class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-white/10 backdrop-blur-xs border border-white/15 text-[10px] font-mono font-bold tracking-wider text-slate-200">
+              <span>{banner.number} {banner.categoryTag}</span>
+            </div>
+            <h2 class="text-lg font-bold text-white tracking-tight pt-0.5">
+              {banner.title}
+            </h2>
+            <p class="text-[11px] text-slate-300 leading-snug line-clamp-1">
+              {banner.description}
+            </p>
+          </div>
+
+          <!-- 親指操作用大型円形CTAボタン（右側） -->
+          <div class="relative z-10 w-11 h-11 rounded-full bg-white text-slate-950 flex items-center justify-center shrink-0 shadow-md">
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+              aria-hidden="true"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </div>
+        </div>
+      </a>
+    ))}
+  </div>
+</div>
