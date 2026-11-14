@@ -169,12 +169,13 @@ test.describe('サイトのルーティングと共通コンポーネント', ()
 
     const disabledCards = mobile.locator('a[aria-disabled="true"]');
     await expect(disabledCards).toHaveCount(3);
-    await expect(disabledCards).not.toHaveAttribute('href');
-    await expect(disabledCards).toHaveAttribute('tabindex', '-1');
-    await expect(disabledCards.nth(0)).toHaveCSS('pointer-events', 'none');
-    await expect(disabledCards.nth(0).locator('[data-disabled-cta="true"]')).toHaveClass(
-      /opacity-60/,
-    );
+
+    for (const card of await disabledCards.all()) {
+      await expect(card).not.toHaveAttribute('href');
+      await expect(card).toHaveAttribute('tabindex', '-1');
+      await expect(card).toHaveCSS('pointer-events', 'none');
+      await expect(card.locator('[data-disabled-cta="true"]')).toHaveClass(/opacity-60/);
+    }
 
     await expect(mobile).toContainText('攻略ディレクトリ');
     await expect(mobile).toContainText('ステージ攻略');
