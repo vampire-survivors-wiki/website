@@ -177,6 +177,7 @@ test.describe('サイトのルーティングと共通コンポーネント', ()
   test('キャラクター一覧ページとPC・スマートフォン用コンポーネントが描画される', async ({
     page,
   }) => {
+    await page.setViewportSize({ width: 1280, height: 900 });
     const response = await page.goto('/characters/');
 
     expect(response?.status()).toBe(200);
@@ -188,9 +189,36 @@ test.describe('サイトのルーティングと共通コンポーネント', ()
     await expect(page.locator('main')).toContainText('アントニオ');
     await expect(page.locator('main')).toContainText('初期・通常キャラクター');
     await expect(page.locator('main')).toContainText('Foscariの潮流');
+    const desktop = page.locator('[data-character-view="desktop"]');
+    const desktopBreadcrumb = desktop.getByRole('navigation', { name: 'パンくずリスト' });
+    await expect(desktopBreadcrumb).toBeVisible();
+    await expect(desktopBreadcrumb.getByRole('link', { name: 'ホーム' })).toHaveAttribute(
+      'href',
+      '/',
+    );
+    await expect(desktopBreadcrumb.getByRole('link', { name: '攻略' })).toHaveAttribute(
+      'href',
+      '/strategy/',
+    );
+    await expect(desktopBreadcrumb.locator('[aria-current="page"]')).toHaveText('キャラクター');
+
     await expect(
       page.locator('[data-character-view="desktop"] img[alt$="のキャラクター画像"]'),
     ).toHaveCount(3);
+
+    await page.setViewportSize({ width: 390, height: 844 });
+    const mobile = page.locator('[data-character-view="mobile"]');
+    const mobileBreadcrumb = mobile.getByRole('navigation', { name: 'パンくずリスト' });
+    await expect(mobileBreadcrumb).toBeVisible();
+    await expect(mobileBreadcrumb.getByRole('link', { name: 'ホーム' })).toHaveAttribute(
+      'href',
+      '/',
+    );
+    await expect(mobileBreadcrumb.getByRole('link', { name: '攻略' })).toHaveAttribute(
+      'href',
+      '/strategy/',
+    );
+    await expect(mobileBreadcrumb.locator('[aria-current="page"]')).toHaveText('キャラクター');
   });
 
   test('PC版とスマートフォン版で同じ3キャラクターが表示される', async ({ page }) => {
