@@ -1,6 +1,6 @@
 ---
 interface Props {
-  currentPath: '/' | '/characters/';
+  currentPath: '/' | '/characters/' | '/strategy/';
 }
 
 const { currentPath } = Astro.props;
@@ -58,11 +58,17 @@ const { currentPath } = Astro.props;
       </a>
 
       <a
-        href="/#strategy-mobile"
+        href="/strategy/"
         data-posthog-home-category="strategy"
         data-posthog-home-category-surface="mobile_drawer"
         data-close-drawer
-        class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-medium text-slate-700 hover:bg-slate-100"
+        aria-current={currentPath === '/strategy/' ? 'page' : undefined}
+        class:list={[
+          'flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs transition-colors',
+          currentPath === '/strategy/'
+            ? 'bg-slate-950 text-white shadow-xs font-bold'
+            : 'text-slate-700 hover:bg-slate-100 font-medium',
+        ]}
       >
         <span>攻略</span>
       </a>

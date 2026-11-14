@@ -1,0 +1,219 @@
+---
+interface CategoryItem {
+  id: string;
+  number: string;
+  label: string;
+  title: string;
+  description: string;
+  href: string | null;
+  ctaText: string;
+  iconPath: string;
+  subLabel: string;
+}
+
+const categories: CategoryItem[] = [
+  {
+    id: 'stages',
+    number: '01',
+    label: 'STAGES DIRECTORY',
+    title: 'ステージ攻略',
+    description:
+      '本編・DLC全ステージのマップ構造、レリック回収ルート、推奨ビルドおよび生存手順の一覧です。',
+    href: null,
+    ctaText: '一覧を見る →',
+    subLabel: 'STAGES & MAPS',
+    iconPath:
+      'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253',
+  },
+  {
+    id: 'bosses',
+    number: '02',
+    label: 'BOSS MECHANICS',
+    title: 'ボス攻略',
+    description:
+      '30分死神討伐手順、ディレクター等の最終ボスギミック対策、ステージ中ボスの弱点一覧です。',
+    href: null,
+    ctaText: '一覧を見る →',
+    subLabel: 'BOSSES & MECHANICS',
+    iconPath:
+      'M14.121 14.121L19 19m-7-7l7-7m-7 7l-2.879 2.879a3 3 0 11-4.242-4.242L10.757 7.757m0 0L7.757 4.757a3 3 0 00-4.242 4.242l2.879 2.879',
+  },
+  {
+    id: 'characters',
+    number: '03',
+    label: 'CHARACTER ARCHIVE',
+    title: 'キャラクター情報',
+    description:
+      '通常・隠し・DLCキャラクターの初期武器、隠しパッシブ効果、解放条件や成長傾向の一覧です。',
+    href: '/characters/',
+    ctaText: '一覧を見る →',
+    subLabel: 'SURVIVORS ARCHIVE',
+    iconPath:
+      'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z',
+  },
+  {
+    id: 'secrets',
+    number: '04',
+    label: 'SECRETS & UNLOCKS',
+    title: 'アンロック攻略',
+    description:
+      'アチーブメント達成ルート、重要レリック獲得手順、隠し呪文コード（Spells）の一覧です。',
+    href: null,
+    ctaText: '一覧を見る →',
+    subLabel: 'CIPHERS & SECRETS',
+    iconPath:
+      'M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z',
+  },
+];
+---
+
+<div class="w-full" data-strategy-content="desktop">
+  <!-- ヒーローフロストガラス帯 -->
+  <section class="w-full hero-glass-band pt-12 pb-8 mb-10" data-posthog-listing-section="intro">
+    <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
+      <nav
+        aria-label="パンくずリスト"
+        class="flex items-center gap-1.5 text-xs font-medium text-slate-500 mb-5"
+      >
+        <svg
+          class="w-3.5 h-3.5"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2"
+          aria-hidden="true"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1-1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+          />
+        </svg>
+        <a href="/" class="hover:text-slate-900">
+          ホーム
+        </a>
+        <span aria-hidden="true">/</span>
+        <span class="text-slate-900 font-bold" aria-current="page">
+          攻略
+        </span>
+      </nav>
+      <span
+        class:list={[
+          'text-xs font-mono font-medium tracking-widest text-slate-500',
+          'uppercase block mb-2',
+        ]}
+      >
+        ARCHIVE & VERIFICATION COMPENDIUM
+      </span>
+      <h1 class="text-4xl lg:text-5xl font-extrabold tracking-tight text-slate-950 mb-3">
+        攻略ディレクトリ
+      </h1>
+      <p class="text-sm text-slate-600 max-w-2xl leading-relaxed">
+        ステージ攻略、ボス攻略、キャラクター情報、アンロック攻略の各一覧への案内ハブです。確認したい項目を選択してください。
+      </p>
+
+      <!-- アンカーショートカット -->
+      <nav
+        aria-label="攻略カテゴリ"
+        class="flex items-center gap-6 mt-6 text-xs font-mono text-slate-500"
+      >
+        {categories.map((cat) => (
+          <a href={'#' + cat.id} class="hover:text-slate-900 transition-colors">
+            {cat.number} {cat.title.replace('情報', '').replace('攻略', '')} ↓
+          </a>
+        ))}
+      </nav>
+    </div>
+  </section>
+
+  <!-- メインリスト（画像ハブカード） -->
+  <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+    <div class="space-y-6">
+      {categories.map((item) => (
+        <section
+          id={item.id}
+          data-posthog-listing-section={item.id}
+          class:list={[
+            'glass-panel rounded-2xl overflow-hidden p-6 lg:p-8',
+            'flex flex-col md:flex-row items-center gap-8',
+            'transition-all hover:shadow-md',
+          ]}
+        >
+          <!-- 左側：画像配置予定領域 -->
+          <div
+            class:list={[
+              'w-full md:w-[380px] lg:w-[440px] h-[210px] rounded-xl',
+              'bg-slate-100/90 border border-slate-200/60',
+              'flex flex-col items-center justify-center text-center p-6 shrink-0 group',
+            ]}
+          >
+            <div
+              class:list={[
+                'w-12 h-12 rounded-xl bg-white/80 border border-slate-200/80',
+                'flex items-center justify-center text-blue-600 shadow-xs mb-3',
+                'group-hover:scale-105 transition-transform',
+              ]}
+            >
+              <svg
+                class="w-6 h-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="1.75"
+                aria-hidden="true"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" d={item.iconPath} />
+              </svg>
+            </div>
+            <span class="text-xs font-mono font-bold tracking-widest text-slate-600 uppercase">
+              {item.subLabel}
+            </span>
+          </div>
+
+          <!-- 右側：コンテンツ詳細＆右寄せCTA -->
+          <div class="flex-1 flex flex-col justify-between min-h-[210px] h-full w-full py-1">
+            <div>
+              <div class="flex items-center gap-2 mb-2">
+                <span class="text-xs font-mono font-bold text-blue-600">
+                  {item.number} {item.label}
+                </span>
+              </div>
+              <h2 class="text-2xl font-extrabold tracking-tight text-slate-950 mb-3">
+                {item.title}
+              </h2>
+              <p class="text-sm text-slate-600 leading-relaxed max-w-2xl">{item.description}</p>
+            </div>
+
+            <!-- 右端寄せのCTAリンク -->
+            <div class="flex justify-end pt-6 mt-4 border-t border-slate-200/50">
+              {item.href ? (
+                <a
+                  href={item.href}
+                  data-posthog-list-item={item.id}
+                  aria-label={item.title + 'の一覧を見る'}
+                  class:list={[
+                    'inline-flex items-center gap-2 px-5 py-2.5 rounded-xl',
+                    'bg-slate-950 text-white text-xs font-bold hover:bg-slate-800',
+                    'transition-colors shadow-xs group',
+                  ]}
+                >
+                  <span>{item.ctaText}</span>
+                </a>
+              ) : (
+                <span
+                  aria-disabled="true"
+                  class:list={[
+                    'inline-flex items-center gap-2 px-5 py-2.5 rounded-xl',
+                    'bg-slate-100 text-slate-400 text-xs font-bold cursor-default',
+                  ]}
+                >
+                  準備中
+                </span>
+              )}
+            </div>
+          </div>
+        </section>
+      ))}
+    </div>
+  </div>
+</div>

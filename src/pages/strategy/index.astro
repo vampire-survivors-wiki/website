@@ -1,0 +1,31 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import StrategyDesktop from '../../components/strategy/StrategyDesktop.astro';
+import StrategyMobile from '../../components/strategy/StrategyMobile.astro';
+---
+
+<Layout
+  title="攻略ディレクトリ | VS GUIDE"
+  description="Vampire Survivorsの攻略ディレクトリ。ステージ攻略、ボス攻略、キャラクター情報、アンロック攻略の各一覧への案内ハブです。"
+  currentPath="/strategy/"
+>
+  <!-- PC画面 (md以上で表示) -->
+  <div
+    data-strategy-view="desktop"
+    data-posthog-page="listing"
+    data-posthog-listing-name="strategy"
+    class="hidden md:block"
+  >
+    <StrategyDesktop />
+  </div>
+
+  <!-- スマホ画面 (md未満で表示) -->
+  <div
+    data-strategy-view="mobile"
+    data-posthog-page="listing"
+    data-posthog-listing-name="strategy"
+    class="block md:hidden"
+  >
+    <StrategyMobile />
+  </div>
+</Layout>

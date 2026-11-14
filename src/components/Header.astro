@@ -1,15 +1,15 @@
 ---
 interface Props {
-  currentPath: '/' | '/characters/';
+  currentPath: '/' | '/characters/' | '/strategy/';
 }
 
 const { currentPath } = Astro.props;
 
 const navItems = [
   { label: 'ホーム', href: '/', id: 'home' },
-  { label: '攻略', href: '#strategy', id: 'strategy' },
-  { label: '金策', href: '#gold', id: 'gold' },
-  { label: 'アップデート', href: '#updates', id: 'updates' },
+  { label: '攻略', href: '/strategy/', id: 'strategy' },
+  { label: '金策', href: '/#gold', id: 'gold' },
+  { label: 'アップデート', href: '/#updates', id: 'updates' },
   { label: 'note', href: 'https://note.com/neo_magical', target: '_blank', id: 'note' },
   {
     label: 'YouTube',
@@ -35,11 +35,14 @@ const navItems = [
     <!-- Center Navigation (PC: md以上で表示) -->
     <nav class="hidden md:flex items-center gap-8 text-sm font-medium">
       {navItems.map((item) => {
-        const isActive = item.href === '/' && currentPath === '/';
+        const isActive =
+          (item.id === 'home' && currentPath === '/') ||
+          (item.id === 'strategy' && currentPath === '/strategy/');
         return (
           <a
             href={item.href}
             target={item.target}
+            aria-current={isActive ? 'page' : undefined}
             data-posthog-home-category={
               ['strategy', 'gold', 'updates'].includes(item.id) ? item.id : undefined
             }
