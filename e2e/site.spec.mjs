@@ -136,6 +136,13 @@ test.describe('サイトのルーティングと共通コンポーネント', ()
     const mobile = page.locator('[data-strategy-view="mobile"]');
     await expect(desktop).toBeVisible();
     await expect(mobile).toBeHidden();
+    const desktopBreadcrumb = desktop.getByRole('navigation', { name: 'パンくずリスト' });
+    await expect(desktopBreadcrumb).toBeVisible();
+    await expect(desktopBreadcrumb.getByRole('link', { name: 'ホーム' })).toHaveAttribute(
+      'href',
+      '/',
+    );
+    await expect(desktopBreadcrumb.locator('[aria-current="page"]')).toHaveText('攻略');
     await expect(desktop.locator('section[id]')).toHaveCount(4);
     await expect(desktop).toContainText('ステージ攻略');
     await expect(desktop).toContainText('ボス攻略');
@@ -151,6 +158,13 @@ test.describe('サイトのルーティングと共通コンポーネント', ()
     await page.setViewportSize({ width: 390, height: 844 });
     await expect(desktop).toBeHidden();
     await expect(mobile).toBeVisible();
+    const mobileBreadcrumb = mobile.getByRole('navigation', { name: 'パンくずリスト' });
+    await expect(mobileBreadcrumb).toBeVisible();
+    await expect(mobileBreadcrumb.getByRole('link', { name: 'ホーム' })).toHaveAttribute(
+      'href',
+      '/',
+    );
+    await expect(mobileBreadcrumb.locator('[aria-current="page"]')).toHaveText('攻略');
     await expect(mobile.locator('a[data-posthog-list-item]')).toHaveCount(1);
     await expect(mobile.locator('a[aria-disabled="true"]')).toHaveCount(3);
     await expect(mobile).toContainText('攻略ディレクトリ');
