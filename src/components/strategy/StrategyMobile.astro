@@ -92,7 +92,9 @@ const bannerItems: MobileBannerItem[] = [
         class:list={[
           'relative block w-full rounded-2xl overflow-hidden shadow-xs border border-slate-200/80',
           'transition-transform duration-200',
-          banner.href ? 'active:scale-[0.98]' : 'cursor-default',
+          banner.href
+            ? 'active:scale-[0.98]'
+            : 'cursor-not-allowed pointer-events-none',
         ]}
       >
         <!-- 背景ビジュアル領域（画像を後から配置する想定） -->
@@ -131,9 +133,13 @@ const bannerItems: MobileBannerItem[] = [
 
           <!-- 親指操作用大型円形CTAボタン（右側） -->
           <div
+            data-disabled-cta={banner.href ? undefined : 'true'}
             class:list={[
-              'relative z-10 w-11 h-11 rounded-full bg-white text-slate-950',
+              'relative z-10 w-11 h-11 rounded-full',
               'flex items-center justify-center shrink-0 shadow-md',
+              banner.href
+                ? 'bg-white text-slate-950'
+                : 'bg-slate-300/70 text-slate-600 opacity-60',
             ]}
           >
             <svg
