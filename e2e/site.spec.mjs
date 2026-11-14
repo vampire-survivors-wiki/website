@@ -166,7 +166,16 @@ test.describe('サイトのルーティングと共通コンポーネント', ()
     );
     await expect(mobileBreadcrumb.locator('[aria-current="page"]')).toHaveText('攻略');
     await expect(mobile.locator('a[data-posthog-list-item]')).toHaveCount(1);
-    await expect(mobile.locator('a[aria-disabled="true"]')).toHaveCount(3);
+
+    const disabledCards = mobile.locator('a[aria-disabled="true"]');
+    await expect(disabledCards).toHaveCount(3);
+    await expect(disabledCards).not.toHaveAttribute('href');
+    await expect(disabledCards).toHaveAttribute('tabindex', '-1');
+    await expect(disabledCards.nth(0)).toHaveCSS('pointer-events', 'none');
+    await expect(disabledCards.nth(0).locator('[data-disabled-cta="true"]')).toHaveClass(
+      /opacity-60/,
+    );
+
     await expect(mobile).toContainText('攻略ディレクトリ');
     await expect(mobile).toContainText('ステージ攻略');
     await expect(mobile).toContainText('ボス攻略');
