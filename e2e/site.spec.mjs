@@ -443,6 +443,8 @@ test.describe('スマートフォン操作', () => {
       await expect(mobileView.getByText(label, { exact: true })).toHaveCount(0);
     }
 
+    await expect(mobileView.locator('h1')).toHaveCount(1);
+    await expect(mobileView.locator('h1')).toHaveText('キャラクター一覧');
     await expect(mobileView).toContainText('SECTION 01');
     await expect(mobileView).toContainText('SECTION 02');
     await expect(mobileView).toContainText('SECTION 03');
